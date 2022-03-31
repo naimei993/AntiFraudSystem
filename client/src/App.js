@@ -1,9 +1,13 @@
 import React, { Component } from "react";
+import { BrowserRouter,Navigate} from 'react-router-dom';
+import {Route,Routes,} from 'react-router'
+
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
-
-import "./App.css";
-
+import './App.css';
+import Index from './components/index/index'
+import Admin from './components/admin/admin'
+import Login from './components/login/login'
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null };
 
@@ -28,9 +32,9 @@ class App extends Component {
       this.setState({ web3, accounts, contract: instance }, this.runExample);
     } catch (error) {
       // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
-      );
+      // alert(
+      //   `Failed to load web3, accounts, or contract. Check console for details.`,
+      // );
       console.error(error);
     }
   };
@@ -50,7 +54,24 @@ class App extends Component {
 
   render() {
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+      return <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/index" element={<Index/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/admin/*" element={<Admin/>}/>
+          <Route path="/" element={<Navigate to="/admin/home" />}/>
+          <Route
+            path="*"
+            element={
+        <main style={{ padding: "1rem" }}>
+          <p>There's nothing here!</p>
+        </main>
+      }
+    />
+        </Routes>
+        </BrowserRouter>
+    </div>;
     }
     return (
       <div className="App">
