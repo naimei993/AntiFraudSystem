@@ -265,14 +265,18 @@ contract AntiFraud {
         // 回答提交时间
         uint postTime;
     }
-    // 储存该问题下所有回答的id
+    // 采纳制：储存某一任务下所有回答的id
     mapping (uint => mapping (address => TaskAnswer)) answerList; 
+    // 采纳制：储存某一任务下所有回答的地址
+    mapping (uint => mapping (uint => address)) answerAdressList; 
     // 提交回答
     function postTaskAnswer(uint _taskIndex, string memory _detail) external {
         // 增加回答辅助编号
         taskAnswerIndex++;
         // 将回答加入该任务对应的回答列表
         TaskAnswer storage answer = answerList[_taskIndex][msg.sender];
+        // 将回答加入该任务对应的回答地址列表
+        answerAdressList[_taskIndex][taskAnswerIndex] = msg.sender;
         // 设定id
         answer.id = taskAnswerIndex;
         // 设定回答内容
@@ -291,16 +295,15 @@ contract AntiFraud {
         _taskFailed(_taskIndex);
     }
     // 确认任务是否完成 
-    function taskCompelte(uint _taskIndex, bool _isAdopt) external {
+    function taskCompelte(uint _taskIndex, uint _answerIndex, bool _isAdopt) external {
         if (_isAdopt) {
             taskList[taskIdToPostPoliceUser[_taskIndex]].isSolved = true;
             if (taskList[taskIdToPostPoliceUser[_taskIndex]].isAnswerInRush) {
-                // 创建者账户向抢答者账户转入积分
+                // 创建者账户向抢答者账户转入积分（抵押金+奖金）
                 credit.transferFrom(administrator, taskIdToAnswerRusher[_taskIndex], 2);
             } else {
-                // TODO 获取被采纳者地址 
-                // 创建者账户向被采纳者账户转入积分
-
+                // 创建者账户向被采纳者账户转入积分（奖金）
+                credit.transferFrom(administrator, answerAdressList[_taskIndex][_answerIndex], 1);
             }
         } else {
             _taskFailed(_taskIndex);
