@@ -102,9 +102,11 @@ function taskFailed(uint _taskIndex) external {}
 
 _taskIndex: int 完成的任务的id
 
+_answeIndex: int 正在确认的回答的id
+
 _isAdopt: bool 是否采纳
 
 ```solidity
-function taskCompelte(uint _taskIndex, bool _isAdopt) external {}
+function taskCompelte(uint _taskIndex, uint _answerIndex, bool _isAdopt) external {}
 ```
 
