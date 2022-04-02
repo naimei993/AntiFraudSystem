@@ -4,50 +4,31 @@ const menuList = [ //eslint-disable-next-line
     title: '主页', // 菜单标题名称
     key: 'home', // 对应的path
     icon: 'HomeOutlined', // 图标名称
-    path: '/admin/home'//对应路径
+    path: '/admin/home/index'//对应路径
   },
   {
     title: '我要举报',
-    key: 'report',
+    key: 'reporting_center',
     icon: 'LikeOutlined',
-    path: '/admin/report'
+    path: '/admin/reporting_center/index'
   },
   {
-    title: '文章',
+    title: '我的文章',
     key: 'article_about',
     icon: 'FormOutlined',
-    children: [ // 子菜单列表
-      {
-        title: '文章列表',
-        key: 'articlelist',
-        icon: 'UnorderedListOutlined',
-        path: '/admin/article_about/articlelist'
-      },
-      {
-        title: '写文章',
-        key: 'writearticle',
-        icon: 'EditOutlined',
-        path: '/admin/article_about/writearticle'
-      },
-      {
-        title: '分类目录',
-        key: 'classification',
-        icon: 'ClusterOutlined',
-        path: '/admin/article_about/classification'
-      },
-    ]
+    path:'/admin/article_about/index'
   },
   {
     title: '积分商城',
-    key: 'Integralmall',
+    key: 'integralmall',
     icon: 'ShoppingOutlined',
-    path: '/admin/Integralmall'
+    path: '/admin/integralmall/index'
   },
   {
     title: '个人中心',
     key: 'personalcenter',
     icon: 'UserOutlined',
-    path: '/admin/personalcenter'
+    path: '/admin/personalcenter/index'
   },
 ]
 export default menuList

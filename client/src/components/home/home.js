@@ -6,6 +6,8 @@ import lb01 from '../../static/lb01.jpg'
 import lb02 from '../../static/lb02.jpg'
 import lb03 from '../../static/lb03.png'
 import lb04 from '../../static/lb04.png'
+import report from '../../static/fanzha.svg'
+import progressquery from '../../static/jinduchaxun.svg'
 const Home = () => {
 
       const niticeList = [
@@ -43,7 +45,18 @@ const Home = () => {
     return (
         <div className='home'>
             <div className='top_bag'>
-
+                <div className='jubao entrance'>
+                    <a href='/admin/home'>
+                <img src={report} alt="我要举报"></img>
+                <div>我要举报</div>
+                </a>
+                </div>
+                <div className='chaxun entrance'>
+                <a href='/admin/home'>
+                    <img src={progressquery} alt="进度查询"></img>
+                    <div>进度查询</div>
+                </a>
+                </div>
             </div>
             <div className='home_center'>
                 <div className='shuffling'>

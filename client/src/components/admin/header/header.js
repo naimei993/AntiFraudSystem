@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu,Avatar,Dropdown, message,} from 'antd';
-import {Link} from 'react-router-dom';
+import {Link,useLocation} from 'react-router-dom';
 import { UserOutlined,DownOutlined } from '@ant-design/icons';
 import  * as Icon from '@ant-design/icons';
 import './header.min.css'
@@ -8,10 +8,8 @@ import logo from '../../../static/logo.png'
 import menuList from '../../../config/menu_config_personal';
 const { SubMenu } = Menu;
 const Header = () => {
-
-    const [current,setcurrent] = React.useState("home")
-
-    
+    const { pathname } = useLocation();
+    let pathnamedetail = pathname.split('/').splice(2)
     const onClick = ({ key }) => {
       message.info(`Click on item ${key}`);
     };
@@ -49,10 +47,6 @@ const Header = () => {
           
     }))
       }
-    const handleClick = (e) => {
-        console.log('click ', e);
-        setcurrent(e.key)
-      };
     return (
         <div className='header'>
             <div className='logo'>
@@ -62,7 +56,7 @@ const Header = () => {
                 </a>
             </div>
             <div className='NavigationBar'>
-            <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal" theme="light">
+            <Menu defaultSelectedKeys={pathnamedetail[0]}  mode="horizontal" theme="light">
             {createMenu(menuList)}
       </Menu>
             </div>

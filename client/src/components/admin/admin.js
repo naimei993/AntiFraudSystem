@@ -4,6 +4,9 @@ import {Route,Routes} from 'react-router'
 import HeaderTop from './header/header';
 import Home from '../home/home';
 import PersonalCenter from '../personalCenter/personalCenter';
+import RepForm from '../repCenter/repForm/repForm';
+import RepGuide from '../repCenter/repGuide/repGuide';
+import Integralmall from '../integralmall/integralmall';
 const { Header, Content } = Layout;
 const Admin = () => {
     return (
@@ -12,8 +15,12 @@ const Admin = () => {
       <Header><HeaderTop/></Header>
       <Content>
       <Routes>
-                <Route path="/home" element={<Home/>}/>
-
+                <Route path="/home/index" element={<Home/>}/>Reporting center
+               
+                <Route path="/reporting_center">
+                    <Route path="index" element={<RepGuide/>}/>
+                    <Route path="reporting_form" element={<RepForm/>}/>
+                </Route>
                 {/* <Route path="/article_about">
                     <Route path="articlelist" element={<Articlelist/>}/>
                     <Route path="writearticle" element={<Writearticle/>}/>
@@ -27,7 +34,8 @@ const Admin = () => {
                 </Route>
                 <Route path="comments" element={<Comments/>}/>
                 <Route path="comments/:id" element={<Commentdetial/>}/> */}
-                <Route path="/personalcenter" element={<PersonalCenter/>}/>
+                <Route path="/integralmall/index" element={<Integralmall/>}/>
+                <Route path="/personalcenter/index" element={<PersonalCenter/>}/>
                 <Route
                 path="*"
                 element={

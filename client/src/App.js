@@ -60,7 +60,7 @@ class App extends Component {
           <Route path="/index" element={<Index/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/admin/*" element={<Admin/>}/>
-          <Route path="/" element={<Navigate to="/admin/home" />}/>
+          <Route path="/" element={<Navigate to="/admin/home/index" />}/>
           <Route
             path="*"
             element={
