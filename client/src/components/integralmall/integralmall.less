@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background-color: #f5f5f5;
+    background-color: #ebebeb;
     // height: 1000px;
     .inter_left{
         display: flex;
@@ -10,20 +10,17 @@
         align-items: center;
         width: 840px;
         height: 100%;
-        background-color: rgb(40, 98, 192);
-        .inter_left_top{
-            height: 200px;
-            width: 100%;
-            background-color: pink;
-        }
+
+        
         .inter_left_bottom{
             height: 100%;
             width: 100%;
-            margin-top: 30px;
+            margin-top: 20px;
             margin-bottom: 100px;
-            background-color: #ebebeb;
+            background-color: #f5f5f5;
             display: flex;
             flex-wrap:wrap;
+            border-radius: 10px;
             .goodsItem{
                 width: 220px;
                 height: 300px;
@@ -32,7 +29,7 @@
                 -webkit-box-shadow: 0 5px 15px 0 rgba(0,0,0,0.08);
                 box-shadow: 0 5px 15px 0 rgba(0,0,0,0.08);
                 border-radius: 10px;
-                background-color: #C6CCCC;
+                background-color: #ccd4e4;
                 -webkit-transition: -webkit-box-shadow .4s;
                 transition: -webkit-box-shadow .4s;
                 -o-transition: box-shadow .4s;
@@ -77,9 +74,16 @@
 
                     .bottom_right{
                         display: flex;
-                        justify-content: center;
-                        align-items: flex-end;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        align-items: center;
                         width: 50%;
+                        .price{
+                            font-size: 18px;
+                            span{
+                                color: rgb(81, 128, 148);
+                            }
+                        }
                         .ant-btn-primary{
                             border-color: #F40;
                             background: #F40;
@@ -99,9 +103,53 @@
     }
     .inter_right{
         width: 300px;
-        height: 200px;
-        margin-left: 50px;
-        background-color: red;
+        height: 400px;
+        margin-left: 40px;
+        background-color:#f5f5f5;
+        margin-top: 20px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        .int_right_avatar{
+
+            .username{
+                font-weight: bold;
+                font-size: 24px;
+                padding-top: 20px;
+            }
+        }
+        .int_right_msg{
+            line-height: 20px;
+            font-size: 20px;
+            display: flex;
+            .points{
+                margin-right: 10px;
+                div{
+                    margin-top: 5px;
+                }
+            }
+            .order{
+                border-left: 3px solid rgba(0, 0, 0, 0.184);
+                padding-left: 10px;
+                div{
+                    margin-top: 5px;
+                }
+            }
+        }
+        .int_right_shopcart{
+            
+            .ant-btn-lg{
+                padding-left: 50px;
+                padding-right: 50px;
+            }
+            .ant-btn-primary{
+                background-color: #F40;
+                border-color: #F40;
+            }
+            
+        }
     }
     
 }

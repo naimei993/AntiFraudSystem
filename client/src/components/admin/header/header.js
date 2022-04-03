@@ -1,6 +1,7 @@
 import React from 'react';
-import { Menu,Avatar,Dropdown, message,} from 'antd';
+import { Menu,Avatar,Dropdown, } from 'antd';
 import {Link,useLocation} from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { UserOutlined,DownOutlined } from '@ant-design/icons';
 import  * as Icon from '@ant-design/icons';
 import './header.min.css'
@@ -9,16 +10,17 @@ import menuList from '../../../config/menu_config_personal';
 const { SubMenu } = Menu;
 const Header = () => {
     const { pathname } = useLocation();
+    const navigate = useNavigate()
     let pathnamedetail = pathname.split('/').splice(2)
     const onClick = ({ key }) => {
-      message.info(`Click on item ${key}`);
+      navigate(`${key}`)
     };
     const menu = (
       <Menu onClick={onClick}>
-    <Menu.Item key="1">个人中心</Menu.Item>
-    <Menu.Item key="2">我的贴子</Menu.Item>
-    <Menu.Item key="3">我的积分</Menu.Item>
-    <Menu.Item key="4">退出登录</Menu.Item>
+    <Menu.Item key="/admin/personalcenter/index">个人中心</Menu.Item>
+    <Menu.Item key="/admin/article_about/index">我的贴子</Menu.Item>
+    <Menu.Item key="/admin/integralmall/index">我的积分</Menu.Item>
+    <Menu.Item key="/login">退出登录</Menu.Item>
   </Menu>
     );
     const createMenu = (target)=>{//箭头函数
@@ -64,7 +66,7 @@ const Header = () => {
                 <div className='useravatat'><Avatar size="default" icon={<UserOutlined />} /></div>
                 <Dropdown overlay={menu}>
                 <a href='/admin/home' className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                张三 <DownOutlined />
+                张伟 <DownOutlined />
                   </a>
                 </Dropdown>
                

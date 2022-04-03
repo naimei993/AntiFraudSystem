@@ -64,7 +64,7 @@ const PersonalCenter = () => {
     />
               </div>
               <div className='userinfo'>
-                <div className='username'>张三</div>
+                <div className='username'>张伟</div>
                 <div className='userdetial'>
                   性别：男
                   <Divider type="vertical" />

@@ -7,6 +7,8 @@ import PersonalCenter from '../personalCenter/personalCenter';
 import RepForm from '../repCenter/repForm/repForm';
 import RepGuide from '../repCenter/repGuide/repGuide';
 import Integralmall from '../integralmall/integralmall';
+import Article from '../article/article';
+import Artdetial from '../article/artdetial/artdetial';
 const { Header, Content } = Layout;
 const Admin = () => {
     return (
@@ -20,6 +22,10 @@ const Admin = () => {
                 <Route path="/reporting_center">
                     <Route path="index" element={<RepGuide/>}/>
                     <Route path="reporting_form" element={<RepForm/>}/>
+                </Route>
+                <Route path='/article_about'>
+                    <Route path='index' element={<Article/>}/>
+                    <Route path=':id' element={<Artdetial/>}/>
                 </Route>
                 {/* <Route path="/article_about">
                     <Route path="articlelist" element={<Articlelist/>}/>

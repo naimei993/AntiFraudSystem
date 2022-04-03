@@ -140,8 +140,8 @@ const Home = () => {
                 </div>
                 <div className='web_msg'>
                 <img src={logo} alt='logo'></img>
-                    <div className='record'>京公网安备 11010102002019号</div>
-                    <div>京ICP备05070602号</div>
+                    <div className='record'>京公网安备 66666666666666号</div>
+                    <div>京ICP备00000000号</div>
 
                 </div>
                     
