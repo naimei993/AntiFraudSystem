@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.21 <0.9.0;
 
-import "./erc20.sol";
+import "./TokenERC20.sol";
 
 contract AntiFraud {
     // 引入ERC20规则的积分（代币）合约
