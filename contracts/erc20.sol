@@ -30,6 +30,10 @@ contract TokenERC20 {
         name = tokenName;                                   // 代币名称
         symbol = tokenSymbol;                               // 代币符号
     }
+
+    function _getBalance(address _address) public view returns (uint) {
+        return (balanceOf[_address]);
+    }
  
     /**
      * 代币交易转移的内部实现
