@@ -2,6 +2,82 @@
 
 注：IPFS相关的实现可以暂时延后
 
+# GETs
+
+前端页面只显示需要的返回值就行 这里给的返回值比较多
+
+## 1.获取警方用户
+
+_policeUserAddress: address 该用户的地址
+
+```solidity
+function getPoliceUser(address _policeUserAddress) external view returns (uint, string memory, string memory) {
+    // ... ...
+    // 返回：id(uint) 名称(string) 头像链接(string)
+	  return(police.id, police.name, police.avatarLink);
+}
+```
+
+## 2.获取民众用户
+
+_civilUserAddress: address 该用户的地址
+
+```solidity
+function getCivilUser(address _civilUserAddress) external view returns (uint, string memory, string memory) {
+    // ... ...
+    // 返回：id(uint) 名称(string) 头像链接(string)
+    return(civil.id, civil.name, civil.avatarLink); 
+}
+```
+
+## 3.获取账户余额
+
+_address: address 该用户的地址
+
+```solidity
+function getBalanceOf(address _address) external view returns (uint256) {
+    // 返回：余额 (uint256)
+    return credit._getBalance(_address);
+}
+```
+
+## 4.获取截图资料列表
+
+```solidity
+    function getScreenshot() external view 
+        returns (uint[] memory, address[] memory, string[] memory, bool[] memory, uint[] memory) {
+        // ... ...
+    	// 返回：id数组(uint) 审查的警方用户的地址(address) 截图链接数组(string) 是否有效数组(bool) 发布时间数组(uint)
+        return(ids, auditPoliceUsers, screenshotLinks, valids, postTimes);
+    }
+```
+
+## 5.获取案件列表
+
+```solidity
+    function getCase() external view 
+        returns (uint[] memory, string[] memory, string[] memory, uint[] memory, string[] memory) {
+            // ... ...
+            // 返回值：id数组(uint) 案件标题数组(string) 案件描述数组(string) 发布时间数组(uint) 案件图片链接数组(string)
+            return(ids, titles, descriptions, postTimes, caseImageLinks);
+    }
+    
+```
+
+## 6.获取任务列表
+
+```solidity
+    function getTask() external view 
+        returns (uint[] memory, string[] memory, string[] memory, uint[] memory, bool[] memory, string[] memory, bool[] memory, bool[] memory) {
+            // ... ...
+            // 返回值：id数组(uint) 任务标题数组 任务描述数组 发布时间数组(uint) 是否解决数组(bool) 任务图片链接数组 是否为抢答模式数组(bool) 是否已被抢答数组(bool)
+            return(ids, titles, descriptions, postTimes, isSolveds, taskImageLinks, isAnswerInRushs, isAccpets);
+    }  
+    
+```
+
+
+
 ## 警用端-注册警方用户
 
 _name: string 用户名

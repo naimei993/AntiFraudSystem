@@ -51,6 +51,8 @@ contract AntiFraud {
         // TODO 头像
         string avatarLink;
     }
+    // 地址转换
+    // mapping(uint => address) policeIdToAddress;
     // 储存所有警方用户的映射
     mapping(address => Police) policeList;
        // get警方用户1
@@ -85,6 +87,11 @@ contract AntiFraud {
     }
     // 储存所有市民用户的映射
     mapping(address => Civil) civilList;
+    // get市民用户
+    function getCivilUser(address _civilUserAddress) external view returns (uint, string memory, string memory) {
+        Civil memory civil = civilList[_civilUserAddress];
+        return(civil.id, civil.name, civil.avatarLink); 
+    }
     // 注册市民用户
     function createCivilUser(string memory _name, string memory _avatarLink) external {
         // 增加市民用户辅助编号
@@ -101,6 +108,10 @@ contract AntiFraud {
         // credit.balanceOf[msg.sender] = 0;
         // 加入市民用户列表
         // civilList[msg.sender] = civil;
+    }
+    // get积分余额
+    function getBalanceOf(address _address) external view returns (uint256) {
+        return credit._getBalance(_address);
     }
     // 案件资料结构体
     // 只需市民用户上传截图 警方用户进行审核
@@ -140,6 +151,24 @@ contract AntiFraud {
         // 将案件加入案件列表
         // screenshotList[msg.sender] = fraudScreenshot;
     }
+    // get案件截图列表
+    function getScreenshot() external view 
+        returns (uint[] memory, address[] memory, string[] memory, bool[] memory, uint[] memory) {
+        uint[] memory ids;
+        address[] memory auditPoliceUsers;
+        string[] memory screenshotLinks;
+        bool[] memory valids;
+        uint[] memory postTimes; 
+        for (uint i = 0; i <= screenshotIndex; i++) {
+            FraudScreenshot memory screenshot = screenshotList[screenshotIdToPostCivilUser[i]];
+            ids[i] = screenshot.id;
+            auditPoliceUsers[i] = screenshot.auditPoliceUser;
+            screenshotLinks[i] = screenshot.screenshotLink;
+            valids[i] = screenshot.isValid;
+            postTimes[i] = screenshot.postTime;
+        }
+        return(ids, auditPoliceUsers, screenshotLinks, valids, postTimes);
+    }
     // 审核案件资料截图
     function auditScreenshot(uint _screenshotIndex, bool _isVaild) external {
         // 设定案件是否有效
@@ -174,6 +203,24 @@ contract AntiFraud {
     mapping(address => FraudCase) caseList;
     // 储存案件(id)与发布警方用户的映射
     mapping(uint => address) caseIdToPostPoliceUser;
+    // get案件列表
+    function getCase() external view 
+        returns (uint[] memory, string[] memory, string[] memory, uint[] memory, string[] memory) {
+            uint[] memory ids;
+            string[] memory titles;
+            string[] memory descriptions;
+            uint[] memory postTimes;
+            string[] memory caseImageLinks;
+            for (uint i = 0; i <= caseIndex; i++) {
+                FraudCase memory fraudCase = caseList[caseIdToPostPoliceUser[i]];
+                ids[i] = fraudCase.id;
+                titles[i] = fraudCase.title;
+                descriptions[i] = fraudCase.description;
+                postTimes[i] = fraudCase.postTime;
+                caseImageLinks[i] = fraudCase.caseImageLink; 
+            }
+            return(ids, titles, descriptions, postTimes, caseImageLinks);
+    }
     // 发布案件 -> 类比拍卖系统的发布商品
     function postCase(string memory _title, string memory _description, string memory _caseImageLink) external {
         // 增加案件辅助编号
@@ -221,6 +268,30 @@ contract AntiFraud {
     mapping(address => Task) taskList;
     // 储存任务(id)与发布警方用户的映射
     mapping(uint => address) taskIdToPostPoliceUser;
+    // get任务列表
+    function getTask() external view 
+        returns (uint[] memory, string[] memory, string[] memory, uint[] memory, bool[] memory, string[] memory, bool[] memory, bool[] memory) {
+            uint[] memory ids;
+            string[] memory titles;
+            string[] memory descriptions;
+            uint[] memory postTimes;
+            bool[] memory isSolveds;
+            string[] memory taskImageLinks;
+            bool[] memory isAnswerInRushs;
+            bool[] memory isAccpets;
+            for (uint i = 0; i <= taskIndex; i++) {
+                Task memory task = taskList[taskIdToPostPoliceUser[i]];
+                ids[i] = task.id;
+                titles[i] = task.title;
+                descriptions[i] = task.description;
+                postTimes[i] = task.postTime;
+                isSolveds[i] = task.isSolved;
+                taskImageLinks[i] = task.taskImageLink;
+                isAnswerInRushs[i] = task.isAnswerInRush;
+                isAccpets[i] = task.isAccept; 
+            }
+            return(ids, titles, descriptions, postTimes, isSolveds, taskImageLinks, isAnswerInRushs, isAccpets);
+    }  
     // 发布任务 -> 类比拍卖系统的发布商品
     // 1.抢答式：需要抢答人支付抵押金 成功完成后退回 
     // 2.采纳式：不需要抵押金 由发布者自行采纳回答 允许多人同时作答
