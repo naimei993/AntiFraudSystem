@@ -143,6 +143,8 @@ contract AntiFraud {
         FraudScreenshot storage fraudScreenshot = screenshotList[msg.sender];
         // 资料id设定为辅助编号
         fraudScreenshot.id = screenshotIndex;           
+        // 设定审核资料的警方用户地址为空
+        fraudScreenshot.auditPoliceUser = address(0);
         // 资料上传时间设定为当前时间 
         fraudScreenshot.postTime = block.timestamp;
         // 资料截图   
