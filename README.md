@@ -47,7 +47,7 @@ function getBalanceOf(address _address) external view returns (uint256) {
     function getScreenshot() external view 
         returns (uint[] memory, address[] memory, string[] memory, bool[] memory, uint[] memory) {
         // ... ...
-    	// 返回：id数组(uint) 审查的警方用户的地址(address) 截图链接数组(string) 是否有效数组(bool) 发布时间数组(uint)
+    	// 返回：id数组(uint) 审查的警方用户的地址数组(address) 截图链接数组(string) 是否有效数组(bool) 发布时间数组(uint)
         return(ids, auditPoliceUsers, screenshotLinks, valids, postTimes);
     }
 ```
