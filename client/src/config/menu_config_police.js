@@ -1,5 +1,5 @@
 //项目的菜单配置
-const menuListPeople = [ //eslint-disable-next-line
+const menuListPolice = [ //eslint-disable-next-line
   {
     title: '主页', // 菜单标题名称
     key: 'home', // 对应的path
@@ -7,16 +7,23 @@ const menuListPeople = [ //eslint-disable-next-line
     path: '/admin/home/index'//对应路径
   },
   {
-    title: '我要举报',
-    key: 'reporting_center',
-    icon: 'LikeOutlined',
-    path: '/admin/reporting_center/index'
+    title: '案件广场',
+    key: 'case_square',
+    icon: 'UnorderedListOutlined',
+    path:'/admin/case_square/index'
   },
   {
-    title: '我的文章',
-    key: 'article_about',
-    icon: 'FormOutlined',
-    path:'/admin/article_about/index'
+    title: '案件悬赏',
+    key: 'case_reward',
+    icon: 'LikeOutlined',
+    path: '/admin/case_reward/index'
+    
+  },
+  {
+    title: '跳蚤市场',
+    key: 'flea_market',
+    icon: 'SmileOutlined',
+    path: '/admin/flea_market/index'//flea market
   },
   {
     title: '积分商城',
@@ -31,4 +38,4 @@ const menuListPeople = [ //eslint-disable-next-line
     path: '/admin/personalcenter/index'
   },
 ]
-export default menuListPeople
+export default menuListPolice

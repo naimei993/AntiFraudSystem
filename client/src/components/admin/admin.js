@@ -9,6 +9,11 @@ import RepGuide from '../repCenter/repGuide/repGuide';
 import Integralmall from '../integralmall/integralmall';
 import Article from '../article/article';
 import Artdetial from '../article/artdetial/artdetial';
+import CaseReward from '../casereward/casereward';
+import CaseRewardDetail from '../casereward/caserewarddetail/caserewarddetail'
+import CaseSquare from '../casesquare/casesquare';
+import CaseSquareDeatil from '../casesquare/casesquaredetail/casesquaredetail'
+import Fleamarket from '../fleamarket/fleamarket';
 const { Header, Content } = Layout;
 const Admin = () => {
     return (
@@ -17,31 +22,37 @@ const Admin = () => {
       <Header><HeaderTop/></Header>
       <Content>
       <Routes>
-                <Route path="/home/index" element={<Home/>}/>Reporting center
-               
+                {/* 主页路由 */}
+                <Route path="/home/index" element={<Home/>}/>
+                {/* 举报中心路由 */}
                 <Route path="/reporting_center">
                     <Route path="index" element={<RepGuide/>}/>
                     <Route path="reporting_form" element={<RepForm/>}/>
                 </Route>
+                {/* 民众案件列表路由 */}
                 <Route path='/article_about'>
                     <Route path='index' element={<Article/>}/>
                     <Route path=':id' element={<Artdetial/>}/>
                 </Route>
-                {/* <Route path="/article_about">
-                    <Route path="articlelist" element={<Articlelist/>}/>
-                    <Route path="writearticle" element={<Writearticle/>}/>
-                    <Route path="classification" element={<Classification/>}/>
-                    <Route path="articledetail/:id" element={<ArticleDetail/>}/>
-                    <Route path="articleupdate/:id" element={<ArticleUpdate/>}/>
+                {/* 警方案件广场路由 */}
+                <Route path='/case_square'>
+                    <Route path='index' element={<CaseSquare/>}/>
+                    <Route path=':id' element={<CaseSquareDeatil/>}/>
                 </Route>
-                <Route path="/system">
-                    <Route path="log"  element={<Log/>}/>
-                    <Route path="friendlink"  element={<FriendLink/>}/>
+                {/* 警方悬赏广场路由 */}
+                <Route path='/case_reward'>
+                    <Route path='index' element={<CaseReward/>}/>
+                    <Route path=':id' element={<CaseRewardDetail/>}/>
                 </Route>
-                <Route path="comments" element={<Comments/>}/>
-                <Route path="comments/:id" element={<Commentdetial/>}/> */}
+                {/* 跳蚤市场 */}
+                <Route path='/flea_market'>
+                    <Route path='index' element={<Fleamarket/>}/>
+                </Route>
+                {/* 积分商城路由 */}
                 <Route path="/integralmall/index" element={<Integralmall/>}/>
+                {/* 个人中心路由 */}
                 <Route path="/personalcenter/index" element={<PersonalCenter/>}/>
+                {/* 404not found */}
                 <Route
                 path="*"
                 element={

@@ -1,20 +1,31 @@
 import React from 'react';
-import { Menu,Avatar,Dropdown, } from 'antd';
+import { Menu,Avatar,Dropdown, Button, } from 'antd';
 import {Link,useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { UserOutlined,DownOutlined } from '@ant-design/icons';
 import  * as Icon from '@ant-design/icons';
 import './header.min.css'
 import logo from '../../../static/logo.png'
-import menuList from '../../../config/menu_config_personal';
+import menuListPeople from '../../../config/menu_config_personal';
+import menuListPolice from '../../../config/menu_config_police';
 const { SubMenu } = Menu;
 const Header = () => {
+    const [type,settype] = React.useState("police")
     const { pathname } = useLocation();
     const navigate = useNavigate()
     let pathnamedetail = pathname.split('/').splice(2)
     const onClick = ({ key }) => {
       navigate(`${key}`)
     };
+    const changeIdentity = ()=>{//改变身份
+          if(type === "people"){
+            settype("police")
+            navigate({ pathname: '/admin/home/index' }, { replace: true })
+          }else{
+            settype('people')
+            navigate({ pathname: '/admin/home/index' }, { replace: true })
+          }
+    }
     const menu = (
       <Menu onClick={onClick}>
     <Menu.Item key="/admin/personalcenter/index">个人中心</Menu.Item>
@@ -59,7 +70,7 @@ const Header = () => {
             </div>
             <div className='NavigationBar'>
             <Menu defaultSelectedKeys={pathnamedetail[0]}  mode="horizontal" theme="light">
-            {createMenu(menuList)}
+            {type === "people" ?createMenu(menuListPeople):createMenu(menuListPolice)}
       </Menu>
             </div>
             <div className='user'>
@@ -68,8 +79,9 @@ const Header = () => {
                 <a href='/admin/home' className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                 张伟 <DownOutlined />
                   </a>
+                  
                 </Dropdown>
-               
+                <Button type='primary' onClick={changeIdentity}>{`切换为${type === 'people'?'警察':'民众'}`}</Button>
             </div>
                 
         </div>

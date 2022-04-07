@@ -2,12 +2,12 @@ import React from 'react';
 import {Card,List,Button,Image} from 'antd'
 import {useLocation,useNavigate} from 'react-router-dom';
 import {ArrowLeftOutlined,} from '@ant-design/icons'
+import './casesquaredetail.min.css'
 
-import './artdetial.min.css'
 const {Item} = List
-const Artdetial = () => {
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
+const CasesquareDetail = () => {
+    let navigate = useNavigate();
+    let { pathname } = useLocation();
     let pathnamedetail = pathname.split('/').splice(2)
     console.log(pathnamedetail);
     const dataList = {   
@@ -62,4 +62,4 @@ const Artdetial = () => {
     );
 };
 
-export default Artdetial;
+export default CasesquareDetail;

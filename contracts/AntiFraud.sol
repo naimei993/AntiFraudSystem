@@ -53,6 +53,10 @@ contract AntiFraud {
     }
     // 储存所有警方用户的映射
     mapping(address => Police) policeList;
+       // get警方用户1
+    function getPoliceUser1(address _policeUserAddress) external view returns (uint, string memory, string memory) {
+        return(policeList[_policeUserAddress].id, policeList[_policeUserAddress].name, policeList[_policeUserAddress].avatarLink);
+    }
     // 注册警方用户
     function createPoliceUser(string memory _name, string memory _avatarLink) external {
         // 增加警方用户辅助编号
