@@ -2,23 +2,85 @@
     display: flex;
     justify-content: center;
     .fleam_all{
-        width: 60%;
-        background-color: #fff;
-        .ant-divider {
-            border-width: 2px 0 0;
-        }
-        .ant-comment-inner{
-            padding: 0 0;
-        }
-        .ant-comment-inner{
-            text-align: start;
-        }
-        .ant-comment-content-detail{
-            div{
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+        display: flex;
+        justify-content: center;
+        width: 70%;
+        .fleam_left{
+            width: 60%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 10px 10px;
+            margin-top: 20px;
+            .ant-divider {
+                border-width: 2px 0 0;
+            }
+            .ant-comment-inner{
+                padding: 0 0;
+            }
+            .ant-comment-inner{
+                text-align: start;
+            }
+            .ant-comment-content-detail{
+                div{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
             }
         }
+        .fleam_right{
+            width: 10%;
+            .inter_right{
+                width: 300px;
+                height: 400px;
+                margin-left: 40px;
+                background-color:#fff;
+                margin-top: 20px;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                .int_right_avatar{
+        
+                    .username{
+                        font-weight: bold;
+                        font-size: 24px;
+                        padding-top: 20px;
+                    }
+                }
+                .int_right_msg{
+                    line-height: 20px;
+                    font-size: 20px;
+                    display: flex;
+                    .points{
+                        margin-right: 10px;
+                        div{
+                            margin-top: 5px;
+                        }
+                    }
+                    .order{
+                        border-left: 3px solid rgba(0, 0, 0, 0.184);
+                        padding-left: 10px;
+                        div{
+                            margin-top: 5px;
+                        }
+                    }
+                }
+                .int_right_shopcart{
+                    
+                    .ant-btn-lg{
+                        padding-left: 50px;
+                        padding-right: 50px;
+                    }
+                    .ant-btn-primary{
+                        background-color: #F40;
+                        border-color: #F40;
+                    }
+                    
+                }
+            }
+        }
+        
     }
 }

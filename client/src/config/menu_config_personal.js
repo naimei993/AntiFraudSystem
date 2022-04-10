@@ -12,11 +12,18 @@ const menuListPeople = [ //eslint-disable-next-line
     icon: 'LikeOutlined',
     path: '/admin/reporting_center/index'
   },
+  
   {
     title: '协助审核',
     key: 'assist_audit',
     icon: 'TeamOutlined',
     path:'/admin/assist_audit/index'
+  },
+  {
+    title: '跳蚤市场',
+    key: 'flea_market',
+    icon: 'SmileOutlined',
+    path: '/admin/flea_market/index'//flea market
   },
   {
     title: '历史审核',

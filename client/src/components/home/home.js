@@ -52,9 +52,9 @@ const Home = (props) => {
                 </a>
                 </div>
                 <div className='chaxun entrance'>
-                <a href={props.userInfo.user === "people"?"/admin/article_about/index":"/admin/case_reward/index"}>
+                <a href={props.userInfo.user === "people"?"/admin/assist_audit/index":"/admin/case_reward/index"}>
                     <img src={progressquery} alt="进度查询"></img>
-                    <div>{props.userInfo.user=== "people"?"进度查询":"悬赏案件"}</div>
+                    <div>{props.userInfo.user=== "people"?"协助审查":"悬赏案件"}</div>
                 </a>
                 </div>
             </div>

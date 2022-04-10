@@ -78,6 +78,18 @@
                         font-weight: bold;
                         font-size: 24px;
                         padding: 0 10px;
+                        .badge{
+                            height: 22px;
+                            line-height: 22px;
+                            background-image: -webkit-linear-gradient(0deg, #3ca5f6 0%, #a86af9 100%);
+                            color: #fff;
+                            font-size: 12px;
+                            margin-right: 5px;
+                            border-radius: 2px;
+                            padding: 0 8px;
+                            white-space: nowrap;
+                            vertical-align: 2px
+                        }
                         a{
                             span{
                                 color: #303133;
@@ -158,6 +170,7 @@
                     div{
                         margin-left: 3px;
                     }
+                   
                 }
                 .bottom_right:hover{
                     border-radius: 15px;
@@ -195,6 +208,48 @@
                     }
                 }
             }
+            .mycomment{
+                .check{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .check_left{
+                        display: flex;
+                    }
+                    p{
+                        margin-right: 15px;
+                    }
+                }
+                .ant-divider{
+                    border-width: 1px 0 0;
+                    border-color:#0000000f ;
+                }
+                .ant-comment{
+                    .ant-comment-inner{
+                        padding: 5px 0;
+                        .ant-comment-content{
+                            text-align: left;
+                            .ant-comment-actions{
+                                span{
+                                    margin-left: 13px;
+                                }
+                            }
+                            .ant-comment-content-author{
+                                margin-bottom: 0px;
+                                p{
+                                    margin-bottom: 5px;
+                                }
+                            }
+                            .ant-comment-actions{
+                                margin-top: 0px;
+                            }
+                        }
+                    }
+                }
+            }
+            
+           
+            
             .assistaudit_item:hover .line{
                 -webkit-transform: scaleY(1);
                 transform: scaleY(1);
