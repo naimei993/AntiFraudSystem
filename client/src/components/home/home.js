@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card,Carousel,Divider } from 'antd';
+import {connect} from 'react-redux'
 import './home.min.css'
 import logo from '../../static/gongan.png'
 import lb01 from '../../static/lb01.jpg'
@@ -8,8 +9,7 @@ import lb03 from '../../static/lb03.png'
 import lb04 from '../../static/lb04.png'
 import report from '../../static/fanzha.svg'
 import progressquery from '../../static/jinduchaxun.svg'
-const Home = () => {
-
+const Home = (props) => {
       const niticeList = [
           {   id:"1",
               title:"习近平向第四届中古两党理论研讨会致贺信",
@@ -46,15 +46,15 @@ const Home = () => {
         <div className='home'>
             <div className='top_bag'>
                 <div className='jubao entrance'>
-                    <a href='/admin/home'>
+                    <a href={props.userInfo.user ==="people"?"/admin/reporting_center/index":"/admin/case_square/index" }>
                 <img src={report} alt="我要举报"></img>
-                <div>我要举报</div>
+                <div>{props.userInfo.user === "people" ?"我要举报":"案件审查"}</div>
                 </a>
                 </div>
                 <div className='chaxun entrance'>
-                <a href='/admin/home'>
+                <a href={props.userInfo.user === "people"?"/admin/article_about/index":"/admin/case_reward/index"}>
                     <img src={progressquery} alt="进度查询"></img>
-                    <div>进度查询</div>
+                    <div>{props.userInfo.user=== "people"?"进度查询":"悬赏案件"}</div>
                 </a>
                 </div>
             </div>
@@ -149,5 +149,11 @@ const Home = () => {
         </div>
     );
 };
-
-export default Home;
+const mapStateToProps = (state)=>{
+    return {
+      userInfo:state.userInfo
+    }
+  }
+export default connect(
+    mapStateToProps,{}
+  )(Home)

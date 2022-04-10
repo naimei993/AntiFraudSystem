@@ -14,6 +14,7 @@ import CaseRewardDetail from '../casereward/caserewarddetail/caserewarddetail'
 import CaseSquare from '../casesquare/casesquare';
 import CaseSquareDeatil from '../casesquare/casesquaredetail/casesquaredetail'
 import Fleamarket from '../fleamarket/fleamarket';
+import Assistaudit from '../assistaudit/assistaudit';
 const { Header, Content } = Layout;
 const Admin = () => {
     return (
@@ -29,10 +30,14 @@ const Admin = () => {
                     <Route path="index" element={<RepGuide/>}/>
                     <Route path="reporting_form" element={<RepForm/>}/>
                 </Route>
-                {/* 民众案件列表路由 */}
+                {/* 民众历史审核路由 */}
                 <Route path='/article_about'>
                     <Route path='index' element={<Article/>}/>
                     <Route path=':id' element={<Artdetial/>}/>
+                </Route>
+                <Route path='/assist_audit'>
+                    <Route path='index' element={<Assistaudit/>}/>
+                    <Route path=':id' element={<CaseRewardDetail/>}/>
                 </Route>
                 {/* 警方案件广场路由 */}
                 <Route path='/case_square'>

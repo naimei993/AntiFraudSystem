@@ -17,7 +17,7 @@ const Integralmall = () => {
 
 
     const onClick = (value) =>{//添加商品到购物车
-        message.info(`你添加了id为${value}的商品到购物车`)
+        message.info(`你添加了${value.goodsName}到购物车`)
         setshopcart((oldState)=>({
             ...oldState,
             goodslist:shopcart.goodslist+`${value},`
@@ -165,7 +165,7 @@ const Integralmall = () => {
                                     </div>
                                     <div className='bottom_right'>
                                         <div className='price'>积分：<span>{item.price}</span></div>
-                                    <Button type="primary" icon={<ShoppingCartOutlined />} size="large" onClick={()=> onClick(item.id)}>
+                                    <Button type="primary" icon={<ShoppingCartOutlined />} size="large" onClick={()=> onClick(item)}>
                                         添加
                                     </Button>
                                     </div>

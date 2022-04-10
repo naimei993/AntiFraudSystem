@@ -1,59 +1,60 @@
 import React from 'react';
-import { Form, Input, Button,Radio,Cascader,Select,message,Upload,DatePicker,ConfigProvider} from 'antd';
+import { Form, Input, Button,message,Upload,ConfigProvider} from 'antd';
+// import { Form, Input, Button,Radio,Cascader,Select,message,Upload,DatePicker,ConfigProvider} from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import  './repForm.min.css'
-import  options from './city.js';
+// import  options from './city.js';
 import zhCN from 'antd/es/locale/zh_CN'; // 引入语言包
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
-const { Option } = Select;
+// const { Option } = Select;
 const { Dragger } = Upload;
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 const RepForm = () => {
 
-    const [allinfo,setallinfo] = React.useState({radiovalue:"",address:[],hazardType:"",repPlatform:""})
-    const radioChange = (e)=>{//单选框改变是触发
-      setallinfo(oldState => ({
-        ...oldState,
-        radiovalue:e.target.value
-    }))
-  }
-  const onChange = (value)=>{//地址选择回调
-    setallinfo(oldState => ({
-      ...oldState,
-     address:value
-  }))
-  console.log(value);
+    // const [allinfo,setallinfo] = React.useState({radiovalue:"",address:[],hazardType:"",repPlatform:""})
+  //   const radioChange = (e)=>{//单选框改变是触发
+  //     setallinfo(oldState => ({
+  //       ...oldState,
+  //       radiovalue:e.target.value
+  //   }))
+  // }
+  // const onChange = (value)=>{//地址选择回调
+  //   setallinfo(oldState => ({
+  //     ...oldState,
+  //    address:value
+  // }))
+  // console.log(value);
       
-    }
-  const phonevalidator  = (rule,value,callback)=>{//手机号码验证
-    if(!value){
-      return Promise.reject('请输入正确的号码格式');
-    }else if(value.length < 2){
-      return Promise.reject('号码太短')
-    }
-    else if(value.length > 12){
-      return Promise.reject('密码长度必须小于15')
-    }else if(!(/^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/).test(value)){
-      return Promise.reject('请输入正确的号码格式')
-    }else{
-      return Promise.resolve();
-    }
-  }
-  const dropChoice = (value)=>{//下拉选择类型调用
-  setallinfo(oldState => ({
-    ...oldState,
-   hazardType:value
-}))
-  }
- const reportingPlatform = (value) =>{//下拉选择平台
-  setallinfo(oldState => ({
-    ...oldState,
-   repPlatform:value
-}))
- }
+  //   }
+  // const phonevalidator  = (rule,value,callback)=>{//手机号码验证
+  //   if(!value){
+  //     return Promise.reject('请输入正确的号码格式');
+  //   }else if(value.length < 2){
+  //     return Promise.reject('号码太短')
+  //   }
+  //   else if(value.length > 12){
+  //     return Promise.reject('密码长度必须小于15')
+  //   }else if(!(/^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/).test(value)){
+  //     return Promise.reject('请输入正确的号码格式')
+  //   }else{
+  //     return Promise.resolve();
+  //   }
+  // }
+//   const dropChoice = (value)=>{//下拉选择类型调用
+//   setallinfo(oldState => ({
+//     ...oldState,
+//    hazardType:value
+// }))
+//   }
+//  const reportingPlatform = (value) =>{//下拉选择平台
+//   setallinfo(oldState => ({
+//     ...oldState,
+//    repPlatform:value
+// }))
+//  }
   const layout = {//表单布局
     labelCol: {
       span: 4,
@@ -96,8 +97,8 @@ const RepForm = () => {
 
   const onFinish = (values) => {//点击提交事件，最后结果为result
     let result = {};
-    Object.assign(result,values.user,allinfo);
-    console.log(values,allinfo,result);
+    // Object.assign(result,values.user,allinfo);
+    Object.assign(result,values.user);
   };
 
 
@@ -107,8 +108,8 @@ const RepForm = () => {
 <div className='repform'>
            <div className='repform_all'>
            <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-               <h2 className='shimingtitle'>填写举报人信息</h2>
-      <Form.Item
+               {/* <h2 className='shimingtitle'>填写举报人信息</h2> */}
+      {/* <Form.Item
         name={['user', 'name']}
         label="真实姓名"
         rules={[
@@ -164,20 +165,10 @@ const RepForm = () => {
             label="地址"
             rules={[{  }]}>
         <Cascader allowClear={false} options={options.options} onChange={onChange} placeholder="请选择" />,
-      </Form.Item>
-      <Form.Item
-        name={['user', 'communication_address']}
-        label="通信地址"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <h2 className='shimingtitle'>填写举报人信息</h2>
-      <Form.Item  label="危害小类">
+      </Form.Item> */}
+      
+      <h2 className='shimingtitle'>填写举报信息</h2>
+      {/* <Form.Item  label="危害小类">
       <Input.Group compact>
       <Select defaultValue="请选择"  onChange={dropChoice}>
         <Option value="电信诈骗">电信诈骗</Option>
@@ -194,6 +185,17 @@ const RepForm = () => {
         <Option value="网络账号">网络账号</Option>
       </Select>
     </Input.Group>
+      </Form.Item> */}
+      <Form.Item
+        name={['user', 'communication_address']}
+        label="通信地址"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
       </Form.Item>
       <Form.Item name={['user', 'content']} rules={[{required:true,}]} label="举报内容">
         <Input.TextArea />

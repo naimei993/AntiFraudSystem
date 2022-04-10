@@ -5,8 +5,21 @@ import { useNavigate } from 'react-router';
 import './repguide.min.css'
 const RepGuide = () => {
     const navigate = useNavigate()
-    const [value, setValue] = React.useState(2);
-
+    const [value, setValue] = React.useState(false);
+    const [time,setTime]=React.useState(5)//倒计时时间
+    const timeRef=React.useRef()//设置延时器
+	//倒计时
+    React.useEffect(()=>{
+    	//如果设置倒计时且倒计时不为0
+        if(time&&time!==0)
+            timeRef.current=setTimeout(()=>{
+                setTime(time=>time-1)
+            },1000)
+        //清楚延时器
+        return ()=>{
+            clearTimeout(timeRef.current)
+        }
+    },[time])
   const onChange = e => {
     setValue(e.target.checked);
   };
@@ -16,7 +29,7 @@ const RepGuide = () => {
             navigate('/admin/reporting_center/reporting_form')
         }
         else{
-           message.error("请您先阅读条款",3)
+           message.error("请您先阅读并同意条款",3)
         }
   }
   const donotAgree = ()=>{//不同意按钮
@@ -39,7 +52,7 @@ const RepGuide = () => {
             </div>
             <div className='repbottom'>
                 <div className='radio'>
-                <Checkbox onChange={onChange}>我已知晓并同意上述规则</Checkbox>
+                <Checkbox disabled={time === 0?false:true} onChange={onChange}>我已知晓并同意上述规则</Checkbox><p style={{color:"red"}}>{time === 0?"":`${time}s`}</p>
                 </div>
                 <div className='repbutton'>
                     <Button size='large' type='primary' onClick={isAgerr}>同意</Button>

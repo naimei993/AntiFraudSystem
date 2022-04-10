@@ -1,16 +1,18 @@
 import React from 'react';
 import { Menu,Avatar,Dropdown, Button, } from 'antd';
+import { connect } from 'react-redux';
 import {Link,useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { UserOutlined,DownOutlined } from '@ant-design/icons';
 import  * as Icon from '@ant-design/icons';
+import {createSaveUserInfoAction} from '../../../redux/action_creators/login_action'
 import './header.min.css'
 import logo from '../../../static/logo.png'
 import menuListPeople from '../../../config/menu_config_personal';
 import menuListPolice from '../../../config/menu_config_police';
 const { SubMenu } = Menu;
-const Header = () => {
-    const [type,settype] = React.useState("police")
+const Header = (props) => {
+    const [type,settype] = React.useState(props.userInfo.user)
     const { pathname } = useLocation();
     const navigate = useNavigate()
     let pathnamedetail = pathname.split('/').splice(2)
@@ -20,9 +22,13 @@ const Header = () => {
     const changeIdentity = ()=>{//改变身份
           if(type === "people"){
             settype("police")
+            console.log(props);
+            props.saveUserInfo("police")
             navigate({ pathname: '/admin/home/index' }, { replace: true })
           }else{
             settype('people')
+            props.saveUserInfo("people")
+            console.log(props);
             navigate({ pathname: '/admin/home/index' }, { replace: true })
           }
     }
@@ -63,7 +69,7 @@ const Header = () => {
     return (
         <div className='header'>
             <div className='logo'>
-                <a href='/admin' className='logo_a'>
+                <a href='/admin/home/index' className='logo_a'>
                     <img src={logo} alt="反诈信息平台"></img>
                     <div className='header_title'>反诈信息平台</div>
                 </a>
@@ -76,7 +82,7 @@ const Header = () => {
             <div className='user'>
                 <div className='useravatat'><Avatar size="default" icon={<UserOutlined />} /></div>
                 <Dropdown overlay={menu}>
-                <a href='/admin/home' className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                <a href='/admin/home/index' className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                 张伟 <DownOutlined />
                   </a>
                   
@@ -88,4 +94,11 @@ const Header = () => {
     );
 };
 
-export default Header;
+const mapStateToProps = (state)=>{
+  return {
+    userInfo:state.userInfo
+  }
+}
+export default connect(
+  mapStateToProps,{saveUserInfo:createSaveUserInfoAction,}
+)(Header)

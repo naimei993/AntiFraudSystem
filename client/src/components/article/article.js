@@ -1,5 +1,5 @@
 import React from 'react';
-import {Divider} from 'antd'
+import {Divider,Image} from 'antd'
 import './article.min.css'
 const Article = () => {
 
@@ -7,43 +7,48 @@ const Article = () => {
 
     const dataList = [
         {   id:"1",
-            imgsrc:"https://www.vvhan.com/headImg/thumb/www.vvhan.com[32]-img.jpg",
-            time:"2022-04-5",
-            title:"电信诈骗",
-            describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
-            caseState:"completed",
+        imgsrc:"http://p6.qhimg.com/t01bd60eab8fdee708d.png",
+        time:"2022-04-5",
+        title:"我点了个链接，银行卡余额被清空了",
+        describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
+        caseState:"completed",
+            classification:"电信诈骗"
 
         },
         {   id:"2",
-            imgsrc:"https://www.vvhan.com/headImg/thumb/www.vvhan.com[32]-img.jpg",
-            time:"2022-04-5",
-            title:"电信诈骗",
-            describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
-            caseState:"review",
+        imgsrc:"https://p5.ssl.qhimg.com/t0189e7577c3b264565.jpg",
+        time:"2022-04-5",
+        title:"刚开始说好的，结果后面人消失了",
+        describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
+        caseState:"review",
+            classification:"网络赌博"
 
         },
         {   id:"3",
-            imgsrc:"https://www.vvhan.com/headImg/thumb/www.vvhan.com[32]-img.jpg",
-            time:"2022-04-5",
-            title:"电信诈骗",
-            describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
-            caseState:"completed",
+        imgsrc:"http://p2.qhimg.com/t01d3fc8a4a5a73590d.png",
+        time:"2022-04-5",
+        title:"投递简历之前请看清！",
+        describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
+        caseState:"completed",
+            classification:"短信诈骗"
 
         },  
         {   id:"4",
-            imgsrc:"https://www.vvhan.com/headImg/thumb/www.vvhan.com[32]-img.jpg",
-            time:"2022-04-5",
-            title:"电信诈骗",
-            describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
-            caseState:"review",
+        imgsrc:"http://p5.qhimg.com/t019c2e2673692a26ce.png",
+        time:"2022-04-5",
+        title:"切莫点击不明链接",
+        describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
+        caseState:"review",
+            classification:"电信诈骗"
 
         },
         {   id:"5",
-            imgsrc:"https://www.vvhan.com/headImg/thumb/www.vvhan.com[32]-img.jpg",
-            time:"2022-04-5",
-            title:"电信诈骗",
-            describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
-            caseState:"completed",
+        imgsrc:"http://n.sinaimg.cn/translate/w398h415/20180208/ZQK--fyrkuxs4332770.jpg",
+        time:"2022-04-5",
+        title:"我被骗了，呜呜呜",
+        describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
+        caseState:"completed",
+        classification:"电信诈骗"
 
         },
     ]
@@ -58,11 +63,13 @@ const Article = () => {
                                      <div className='article_item'>
                         <div className='line'></div>
                         <div className='article_left'>
-                            <a href={`/admin/article_about/${item.id}`}>
-                                <img src={item.imgsrc} alt='图片'>
-                                </img>
+                           
+                            <Image
+                             width={200}
+                             src={item.imgsrc}
+                            />
                                 <time dateTime="2022-04-5">{item.time}</time>
-                            </a>
+                           
                             
                         </div>
                         <div className='article_right'>

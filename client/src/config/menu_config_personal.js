@@ -13,7 +13,13 @@ const menuListPeople = [ //eslint-disable-next-line
     path: '/admin/reporting_center/index'
   },
   {
-    title: '我的文章',
+    title: '协助审核',
+    key: 'assist_audit',
+    icon: 'TeamOutlined',
+    path:'/admin/assist_audit/index'
+  },
+  {
+    title: '历史审核',
     key: 'article_about',
     icon: 'FormOutlined',
     path:'/admin/article_about/index'

@@ -1,0 +1,27 @@
+Arguments: 
+  D:\nvm\nodejs_nvm\node.exe C:\Users\22672\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add ipfs-api
+
+PATH: 
+  C:\ProgramData\Oracle\Java\javapath;D:\BaiduNetdiskDownload\VMware\bin\;D:\Anaconda3;D:\Anaconda3\Library\mingw-w64\bin;D:\Anaconda3\Library\usr\bin;D:\Anaconda3\Library\bin;D:\Anaconda3\Scripts;C:\Program Files\MySQL\MySQL Server 5.7\bin;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\22672\AppData\Local\Programs\Python\Python38；;:\Users\22672\AppData\Local\Programs\Python\Python38\Scripts;C:\Windows\System32;d:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\WINDOWS;D:\Program Files (x86)\Rational\common;D:\MySQL\mysql-5.7.34-winx64\bin;C:\WINDOWS\system32;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\nvm\nvm;D:\nvm\nodejs_nvm;D:\Program Files (x86)\NetSarang\Xshell 7\;D:\Program Files (x86)\NetSarang\Xftp 7\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;D:\Program Files (x86)\Tencent\微信web开发者工具\dll;C:\Users\22672\AppData\Local\Microsoft\WindowsApps;D:\Users\PyCharm Community Edition 2019.2.3\bin;;d:\Users\22672\AppData\Local\Programs\Microsoft VS Code\bin;d:\Program Files\JetBrains\PyCharm 2019.3\bin;;C:\Program Files\Azure Data Studio\bin;C:\Users\22672\AppData\Roaming\npm;D:\nvm\nvm;D:\nvm\nodejs_nvm;C:\Users\22672\AppData\Local\Yarn\Data\global;C:\Users\22672\AppData\Local\Yarn\bin;C:\Program Files\MongoDB\Server\3.2\bin;D:\Program Files (x86)\Tencent\微信web开发者工具\dll;C:\Users\22672\AppData\Roaming\npm\node_modules\n\bin;
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.17.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: read ECONNRESET
+      at TLSWrap.onStreamRead (internal/stream_base_commons.js:209:20)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

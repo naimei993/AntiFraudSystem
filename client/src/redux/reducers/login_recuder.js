@@ -1,7 +1,7 @@
 import {SAVE_USER_INFO,DELETE_USER_INFO} from '../action_types'
 
 //尝试从localStorage中读取之前保存的信息
-let user = JSON.parse(localStorage.getItem('user'))
+let user = localStorage.getItem('user')
 let token = localStorage.getItem('token')
 //初始化userInfo数据
 let initState = {
@@ -16,8 +16,8 @@ export default function test(preState=initState,action) {
   let newState
   switch (type) {
     case SAVE_USER_INFO: //保存user和token
-      const {token} = data 
-      const user = data.user.username
+      const token = data 
+      const user = data
       newState = {user,token,isLogin:true}
       return newState
     case DELETE_USER_INFO://删除user和token

@@ -86,7 +86,7 @@ const PersonalCenter = () => {
                   </a>
                 </div>
                 <div className='entrance'>
-                  <a href='/admin/reporting_center/index'>
+                  <a href='/admin/home/index'>
                   <div>反馈信息</div>
                   </a>
                 </div>
