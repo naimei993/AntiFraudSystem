@@ -9,10 +9,64 @@
             width: 60%;
             background-color: #fff;
             border-radius: 10px;
-            padding: 10px 10px;
+            padding: 20px 20px;
             margin-top: 20px;
             .ant-divider {
                 border-width: 2px 0 0;
+            }
+            .ant-comment-content{
+                .ant-comment-actions{
+                    li{
+                        width: 100%;
+                        .comment_bottom{
+                            display: flex;
+                            justify-content: space-around;
+                            .share{
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-weight: bold;
+                                font-size: 14px;
+                                cursor:pointer;
+                                width: 60px;
+                                text-align: center;
+                                
+                            }
+                            .share:hover{
+                                background-color: #136ac065;
+                                border-radius: 10px;
+                            }
+                            .comment{
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-weight: bold;
+                                font-size: 14px;
+                                cursor:pointer;
+                                width: 60px;
+                                text-align: center;
+                            }
+                            .comment:hover{
+                                background-color: #136ac065;
+                                border-radius: 10px;
+                            }
+                            .like{
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-weight: bold;
+                                font-size: 14px;
+                                cursor:pointer;
+                                width: 60px;
+                            }
+                            .like:hover{
+                                background-color: #136ac065;
+                                border-radius: 10px;
+                            }
+                        }
+                    }
+                }
+                
             }
             .ant-comment-inner{
                 padding: 0 0;
@@ -25,6 +79,17 @@
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
+                }
+                .ant-image{
+                    cursor: pointer;
+                }
+                
+                .ant-image-mask-info{
+                    align-self:center;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
         }

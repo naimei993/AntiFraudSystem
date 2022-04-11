@@ -20,7 +20,7 @@ const menuListPeople = [ //eslint-disable-next-line
     path:'/admin/assist_audit/index'
   },
   {
-    title: '跳蚤市场',
+    title: '社区生态',
     key: 'flea_market',
     icon: 'SmileOutlined',
     path: '/admin/flea_market/index'//flea market

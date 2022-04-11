@@ -1,14 +1,17 @@
 import React from 'react';
 import * as echarts from 'echarts'
-import {Divider,Image,Comment, Avatar,Radio, Button, message } from 'antd'
+import {Divider,Image,Comment, Avatar,Radio, Button, message,Input } from 'antd'
 import './assistaudit.min.css'
 import avatar from '../../static/avatar.webp'
+
+const { TextArea } = Input;
 const Assistaudit = () => {
     const [comment,setcomment] = React.useState({isShow:false,id:""})
     const [similarity,setsimilarity] = React.useState({isVisible:false,id:"",})
     const [value, setValue] = React.useState(0);
     const [butloading,setbutloading] = React.useState(false)
     const [vote,setvote] = React.useState(true)
+    const [combutloading,setcombutloading] = React.useState(false)
     const Clickcomment = (id)=>{//评论区点击
         if(similarity.isVisible){
             setsimilarity((oldState)=>({
@@ -56,6 +59,14 @@ const Assistaudit = () => {
     const onChange = e => {//设置单选框的值
       setValue(e.target.value);
     };
+    const onChangeInput = e =>{
+      console.log(e.target.value);
+      setcombutloading(true)
+      setTimeout(() => {
+        setcombutloading(false)
+        message.success("感谢您的提交",3)
+      }, 2000);
+    }
     const SubmitCheck = ()=>{//提交按钮
       if(value === 1 || value === 2){
         setbutloading(true)
@@ -313,6 +324,7 @@ const Assistaudit = () => {
     const MyComment = ()=>{//评论区组件
           return(
             <div className='mycomment'>
+              
               {vote?<div className='check'>
                 <div className='check_left'>
                 <p>您的建议是:</p>
@@ -327,7 +339,11 @@ const Assistaudit = () => {
                 <Button type='primary' loading={butloading} onClick={SubmitCheck}>提交</Button>
               </div>
                 </div>:null}
-              
+                <div className='top_comment'>
+                <TextArea   placeholder="欢迎您的评论"  />
+                <Button type='primary' loading={combutloading} onClick={onChangeInput}>评论</Button>
+                </div>
+                
                 
               <Comment
         actions={[<span key="comment-nested-reply-to">回复</span>]}
@@ -387,7 +403,7 @@ const Assistaudit = () => {
         describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
         caseState:"completed",
         classification:"电信诈骗",
-        price:"10",
+        price:10,
         systemprobability:"84.5",
         peopleprobability:"80.2",
 
@@ -399,7 +415,7 @@ const Assistaudit = () => {
         describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
         caseState:"review",
         classification:"网络赌博",
-        price:"5",
+        price:10,
         systemprobability:"35.6",
         peopleprobability:"40.8",
 
@@ -411,6 +427,7 @@ const Assistaudit = () => {
         describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
         caseState:"completed",
         classification:"短信诈骗",
+        price:2,
         systemprobability:"70.0",
         peopleprobability:"65.0",
 
@@ -422,6 +439,7 @@ const Assistaudit = () => {
         describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
         caseState:"review",
         classification:"电信诈骗",
+        price:1,
         systemprobability:"10.0",
         peopleprobability:"31.5",
 
@@ -433,6 +451,7 @@ const Assistaudit = () => {
         describe:"点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移,点击诈骗短信不明链接，填写个人信息，银行卡账户余额被转移",
         caseState:"completed",
         classification:"电信诈骗",
+        price:1,
         systemprobability:"100.0",
         peopleprobability:"99.0",
 
@@ -461,7 +480,7 @@ const Assistaudit = () => {
                                         </div>
                                         <div className='assistaudit_right'>
                             <div className='right_title'>
-                              {item.price ? <span class="badge" style={{display: "inline-block"}}>悬赏</span>:null}
+                              {item.price>5 ? <span className="badge" style={{display: "inline-block"}}>悬赏</span>:null}
                                 <a href={`/admin/assist_audit/${item.id}`}><span>{item.title}</span></a>
                             </div>
                             <div className='right_describe'>
@@ -471,12 +490,8 @@ const Assistaudit = () => {
                                 <div className='time'>{item.time}</div>
                                 
                                 <div className='classification'>
-                                <svg className="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="15" height="15">
-                                        <path d="M512.2 564.743a76.818 76.818 0 0 1-30.973-6.508L108.224 393.877c-26.105-11.508-42.56-35.755-42.927-63.272-.384-27.44 15.356-52.053 41.042-64.232l373.004-176.74c20.591-9.737 45.16-9.755 65.75.017L917.68 266.39c25.668 12.188 41.39 36.792 41.024 64.231-.384 27.5-16.821 51.73-42.908 63.237l-372.57 164.377a77.18 77.18 0 0 1-31.025 6.508zM139.843 329.592l370.213 163.241c1.291.56 3.018.567 4.345-.009l369.758-163.128-369.706-175.464v-.01c-1.326-.628-3.158-.636-4.502 0l-370.108 175.37zm748.015 1.858h.175-.175zM512.376 941.674c-10.348 0-20.8-2.32-30.537-6.997L121.05 778.624c-18.113-7.834-26.454-28.87-18.62-46.983 7.835-18.112 28.862-26.488 46.993-18.61l362.08 156.629 345.26-156.366c17.939-8.166 39.14-.253 47.324 17.746 8.166 17.964.227 39.157-17.729 47.324l-344.51 156.61c-9.196 4.449-19.281 6.7-29.471 6.7z" fill="#444">
-                                            </path><path d="M871.563 515.449L511.81 671.775 152.358 515.787v73.578a34.248 34.248 0 0 0 20.76 31.48l301.518 129.19c11.806 5.703 24.499 8.546 37.175 8.546s25.367-2.843 37.174-8.546L850.82 620.534a34.248 34.248 0 0 0 20.744-31.474V515.45z" fill="#ff6a18">
-                                                </path>
-                                                </svg>
-                                    <span >{item.classification}</span>
+                                <svg t="1649339921591" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4427" width="16" height="18"><path d="M512 967.110656C260.64896 967.110656 56.889344 763.35104 56.889344 512S260.64896 56.889344 512 56.889344 967.110656 260.64896 967.110656 512 763.35104 967.110656 512 967.110656z m-57.2928-540.443648H369.77664c-15.709184 0-28.444672 12.734464-28.444672 28.443648 0 15.710208 12.735488 28.444672 28.444672 28.444672h113.777664v85.334016h-113.77664c-15.710208 0-28.445696 12.734464-28.445696 28.443648 0 15.710208 12.735488 28.444672 28.444672 28.444672h113.777664v113.777664C483.555328 755.264512 496.29184 768 512 768s28.444672-12.735488 28.444672-28.444672v-113.77664h113.77664c15.710208 0 28.445696-12.735488 28.445696-28.445696 0-15.70816-12.735488-28.443648-28.444672-28.443648H540.444672v-85.334016h113.77664c15.710208 0 28.445696-12.734464 28.445696-28.444672 0-15.70816-12.735488-28.443648-28.444672-28.443648h-82.90816l81.883136-81.883136c11.108352-11.108352 11.108352-29.11744 0-40.225792-11.108352-11.108352-29.118464-11.108352-40.226816 0l-99.959808 99.959808-99.959808-99.959808c-11.108352-11.108352-29.118464-11.108352-40.226816 0-11.108352 11.108352-11.108352 29.11744 0 40.225792l81.883136 81.883136z" p-id="4428" fill="#ffd700"></path></svg>
+                                    <span >积分:{item.price}</span>
                                      </div>
                                 
                             </div>
@@ -493,7 +508,6 @@ const Assistaudit = () => {
                                         <div>评论</div>
                                         </div>
                                     </div>
-                                    
                                     {similarity.isVisible ? similarity.id === item.id ?<Similarity systemprobability = {item.systemprobability} peopleprobability = {item.peopleprobability}/>:null :null}
                                     {comment.isShow ? comment.id === item.id ? <MyComment/>: null:null}
 

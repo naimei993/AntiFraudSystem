@@ -124,8 +124,17 @@
                             color:#909399 ;//
                         }
                         .classification{
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            .icon{
+                                width: 20px;
+                                height: 20px;
+                            }
                             span{
                                 font-weight: bold;
+                                color: #909399;
+                              
                             }
                         }
                     }
@@ -209,6 +218,17 @@
                 }
             }
             .mycomment{
+                .top_comment{
+                    display: flex;
+                    flex-direction: column;
+                    textarea{
+                        height: 100px;
+                    }
+                    .ant-btn{
+                        width: 20%;
+                        align-self: flex-end;
+                    }
+                }
                 .check{
                     display: flex;
                     justify-content: space-between;

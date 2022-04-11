@@ -7,7 +7,7 @@ const menuListPolice = [ //eslint-disable-next-line
     path: '/admin/home/index'//对应路径
   },
   {
-    title: '案件广场',
+    title: '辖区案件',
     key: 'case_square',
     icon: 'UnorderedListOutlined',
     path:'/admin/case_square/index'
@@ -20,7 +20,7 @@ const menuListPolice = [ //eslint-disable-next-line
     
   },
   {
-    title: '跳蚤市场',
+    title: '社区生态',
     key: 'flea_market',
     icon: 'SmileOutlined',
     path: '/admin/flea_market/index'//flea market
