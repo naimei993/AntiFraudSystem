@@ -43,37 +43,36 @@ function getBalanceOf(address _address) external view returns (uint256) {
 
 ## 4.获取截图资料列表
 
+返回截图结构体数组
+
 ```solidity
-    function getScreenshot() external view 
-        returns (uint[] memory, address[] memory, string[] memory, bool[] memory, uint[] memory) {
-        // ... ...
-    	// 返回：id数组(uint) 审查的警方用户的地址数组(address) 截图链接数组(string) 是否有效数组(bool) 发布时间数组(uint)
-        return(ids, auditPoliceUsers, screenshotLinks, valids, postTimes);
-    }
+function getScreenshotList() external view returns (FraudScreenshot[] memory) {}
 ```
 
 ## 5.获取案件列表
 
+返回案件结构体数组
+
 ```solidity
-    function getCase() external view 
-        returns (uint[] memory, string[] memory, string[] memory, uint[] memory, string[] memory) {
-            // ... ...
-            // 返回值：id数组(uint) 案件标题数组(string) 案件描述数组(string) 发布时间数组(uint) 案件图片链接数组(string)
-            return(ids, titles, descriptions, postTimes, caseImageLinks);
-    }
-    
+function getCase() external view returns (FraudCase[] memory) {}
 ```
 
 ## 6.获取任务列表
 
+返回任务结构体数组
+
 ```solidity
-    function getTask() external view 
-        returns (uint[] memory, string[] memory, string[] memory, uint[] memory, bool[] memory, string[] memory, bool[] memory, bool[] memory) {
-            // ... ...
-            // 返回值：id数组(uint) 任务标题数组 任务描述数组 发布时间数组(uint) 是否解决数组(bool) 任务图片链接数组 是否为抢答模式数组(bool) 是否已被抢答数组(bool)
-            return(ids, titles, descriptions, postTimes, isSolveds, taskImageLinks, isAnswerInRushs, isAccpets);
-    }  
-    
+function getTask() external view returns (Task[] memory) {}   
+```
+
+## 7.获取指定任务下的回答列表
+
+_taskIndex: uint 指定的任务编号
+
+返回回答结构体数组
+
+```solidity
+function getThisTaskAnswer(uint _taskIndex) external view returns (TaskAnswer[] memory) {}
 ```
 
 
