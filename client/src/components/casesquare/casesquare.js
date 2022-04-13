@@ -12,6 +12,7 @@ const CaseSquare = () => {
     const [value, setValue] = React.useState(0);
     const [butloading,setbutloading] = React.useState(false)
     const [vote,setvote] = React.useState(true)
+    const [loading,setloading] = React.useState(false)
     const Clickcomment = (id)=>{//评论区点击
         if(similarity.isVisible){
             setsimilarity((oldState)=>({
@@ -55,6 +56,19 @@ const CaseSquare = () => {
         }
         setvote(true)
         setValue(0)
+    }
+    const start = () => {
+      setloading(true)
+        // ajax request after empty completing
+        setTimeout(() => {
+          setloading(false)
+          message.success("感谢您的审核与提交",3)
+          window.location.reload()
+          
+        }, 1000);
+      };
+    const checkBox = (e)=>{
+      console.log(e.target);
     }
     const onChange = e => {//设置单选框的值
       setValue(e.target.value);
@@ -445,13 +459,16 @@ const CaseSquare = () => {
       
         <div className='casequare'>
             <div className='casequare_bg'>
+            <Button type="primary" className='top_button' onClick={start}  loading={loading}>
+            批量审核
+          </Button>
                 <div className='casequare_all'>
                     {
                         dataList.map((item)=>{//箭头函数
                             return(
                                 <div key={item.id}>
                                     <div className='casequare_item'>
-                                    <Checkbox  ></Checkbox>
+                                    <Checkbox value={item.id} onChange={checkBox} ></Checkbox>
                                         <div className='line'></div>
                                         <div className='casequare_left'>
                             <a href="#!" >
@@ -465,7 +482,7 @@ const CaseSquare = () => {
                                         </div>
                                         <div className='casequare_right'>
                             <div className='right_title'>
-                              {item.price ? <span class="badge" style={{display: "inline-block"}}>悬赏</span>:null}
+                              {item.price ? <span className="badge" style={{display: "inline-block"}}>悬赏</span>:null}
                                 <a href={`/admin/case_square/${item.id}`}><span>{item.title}</span></a>
                             </div>
                             <div className='right_describe'>
@@ -510,6 +527,7 @@ const CaseSquare = () => {
                 </div>
                 
             </div>
+            
         </div>
         
     );

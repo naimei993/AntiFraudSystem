@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Button, message,Avatar,Modal,Table,InputNumber} from 'antd'
 import {ShoppingCartOutlined,} from '@ant-design/icons'
 import bjb from '../../static/bjb.jpg'
@@ -9,13 +10,12 @@ import sjb from '../../static/sjb.jpg'
 import dami from '../../static/dami.jpg'
 import mf from '../../static/mf.jpg'
 import hsy from '../../static/hsy.jpg'
-import avatar from '../../static/avatar.webp'
 import './integralmall.min.css'
 
-const Integralmall = () => {
+const Integralmall = (props) => {
     const [shopcart,setshopcart] = React.useState({visible:false,selectedRowKeys: [],loading: false,goodslist:""})
 
-
+    let reduxinfo = JSON.parse(props.userInfo.user)
     const onClick = (value) =>{//添加商品到购物车
         message.info(`你添加了${value.goodsName}到购物车`)
         setshopcart((oldState)=>({
@@ -181,10 +181,10 @@ const Integralmall = () => {
                 <div className='int_right_avatar'>
                 <Avatar
                     size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                    src={avatar}
+                    src={reduxinfo.imgsrc}
                 />
                 <div className='username'>
-                    张伟
+                   {reduxinfo.username}
                 </div>
                 </div>
                 <div className='int_right_msg'>
@@ -219,5 +219,20 @@ const Integralmall = () => {
         </div>
     );
 };
-
-export default Integralmall;
+const mapStateToProps = (state)=>{
+    return {
+      userInfo:state.userInfo
+    }
+  }
+  export default connect(
+    mapStateToProps,{}
+  )(Integralmall)
+// import {connect} from 'react-redux';
+// const mapStateToProps = (state)=>{
+//     return {
+//       userInfo:state.userInfo
+//     }
+//   }
+//   export default connect(
+//     mapStateToProps,{}
+//   )(Integralmall)

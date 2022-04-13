@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card,Carousel,Divider } from 'antd';
+import { Card,Carousel,Divider, message } from 'antd';
 import {connect} from 'react-redux'
+import { useNavigate } from 'react-router';
 import './home.min.css'
 import logo from '../../static/gongan.png'
 import lb01 from '../../static/lb01.jpg'
@@ -10,6 +11,7 @@ import lb04 from '../../static/lb04.png'
 import report from '../../static/fanzha.svg'
 import progressquery from '../../static/jinduchaxun.svg'
 const Home = (props) => {
+    const navigate = useNavigate ()
       const niticeList = [
           {   id:"1",
               title:"习近平向第四届中古两党理论研讨会致贺信",
@@ -42,112 +44,124 @@ const Home = (props) => {
         },
         
       ]
-    return (
-        <div className='home'>
-            <div className='top_bag'>
-                <div className='jubao entrance'>
-                    <a href={props.userInfo.user ==="people"?"/admin/reporting_center/index":"/admin/case_square/index" }>
-                <img src={report} alt="我要举报"></img>
-                <div>{props.userInfo.user === "people" ?"我要举报":"案件审查"}</div>
-                </a>
-                </div>
-                <div className='chaxun entrance'>
-                <a href={props.userInfo.user === "people"?"/admin/assist_audit/index":"/admin/case_reward/index"}>
-                    <img src={progressquery} alt="进度查询"></img>
-                    <div>{props.userInfo.user=== "people"?"协助审查":"悬赏案件"}</div>
-                </a>
-                </div>
-            </div>
-            <div className='home_center'>
-                <div className='shuffling'>
-                <Carousel autoplay>
-                <div>
-                    <h3 style={{height:"378px"}}><img src={lb01} alt="轮播图片1"></img></h3>
-                </div>
-                <div>
-                    <h3 style={{height:"378px"}}><img src={lb02} alt="轮播图片2"></img></h3>
-                
-                </div>
-                <div>
-                <h3 style={{height:"378px"}}><img src={lb03} alt="轮播图片3"></img></h3>
-                
-                </div>
-                <div>
-                <h3 style={{height:"378px"}}><img src={lb04} alt="轮播图片4"></img></h3>
-                
-                </div>
-                </Carousel>,
-
-                </div>
-                <div className='notice'>
-            <Card title="通知公告" extra={<a href="/admin/home">{`更多>>`}</a>} style={{ width: 500 }} headStyle={{fontWeight:"bold",fontSize:'25px'}}>
-                {
-                    niticeList.map((item)=>{//通知公告列表遍历
-                          return(
-                          <div className='notice_item' key={item.id}>
-                            <a href='/admin/home'>{item.title}</a>
-                          <span className='notice_time'>{item.time}</span>
-                      </div>)
-                    })
-                }
-            
-		
+      let reduxinfo = JSON.parse(props.userInfo.user)
+      const {isLogin} = props.userInfo
+      console.log(props.userInfo);
+      if(!isLogin){
+          message.warn("请您先登录",3)
+          navigate("/admin/login/index")
+        return 
         
-            </Card>
-            </div>
-            </div>
-            <div className='home_bottom'>
-                <div className='card_two'>
-                <Divider style={{fontWeight:"bolder"}} orientation="left">政策文件</Divider>
-                    <div className='rule'>{
-                    niticeList.map((item)=>{//通知公告列表遍历
-                          return(
-                          <div className='notice_item' key={item.id}>
-                            <a href='/admin/home'>{item.title}</a>
-                          <span className='notice_time'>{item.time}</span>
-                      </div>)
-                    })
-                }
-                <div className='card_bottom'>
-                    <a href='/admin/home'>{`更多>>`}</a>
+    }else{
+        return (
+        
+            <div className='home'>
+                <div className='top_bag'>
+                    <div className='jubao entrance'>
+                        <a href={reduxinfo.type ==="people"?"/admin/reporting_center/index":"/admin/case_square/index" }>
+                    <img src={report} alt="我要举报"></img>
+                    <div>{reduxinfo.type === "people" ?"我要举报":"辖区案件"}</div>
+                    </a>
+                    </div>
+                    <div className='chaxun entrance'>
+                    <a href={reduxinfo.type === "people"?"/admin/assist_audit/index":"/admin/flea_market/index"}>
+                        <img src={progressquery} alt="进度查询"></img>
+                        <div>{reduxinfo.type=== "people"?"协助审查":"社区生态"}</div>
+                    </a>
+                    </div>
                 </div>
-                </div>
+                <div className='home_center'>
+                    <div className='shuffling'>
+                    <Carousel autoplay>
+                    <div>
+                        <h3 style={{height:"378px"}}><img src={lb01} alt="轮播图片1"></img></h3>
+                    </div>
+                    <div>
+                        <h3 style={{height:"378px"}}><img src={lb02} alt="轮播图片2"></img></h3>
+                    
+                    </div>
+                    <div>
+                    <h3 style={{height:"378px"}}><img src={lb03} alt="轮播图片3"></img></h3>
+                    
+                    </div>
+                    <div>
+                    <h3 style={{height:"378px"}}><img src={lb04} alt="轮播图片4"></img></h3>
+                    
+                    </div>
+                    </Carousel>,
+    
+                    </div>
+                    <div className='notice'>
+                <Card title="通知公告" extra={<a href="/admin/home/index">{`更多>>`}</a>} style={{ width: 500 }} headStyle={{fontWeight:"bold",fontSize:'25px'}}>
+                    {
+                        niticeList.map((item)=>{//通知公告列表遍历
+                              return(
+                              <div className='notice_item' key={item.id}>
+                                <a href='/admin/home/index'>{item.title}</a>
+                              <span className='notice_time'>{item.time}</span>
+                          </div>)
+                        })
+                    }
                 
-                </div>
-                <div className='card_two'>
-                <Divider style={{fontWeight:"bolder"}} orientation="left">政策解读</Divider>
-                    <div className='rule'>{
-                    niticeList.map((item)=>{//通知公告列表遍历
-                          return(
-                          <div className='notice_item' key={item.id}>
-                            <a href='/admin/home'>{item.title}</a>
-                          <span className='notice_time'>{item.time}</span>
-                      </div>)
-                    })
-                }
-                <div className='card_bottom'>
-                    <a href='/admin/home'>{`更多>>`}</a>
+            
+            
+                </Card>
                 </div>
                 </div>
+                <div className='home_bottom'>
+                    <div className='card_two'>
+                    <Divider style={{fontWeight:"bolder"}} orientation="left">政策文件</Divider>
+                        <div className='rule'>{
+                        niticeList.map((item)=>{//通知公告列表遍历
+                              return(
+                              <div className='notice_item' key={item.id}>
+                                <a href='/admin/home/index'>{item.title}</a>
+                              <span className='notice_time'>{item.time}</span>
+                          </div>)
+                        })
+                    }
+                    <div className='card_bottom'>
+                        <a href='/admin/home/index'>{`更多>>`}</a>
+                    </div>
+                    </div>
                     
+                    </div>
+                    <div className='card_two'>
+                    <Divider style={{fontWeight:"bolder"}} orientation="left">政策解读</Divider>
+                        <div className='rule'>{
+                        niticeList.map((item)=>{//通知公告列表遍历
+                              return(
+                              <div className='notice_item' key={item.id}>
+                                <a href='/admin/home/index'>{item.title}</a>
+                              <span className='notice_time'>{item.time}</span>
+                          </div>)
+                        })
+                    }
+                    <div className='card_bottom'>
+                        <a href='/admin/home/index'>{`更多>>`}</a>
+                    </div>
+                    </div>
+                        
+                    </div>
                 </div>
+                <div className='home_foot'>
+                    <div className='home_detailmsg'>
+                        <div className='email'>邮箱：gongan@gov.cn</div>
+                        <div className='zipcode'>邮编：110110</div>
+                        <div className='address'>地址:重庆市南岸区</div>
+                    </div>
+                    <div className='web_msg'>
+                    <img src={logo} alt='logo'></img>
+                        <div className='record'>京公网安备 66666666666666号</div>
+                        <div>京ICP备00000000号</div>
+    
+                    </div>
+                        
+                    </div>
             </div>
-            <div className='home_foot'>
-                <div className='home_detailmsg'>
-                    <div className='email'>邮箱：gongan@gov.cn</div>
-                    <div className='zipcode'>邮编：110110</div>
-                    <div className='address'>地址:重庆市南岸区</div>
-                </div>
-                <div className='web_msg'>
-                <img src={logo} alt='logo'></img>
-                    <div className='record'>京公网安备 66666666666666号</div>
-                    <div>京ICP备00000000号</div>
-
-                </div>
-                    
-                </div>
-        </div>
-    );
+        );
+    }
+   
 };
 const mapStateToProps = (state)=>{
     return {

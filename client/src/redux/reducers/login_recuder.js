@@ -16,8 +16,8 @@ export default function test(preState=initState,action) {
   let newState
   switch (type) {
     case SAVE_USER_INFO: //保存user和token
-      const token = data 
-      const user = data
+      const token = data || ""
+      const user = data || ""
       newState = {user,token,isLogin:true}
       return newState
     case DELETE_USER_INFO://删除user和token

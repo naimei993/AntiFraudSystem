@@ -1,9 +1,10 @@
 import React from 'react';
 import { Avatar, Image,Divider} from 'antd';
 import * as echarts from 'echarts'
+import {connect} from 'react-redux'
 import './personalcenter.min.css'
-import avatar_My from '../../static/avatar.webp'
-const PersonalCenter = () => {
+const PersonalCenter = (props) => {
+  let reduxinfo = JSON.parse(props.userInfo.user)
     const option = {
         tooltip: {
           trigger: 'item'
@@ -53,18 +54,19 @@ const PersonalCenter = () => {
     return (
       <div className='personalcenter'>
           <div className='per_all'>
+          
             <div className='per_left'>
               <div className='avatar_my'>
               <Avatar
                 src={
                   <Image
-                    src={avatar_My}
+                    src={reduxinfo.imgsrc}
         />
       } size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
     />
               </div>
               <div className='userinfo'>
-                <div className='username'>张伟</div>
+                <div className='username'>{reduxinfo.username}</div>
                 <div className='userdetial'>
                   性别：男
                   <Divider type="vertical" />
@@ -76,13 +78,13 @@ const PersonalCenter = () => {
                 </div>
                 <div className='userbottom'>
                 <div className='entrance'>
-                  <a href='/admin/reporting_center/index'>
-                  <div>我要举报</div>
+                  <a href={reduxinfo.type === "people"?'/admin/reporting_center/index':'/admin/case_square/index'}>
+                    <div>{reduxinfo.type === "people" ? "我要举报":"辖区案件"}</div>
                   </a>
                 </div>
                 <div className='center entrance'>
-                  <a href='/admin/article_about/index'>
-                  <div>进度查询</div>
+                  <a href={reduxinfo.type === "people" ?'/admin/article_about/index':"/admin/history_review/index"}>
+                  <div>历史审核</div>
                   </a>
                 </div>
                 <div className='entrance'>
@@ -104,5 +106,11 @@ const PersonalCenter = () => {
         </div>
     );
 };
-
-export default PersonalCenter;
+const mapStateToProps = (state)=>{
+  return {
+    userInfo:state.userInfo
+  }
+}
+export default connect(
+  mapStateToProps,{}
+)(PersonalCenter)

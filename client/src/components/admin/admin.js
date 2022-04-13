@@ -24,6 +24,7 @@ const Admin = () => {
       <Header><HeaderTop/></Header>
       <Content>
       <Routes>
+               
                 {/* 主页路由 */}
                 <Route path="/home/index" element={<Home/>}/>
                 {/* 举报中心路由 */}
@@ -46,7 +47,7 @@ const Admin = () => {
                     <Route path=':id' element={<CaseSquareDeatil/>}/>
                 </Route>
                 {/* 警方悬赏广场路由 */}
-                <Route path='/case_reward'>
+                <Route path='/history_review'>
                     <Route path='index' element={<CaseReward/>}/>
                     <Route path=':id' element={<CaseRewardDetail/>}/>
                 </Route>

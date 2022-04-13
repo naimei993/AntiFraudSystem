@@ -1,37 +1,30 @@
 import React from 'react';
-import { Menu,Avatar,Dropdown, Button, } from 'antd';
+import { Menu,Avatar,Dropdown,} from 'antd';
 import { connect } from 'react-redux';
 import {Link,useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router';
-import { UserOutlined,DownOutlined } from '@ant-design/icons';
+import {DownOutlined } from '@ant-design/icons';
 import  * as Icon from '@ant-design/icons';
 import {createSaveUserInfoAction} from '../../../redux/action_creators/login_action'
+import {createDeleteUserInfoAction} from '../../../redux/action_creators/login_action'
 import './header.min.css'
 import logo from '../../../static/logo.png'
 import menuListPeople from '../../../config/menu_config_personal';
 import menuListPolice from '../../../config/menu_config_police';
 const { SubMenu } = Menu;
 const Header = (props) => {
-    const [type,settype] = React.useState(props.userInfo.user)
+    let reduxinfo = JSON.parse(props.userInfo.user)
+    console.log(reduxinfo);
+    const {username,imgsrc,type} = reduxinfo;
     const { pathname } = useLocation();
     const navigate = useNavigate()
     let pathnamedetail = pathname.split('/').splice(2)
     const onClick = ({ key }) => {
+      if(key === "/admin/login/index"){
+        props.deleteUserInfo()
+      }
       navigate(`${key}`)
     };
-    const changeIdentity = ()=>{//改变身份
-          if(type === "people"){
-            settype("police")
-            console.log(props);
-            props.saveUserInfo("police")
-            navigate({ pathname: '/admin/home/index' }, { replace: true })
-          }else{
-            settype('people')
-            props.saveUserInfo("people")
-            console.log(props);
-            navigate({ pathname: '/admin/home/index' }, { replace: true })
-          }
-    }
     const menu = (
       <Menu onClick={onClick}>
     <Menu.Item key="/admin/personalcenter/index">个人中心</Menu.Item>
@@ -80,14 +73,13 @@ const Header = (props) => {
       </Menu>
             </div>
             <div className='user'>
-                <div className='useravatat'><Avatar size="default" icon={<UserOutlined />} /></div>
+                <div className='useravatat'><Avatar size="default" src={imgsrc}  /></div>
                 <Dropdown overlay={menu}>
                 <a href='/admin/home/index' className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                张伟 <DownOutlined />
+                {username} <DownOutlined />
                   </a>
                   
                 </Dropdown>
-                <Button type='primary' onClick={changeIdentity}>{`切换为${type === 'people'?'警察':'民众'}`}</Button>
             </div>
                 
         </div>
@@ -100,5 +92,5 @@ const mapStateToProps = (state)=>{
   }
 }
 export default connect(
-  mapStateToProps,{saveUserInfo:createSaveUserInfoAction,}
+  mapStateToProps,{saveUserInfo:createSaveUserInfoAction,deleteUserInfo:createDeleteUserInfoAction}
 )(Header)

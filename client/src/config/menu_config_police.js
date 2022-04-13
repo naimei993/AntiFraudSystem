@@ -12,18 +12,19 @@ const menuListPolice = [ //eslint-disable-next-line
     icon: 'UnorderedListOutlined',
     path:'/admin/case_square/index'
   },
-  {
-    title: '案件悬赏',
-    key: 'case_reward',
-    icon: 'LikeOutlined',
-    path: '/admin/case_reward/index'
-    
-  },
+  
   {
     title: '社区生态',
     key: 'flea_market',
     icon: 'SmileOutlined',
     path: '/admin/flea_market/index'//flea market
+  },
+  {
+    title: '历史审核',
+    key: 'history_review',
+    icon: 'LikeOutlined',
+    path: '/admin/history_review/index'
+    
   },
   {
     title: '积分商城',
