@@ -115,7 +115,7 @@ _isVaild: bool 是否有效
 function auditScreenshot(uint _screenshotIndex, bool _isVaild) external {}
 ```
 
-## 警用端-发布案件
+## 共用-发布案件
 
 _title:  string 标题
 
