@@ -7,7 +7,7 @@ pragma solidity >=0.4.21 <0.9.0;
 import "./erc20.sol";
 // interface 
 contract AntiFraud {
-    // 引入ERC20规则的积分（代币）合约
+    // // 引入ERC20规则的积分（代币）合约
     // 创建完成后所有积分归创建者所有
     // 积分发行 -> 由创建者账户转入对应用户账户
     // 总积分发行量
@@ -26,8 +26,8 @@ contract AntiFraud {
     uint caseIndex;
     // 任务辅助编号 -> 生成任务id
     uint taskIndex;
-    // 任务回答辅助编号 -> 生成任务回答id
-    uint taskAnswerIndex;
+    // 帖子辅助编号 -> 生成帖子id
+    uint postsIndex;
 
     constructor() {
         totalCredit = 100;
@@ -41,7 +41,7 @@ contract AntiFraud {
         screenshotIndex = 0;
         caseIndex = 0;
         taskIndex = 0;
-        taskAnswerIndex= 0;
+        postsIndex = 0;
     }
     // get余额
     function _getBalanceOf(address _userAdd) internal view returns (uint) {
@@ -90,7 +90,7 @@ contract AntiFraud {
         uint id;
         // 警方用户姓名
         string name;
-        // TODO 头像
+        // 头像
         string avatarLink;
     }
     // 地址转换
@@ -121,7 +121,7 @@ contract AntiFraud {
         uint id;
         // 市民用户姓名
         string name;
-        // TODO 头像
+        // 头像
         string avatarLink;
     }
     // 储存所有市民用户的映射
@@ -162,14 +162,14 @@ contract AntiFraud {
     mapping(uint => address) screenshotIdToPostCivilUser;
     // 储存市民的案件资料的映射
     mapping(address => FraudScreenshot[]) screenshotList;
+    // 储存民警审核过的截图
+    mapping(address => FraudScreenshot[]) historyScreenshotAudit;
     // 所有截图
     mapping(uint => FraudScreenshot) allSList;
     // 上传案件资料
     function postScreenshot(string memory _screenshotLink) external {
-        // 增加案件资料辅助编号
-        screenshotIndex++;
         // 设置案件的发布用户地址
-        screenshotIdToPostCivilUser[screenshotIndex - 1] = msg.sender;
+        screenshotIdToPostCivilUser[screenshotIndex] = msg.sender;
         
         FraudScreenshot memory fraudScreenshot;
         // 资料id设定为辅助编号
@@ -185,7 +185,9 @@ contract AntiFraud {
         // 将截图加入市民截图列表
         screenshotList[msg.sender].push(fraudScreenshot);
         // 将截图额加入所有截图列表
-        allSList[screenshotIndex - 1] = fraudScreenshot;
+        allSList[screenshotIndex] = fraudScreenshot;
+        // 增加案件资料辅助编号
+        screenshotIndex++;
     }
     // get案件截图列表
     function getScreenshotList() external view returns (FraudScreenshot[] memory) {
@@ -208,17 +210,29 @@ contract AntiFraud {
         }
         return (_List);
     }
+    // get自己的历史上传
+    function getHistoryPost() external view returns (FraudScreenshot[] memory) {
+        return screenshotList[msg.sender];
+    }
+    // get自己的历史审核
+    function getHistoryAudit() external view returns (FraudScreenshot[] memory) {
+        return historyScreenshotAudit[msg.sender];
+    }
     // 审核案件资料截图
     function auditScreenshot(uint _screenshotIndex, bool _isVaild) external {
         // 设定案件是否有效
         allSList[_screenshotIndex].isValid = _isVaild;
         // 设定审核警方用户
         allSList[_screenshotIndex].auditPoliceUser = msg.sender;
-        // 进行审核的警方用户获得积分
+        // TODO 更新市民历史上传状态
+
+        // 加入民警历史审核
+        historyScreenshotAudit[msg.sender].push(allSList[_screenshotIndex]);
+        // 进行审核的警方用户获得积分+1
         _transfer(administrator, msg.sender, 1);
-        // 审核有效后 市民用户获得积分
+        // 审核有效后 市民用户获得积分+5
         if (_isVaild) {  
-            _transfer(administrator, screenshotIdToPostCivilUser[_screenshotIndex], 1);
+            _transfer(administrator, screenshotIdToPostCivilUser[_screenshotIndex], 5);
         }
     }
     // 案件结构体
@@ -228,25 +242,32 @@ contract AntiFraud {
         uint id;
         // 案件标题
         string title;
-        // TODO 案件类型
-        
+        // 案件类型
+        string tag;
         // 案件描述
         string description;
         // 发布时间
         uint postTime;
         // 案件图片ipfs链接
         string caseImageLink;
+        // 案件状态表
+        // 0：已被否决（社区高票否决/民警复核否决）
+        // 1：已提交（社区投票中）
+        // 2：已通过社区审核（民警复核中）
+        // 3：未通过社区审核（民警复核中）
+        // 4：已完成 （民警复核通过/社区高票直接通过）
+        uint state;
     }
-    // 储存案件(id)与发布警方用户的映射
-    mapping(uint => address) caseIdToPostPoliceUser;
+    // 储存案件(id)与发布用户的映射
+    mapping(uint => address) caseIdToPostUser;
     // 储存每个用户与案件的映射
     mapping(address => FraudCase[]) caseList;
+    // 历史审核
+    mapping(address => FraudCase[]) historyCaseAudit;
     // 储存所有案件的映射
     mapping(uint => FraudCase) allCaseList;
     // 发布案件 -> 类比拍卖系统的发布商品
-    function postCase(string memory _title, string memory _description, string memory _caseImageLink) external {
-        // 增加案件辅助编号
-        caseIndex++;
+    function postCase(string memory _title, string memory _tag, string memory _description, string memory _caseImageLink) external {
         // 将案件加入案件列表
         FraudCase memory fraudCase;
         // 案件id设定为辅助编号
@@ -254,25 +275,92 @@ contract AntiFraud {
         // 案件发布时间设定为当前时间
         fraudCase.postTime = block.timestamp;
         fraudCase.title = _title;
+        fraudCase.tag = _tag;
         fraudCase.description = _description;
         // 案件截图
         fraudCase.caseImageLink = _caseImageLink;
+        // 设置进度
+        fraudCase.state = 1;
         // 设置案件的发布用户地址
-        caseIdToPostPoliceUser[caseIndex - 1] = msg.sender;
+        caseIdToPostUser[caseIndex] = msg.sender;
         // 加入用户案件列表
         caseList[msg.sender].push(fraudCase);
         // 将案件加入案件总列表
-        allCaseList[caseIndex - 1] = fraudCase;
-        // // 发布案件的警方用户获得积分
-        // credit.transferFrom(administrator, msg.sender, 1);
+        allCaseList[caseIndex] = fraudCase;
+        // 增加案件辅助编号
+        caseIndex++;
     } 
     // get案件列表
     function getCase() external view returns (FraudCase[] memory) {
-            FraudCase[] memory _List = new FraudCase[](caseIndex);
-            for (uint i = 0; i < caseIndex; i++) {
-                _List[i] = allCaseList[i];
-            }
-            return (_List);
+        FraudCase[] memory _List = new FraudCase[](caseIndex);
+        for (uint i = 0; i < caseIndex; i++) {
+            _List[i] = allCaseList[i];
+        }
+        return (_List);
+    }
+    // 社区投票
+    // 记录每个案件的票数 案件编号 => 得票数
+    mapping(uint => int) voteCountOfCase;
+    // 记录该地址是否已投票 
+    mapping(address => bool) isVotedThisAddress;
+    // 返回当前地址是否已投票
+    function getIsVoted() external view returns (bool) {
+        return isVotedThisAddress[msg.sender];
+    }
+    // get得票数
+    function getVoteCountOf(uint _caseIndex) external view returns (int) {
+        return voteCountOfCase[_caseIndex];
+    }
+    // 投票
+    // 返回是否成功投票
+    function vote(uint _caseIndex, bool isValid, int _checkValue) external {
+        require(isVotedThisAddress[msg.sender] == false, "Has voted");
+        isVotedThisAddress[msg.sender] = true;
+        if (isValid) {
+            voteCountOfCase[_caseIndex]++;
+        } else {
+            voteCountOfCase[_caseIndex]--;
+        }
+        _countCheck(_checkValue, _caseIndex);
+    }
+    // 票数判断
+    function _countCheck(int _checkValue, uint _caseIndex) internal {
+        int count = voteCountOfCase[_caseIndex];
+        // 每获得一次投票更新状态
+        uint _state;
+        if (count > _checkValue) {
+            // 大于检测值直接通过
+           _state = 4;
+        } else if (count < -_checkValue) {
+            // 小于检测值直接否决
+            _state = 0;
+        } else if (count > 0 && count <= _checkValue) {
+            // 得票大于0小于检测值
+            _state = 2;
+        } else {
+            // 得票小于等于0大于-检测值
+            _state = 3;
+        }
+        allCaseList[_caseIndex].state = _state;
+    }
+    // 审核案件
+    function auditCase(uint _caseIndex, bool isValid) external {
+        // require(allCaseList[_caseIndex].state == 2 || allCaseList[_caseIndex].state == 3);
+        if (isValid) {
+            allCaseList[_caseIndex].state = 4;
+            // 通过审核后发布人获得积分+10
+            _transfer(administrator, caseIdToPostUser[_caseIndex], 10);
+        } else {
+            allCaseList[_caseIndex].state = 0;
+        }
+        // 加入历史审核
+        historyCaseAudit[msg.sender].push(allCaseList[_caseIndex]);
+        // 负责审核警方获得积分+1
+        _transfer(administrator, msg.sender, 1);
+    }
+    // get自己的历史案件审核
+    function getHistoryCaseAudit() external view returns (FraudCase[] memory) {
+        return historyCaseAudit[msg.sender];
     }
     // 任务结构体
     // 由警方用户发布 参与协助的其他警方用户可获得积分
@@ -285,6 +373,8 @@ contract AntiFraud {
         string description;
         // 发布时间
         uint postTime;
+        // 回答数 抢答固定为1
+        uint answerCount;
         // 任务是否已经解决
         bool isSolved;
         // 任务图片ipfs链接
@@ -304,8 +394,6 @@ contract AntiFraud {
     // 1.抢答式：需要抢答人支付抵押金 成功完成后退回 
     // 2.采纳式：不需要抵押金 由发布者自行采纳回答 允许多人同时作答
     function postTask(string memory _title, string memory _description, string memory _taskImageLink, bool _isAnswerInRush) external {
-        // 增加任务辅助编号
-        taskIndex++;
         // 将任务加入任务列表
         Task memory task;
         // 任务编号设定为辅助编号
@@ -314,6 +402,7 @@ contract AntiFraud {
         task.postTime = block.timestamp;
         task.title = _title;
         task.description = _description;
+        task.answerCount = 0;
         // 任务图片
         task.taskImageLink = _taskImageLink;
         // 任务发布时设定为未解决
@@ -323,30 +412,32 @@ contract AntiFraud {
         // 设定为未接受状态
         task.isAccept = false;
         // 设置任务的发布用户地址
-        taskIdToPostPoliceUser[taskIndex - 1] = msg.sender;
+        taskIdToPostPoliceUser[taskIndex] = msg.sender;
         // 加入警方案件列表
         taskList[msg.sender].push(task);
         // 将任务加入所有任务列表
-        allTaskList[taskIndex - 1] = task;
+        allTaskList[taskIndex] = task;
+        // 增加任务辅助编号
+        taskIndex++;
     }
     // get任务列表
     function getTask() external view returns (Task[] memory) {
-            Task[] memory _List = new Task[](taskIndex);
-            for (uint i = 0; i < taskIndex; i++) {
-                _List[i] = allTaskList[i];
-            }
-            return (_List);
+        Task[] memory _List = new Task[](taskIndex);
+        for (uint i = 0; i < taskIndex; i++) {
+            _List[i] = allTaskList[i];
+        }
+        return (_List);
     } 
     // 储存任务id与抢答者地址的映射
     mapping(uint => address) taskIdToAnswerRusher;
-    // 抢答制：接受任务
+    // 抢答任务
     function acceptTask(uint _taskIndex) external {
-        // taskList[taskIdToPostPoliceUser[_taskIndex]].isAnswerInRush = true;
         allTaskList[_taskIndex].isAccept = true;
+        allTaskList[_taskIndex].answerCount = 1;
         // 设置抢答者地址
         taskIdToAnswerRusher[_taskIndex] = msg.sender;
-        // 抢答者账户向创建者账户转入抵押金
-        _transfer(msg.sender, administrator, 1);
+        // 抢答者账户向创建者账户转入抵押金-2
+        _transfer(msg.sender, administrator, 2);
     }
     // 提交任务的回答
     struct TaskAnswer {
@@ -363,12 +454,10 @@ contract AntiFraud {
     mapping (uint => TaskAnswer[]) answerList;
     // 提交回答
     function postTaskAnswer(uint _taskIndex, string memory _detail) external {
-        // 增加回答辅助编号
-        taskAnswerIndex++;
         // 将回答加入该任务对应的回答列表
         TaskAnswer memory answer;
         // 设定id
-        answer.id = taskAnswerIndex;
+        answer.id = ++allTaskList[_taskIndex].answerCount;
         // 设定回答内容
         answer.detail = _detail;
         // 设定回答提交时间
@@ -380,8 +469,8 @@ contract AntiFraud {
     }
     // get该任务下的回答
     function getThisTaskAnswer(uint _taskIndex) external view returns (TaskAnswer[] memory) {
-        TaskAnswer[] memory _List = new TaskAnswer[](taskAnswerIndex);
-        for (uint i = 0; i < answerList[_taskIndex].length; i++) {
+        TaskAnswer[] memory _List = new TaskAnswer[](allTaskList[_taskIndex].answerCount);
+        for (uint i = 0; i < allTaskList[_taskIndex].answerCount; i++) {
             _List[i] = answerList[_taskIndex][i];
         }
         return _List;
@@ -390,7 +479,6 @@ contract AntiFraud {
     // 内部调用
     function _taskFailed(uint _taskIndex) internal {
         // 重新设定为未接受状态
-        // taskList[msg.sender]
         allTaskList[_taskIndex].isAccept = false;
     }
     // 外部调用
@@ -402,14 +490,88 @@ contract AntiFraud {
         if (_isAdopt) {
             allTaskList[_taskIndex].isSolved = true;
             if (allTaskList[_taskIndex].isAnswerInRush) {
-                // 创建者账户向抢答者账户转入积分（抵押金+奖金）
-                _transfer(administrator, taskIdToAnswerRusher[_taskIndex], 2);
+                // 创建者账户向抢答者账户转入积分（抵押金+奖金）2+10
+                _transfer(administrator, taskIdToAnswerRusher[_taskIndex], 12);
             } else {
                 // 创建者账户向被采纳者账户转入积分（奖金）
-                _transfer(administrator, answerList[_taskIndex][_answerIndex].answerAddress, 1);
+                _transfer(administrator, answerList[_taskIndex][_answerIndex].answerAddress, 10);
             }
         } else {
             _taskFailed(_taskIndex);
         }
+    }
+    // 社区（跳骚市场）
+    // 帖子
+    struct Posts {
+        uint id;
+        uint postTime;
+        // 悬赏金
+        uint reward;
+        // 该帖子下的回复数
+        uint replyCounts;
+        string title;
+        string description;
+        // 类型
+        string tag;
+        string imageLink;
+        address postUserAdd;
+    }
+    // 储存所有帖子
+    mapping(uint => Posts) postsList;
+    // 发帖
+    function createPosts(string memory _title, string memory _description, string memory _tag, string memory _imageLink, uint _reward) external {
+        Posts memory _post;
+        _post.id = postsIndex;
+        _post.postTime = block.timestamp;
+        _post.reward = _reward;
+        _post.replyCounts = 0;
+        _post.title = _title;
+        _post.description = _description;
+        _post.tag = _tag;
+        _post.imageLink = _imageLink;
+        _post.postUserAdd = msg.sender;
+        // 加入帖子列表
+        postsList[policeIndex] = _post;
+        postsIndex++;
+    }
+    // get帖子列表
+    function getPostsList() external view returns (Posts[] memory) {
+        Posts[] memory _List = new Posts[](postsIndex);
+        for (uint i = 0; i < postsIndex; i++) {
+            _List[i] = postsList[i];
+        }
+        return _List;
+    }
+    // 回复
+    struct PostsReply {
+        // 所属帖子id
+        uint postsId;
+        // 楼层
+        uint floor;
+        uint postTime;
+        // 回复内容
+        string details;
+        address postUserAdd;
+    }
+    // 储存帖子下的所有回复 帖子id => 对应所有回复
+    mapping(uint => PostsReply[]) replyListOfPosts;
+    // 发送回复
+    function createPostsReply(uint _postsIndex, string memory _details) external {    
+        PostsReply memory _reply;
+        _reply.postsId = _postsIndex;
+        _reply.floor = ++postsList[_postsIndex].replyCounts;
+        _reply.postTime = block.timestamp;
+        _reply.details = _details;
+        _reply.postUserAdd = msg.sender;
+        // 加入回复列表
+        replyListOfPosts[_postsIndex].push(_reply);
+    }
+    // get指定贴子下的所有回复
+    function getThisPostsReply(uint _postsIndex) external view returns (PostsReply[] memory) {
+        PostsReply[] memory _List = new PostsReply[](postsList[_postsIndex].replyCounts);
+        for (uint i = 0; i < postsList[_postsIndex].replyCounts; i++) {
+            _List[i] = replyListOfPosts[_postsIndex][i];
+        }
+        return _List;
     }
 }
