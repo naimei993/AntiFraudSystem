@@ -23,7 +23,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "web3": "^1.6.1",
-    "yarn": "^1.22.18"
+    "yarn": "^1.22.18",
+    "@truffle/hdwallet-provider": "^2.0.4"
   },
   "scripts": {
     "start": "react-app-rewired start",
