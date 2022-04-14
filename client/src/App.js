@@ -1,12 +1,20 @@
 import React, { Component } from "react";
 import { BrowserRouter,Navigate} from 'react-router-dom';
 import {Route,Routes,} from 'react-router'
+// import ipfsAPI from 'ipfs-api'
 import {contractABI,contractAddress} from './contract'
+// import  {  create  }  from  'ipfs-http-client' 
 // import AntiFraud from "./contracts/AntiFraud.json";
 import getWeb3 from "./getWeb3";
 import './App.css';
 import Admin from './components/admin/admin'
 import Login from './components/login/login'
+// const  client  =  create ( new  URL ( 'http://127.0.0.1:5002' ) ) //ipfs相关
+// const ipfs = ipfsAPI({
+//   ip: 'localhost',
+//   port: '8081',
+//   protocol: 'http'
+// })
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null };
   
@@ -14,6 +22,9 @@ class App extends Component {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
+      //ipfs相关
+      // const { cid } = await client.add('Hello world!')
+      // console.log(cid);
       //返回当前区块号
       // web3.eth.getBlockNumber().then(console.log);
      //latest earliest

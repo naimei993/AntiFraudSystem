@@ -1,6 +1,6 @@
 import React from 'react';
-import { Layout } from 'antd';
-import {Route,Routes} from 'react-router'
+import { Layout,Result,Button } from 'antd';
+import {Route,Routes,useNavigate} from 'react-router'
 import HeaderTop from './header/header';
 import Home from '../home/home';
 import PersonalCenter from '../personalCenter/personalCenter';
@@ -18,6 +18,7 @@ import Assistaudit from '../assistaudit/assistaudit';
 import AssistauditDetail from '../assistaudit/assistauditdetail/assistauditdetail';
 const { Header, Content } = Layout;
 const Admin = () => {
+    const navigate = useNavigate()
     return (
         <div>
             <Layout>
@@ -63,9 +64,13 @@ const Admin = () => {
                 <Route
                 path="*"
                 element={
-              <main style={{ padding: "1rem" }}>
-              <p>There's nothing here!</p>
-            </main>
+                    <Result
+                    status="404"
+                    title="404"
+                    style={{height:"870px"}}
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={<Button type="primary" onClick={()=>{navigate("/admin/home/index")}}>回到首页</Button>}
+                  />
             }
             />
               </Routes>
