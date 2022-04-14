@@ -312,7 +312,6 @@ contract AntiFraud {
         return voteCountOfCase[_caseIndex];
     }
     // 投票
-    // 返回是否成功投票
     function vote(uint _caseIndex, bool isValid, int _checkValue) external {
         require(isVotedThisAddress[msg.sender] == false, "Has voted");
         isVotedThisAddress[msg.sender] = true;
