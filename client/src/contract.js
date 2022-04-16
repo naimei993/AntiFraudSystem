@@ -16,6 +16,24 @@ const contractABI =[
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "isValid",
+				"type": "bool"
+			}
+		],
+		"name": "auditCase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "_screenshotIndex",
 				"type": "uint256"
 			},
@@ -71,6 +89,62 @@ const contractABI =[
 			{
 				"internalType": "string",
 				"name": "_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_description",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_tag",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_imageLink",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_reward",
+				"type": "uint256"
+			}
+		],
+		"name": "createPosts",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_postsIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_details",
+				"type": "string"
+			}
+		],
+		"name": "createPostsReply",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_tag",
 				"type": "string"
 			},
 			{
@@ -185,6 +259,35 @@ const contractABI =[
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_val",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
@@ -192,8 +295,31 @@ const contractABI =[
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "isValid",
+				"type": "bool"
+			},
+			{
+				"internalType": "int256",
+				"name": "_checkValue",
+				"type": "int256"
+			}
+		],
+		"name": "vote",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
-				"name": "_address",
+				"name": "_userAdd",
 				"type": "address"
 			}
 		],
@@ -213,29 +339,46 @@ const contractABI =[
 		"name": "getCase",
 		"outputs": [
 			{
-				"internalType": "uint256[]",
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "caseImageLink",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "state",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct AntiFraud.FraudCase[]",
 				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
@@ -271,6 +414,149 @@ const contractABI =[
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getHistoryAudit",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "auditPoliceUser",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "screenshotLink",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isValid",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct AntiFraud.FraudScreenshot[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getHistoryCaseAudit",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "caseImageLink",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "state",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct AntiFraud.FraudCase[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getHistoryPost",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "auditPoliceUser",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "screenshotLink",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isValid",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct AntiFraud.FraudScreenshot[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getIsVoted",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -278,7 +564,7 @@ const contractABI =[
 				"type": "address"
 			}
 		],
-		"name": "getPoliceUser1",
+		"name": "getPoliceUser",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -301,32 +587,99 @@ const contractABI =[
 	},
 	{
 		"inputs": [],
-		"name": "getScreenshot",
+		"name": "getPostsList",
 		"outputs": [
 			{
-				"internalType": "uint256[]",
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reward",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "replyCounts",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "imageLink",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "postUserAdd",
+						"type": "address"
+					}
+				],
+				"internalType": "struct AntiFraud.Posts[]",
 				"name": "",
-				"type": "uint256[]"
-			},
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getScreenshotList",
+		"outputs": [
 			{
-				"internalType": "address[]",
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "auditPoliceUser",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "screenshotLink",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isValid",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct AntiFraud.FraudScreenshot[]",
 				"name": "",
-				"type": "address[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			},
-			{
-				"internalType": "bool[]",
-				"name": "",
-				"type": "bool[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
@@ -337,51 +690,169 @@ const contractABI =[
 		"name": "getTask",
 		"outputs": [
 			{
-				"internalType": "uint256[]",
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "answerCount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isSolved",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "taskImageLink",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isAnswerInRush",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isAccept",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct AntiFraud.Task[]",
 				"name": "",
-				"type": "uint256[]"
-			},
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			},
+				"internalType": "uint256",
+				"name": "_postsIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getThisPostsReply",
+		"outputs": [
 			{
-				"internalType": "string[]",
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "postsId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "floor",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "details",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "postUserAdd",
+						"type": "address"
+					}
+				],
+				"internalType": "struct AntiFraud.PostsReply[]",
 				"name": "",
-				"type": "string[]"
-			},
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
+				"internalType": "uint256",
+				"name": "_taskIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getThisTaskAnswer",
+		"outputs": [
 			{
-				"internalType": "bool[]",
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "detail",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "answerAddress",
+						"type": "address"
+					}
+				],
+				"internalType": "struct AntiFraud.TaskAnswer[]",
 				"name": "",
-				"type": "bool[]"
-			},
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			},
+				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getVoteCountOf",
+		"outputs": [
 			{
-				"internalType": "bool[]",
+				"internalType": "int256",
 				"name": "",
-				"type": "bool[]"
-			},
-			{
-				"internalType": "bool[]",
-				"name": "",
-				"type": "bool[]"
+				"type": "int256"
 			}
 		],
 		"stateMutability": "view",
 		"type": "function"
 	}
 ]
-const contractAddress="0x4856B46C8e8dbBD3eA3B8eF1b8e548d86B9fc1cc"
+const contractAddress="0x971cb9eb6a0504bcE7036CD992DD0a91FaB9e2E4"
 
 export {
 	contractABI,

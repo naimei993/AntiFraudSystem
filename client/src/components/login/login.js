@@ -30,13 +30,14 @@ const Login = (props) => {
           }
     }
     checkLogin()
-    
-    const Loginin = ()=>{//箭头函数
+    const Loginin = async()=>{//箭头函数
         console.log("点击登录按钮");
         console.log(identity.ident);
             try{
                 if(identity.ident === 'people'){
-                   window.contract.methods.getCivilUser(window.accounts[0]).call((erro,result)=>{
+                 
+                 let result = await  window.contract.methods.getCivilUser(window.accounts[0]).call((erro,result)=>{
+                     console.log(result)
                         if(result[1]){
                           result[3] = "people"
                             props.saveUserInfo(result)
@@ -47,8 +48,10 @@ const Login = (props) => {
                         }
                         
                       })
+                      console.log(result);
                 }else{
-                   window.contract.methods.getPoliceUser1(window.accounts[0]).call((erro,result)=>{
+                 let res = await  window.contract.methods.getPoliceUser(window.accounts[0]).call((erro,result)=>{
+                    console.log(result)
                         if(result[1]){
                             result[3] = "police"
                             console.log(result);
@@ -59,6 +62,7 @@ const Login = (props) => {
                         }
                         
                       })
+                      console.log(res );
                 }
                 
             }catch{
@@ -67,7 +71,7 @@ const Login = (props) => {
             
         
     }
-    const onFinish = (values) => {
+    const  onFinish = async(values) => {
           const{username,avatarlink} = values;
           setidentity((oldState)=>({
               ...oldState,
@@ -75,12 +79,23 @@ const Login = (props) => {
               avatarlink,
           }))
           if(identity.ident === 'people'){
-            let res = window.contract.methods.createCivilUser(username,avatarlink).call()
-            console.log(res);
+            console.log(window.accounts[0]);
+            let res = await window.contract.methods.createCivilUser(username,avatarlink).send( {
+              from:window.accounts[0],
+              gas:1500000,
+              gasPrice:"1000000"
+            },function(error,result){console.log(result,"AAAAAAAAAAAAa",error);})
+            console.log(res,"市民注册");
             
           }else{
-            window.contract.methods.createPoliceUser(username,avatarlink).call()
-            message.success("注册成功")
+            console.log(username,avatarlink);
+           let res = await window.contract.methods.createPoliceUser(username,avatarlink).send( {
+                from:window.accounts[0],
+                gas:1500000,
+                gasPrice:"1000000"
+              },function(error,result){console.log(result,"AAAAAAAAAAAAa",error);})
+            console.log(res,"警察注册");
+            // message.success("注册成功")
           }
           console.log(username,avatarlink,identity.ident);
         }

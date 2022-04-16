@@ -163,10 +163,15 @@ const ClickReport = (id)=>{//点击举报
           }
         >
         </Comment>
-        {commentisshow.isvisible ? commentisshow.id === item.id?  <ExampleComment info={{author:"张三",content:"看着感觉还可以，楼主能聊下细节吗？"}}>
+        {commentisshow.isvisible ? commentisshow.id === item.id?  <div><ExampleComment info={{author:"张三",content:"看着感觉还可以，楼主能聊下细节吗？"}}>
         <ExampleComment info={{author:"张伟",content:"可以可以"}}>
             </ExampleComment>
-            </ExampleComment>:null:null }
+            </ExampleComment>
+            <ExampleComment info={{author:"张三",content:"看着感觉还可以，楼主能聊下细节吗？"}}>
+        <ExampleComment info={{author:"张伟",content:"可以可以"}}>
+            </ExampleComment>
+            </ExampleComment>
+            </div>:null:null }
             {report.id === item.id ? <Modal title="举报内容" okText="确定" cancelText="取消" visible={report.repvisible} onOk={handleOkreport} onCancel={handleCancelreport}>
                 <Form
                      name="wrap"

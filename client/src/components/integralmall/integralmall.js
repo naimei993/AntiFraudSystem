@@ -10,6 +10,7 @@ import sjb from '../../static/sjb.jpg'
 import dami from '../../static/dami.jpg'
 import mf from '../../static/mf.jpg'
 import hsy from '../../static/hsy.jpg'
+import ylfw from '../../static/ylfw.webp'
 import './integralmall.min.css'
 
 const Integralmall = (props) => {
@@ -56,10 +57,18 @@ const Integralmall = (props) => {
     }
 
     const goodsList = [
+      {
+        id:"0",
+        imgsrc:ylfw,
+        price:20,
+        goodsName:"医疗服务",
+        describe:"社区医生上门检查身体"
+    },
         {
             id:"1",
             imgsrc:bjb,
             price:5,
+            number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"笔记本",
             describe:"定制真皮手感活页笔记本"
         },
@@ -67,6 +76,7 @@ const Integralmall = (props) => {
             id:"2",
             imgsrc:sbd,
             price:5,
+            number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"鼠标垫",
             describe:"定制鼠标垫"
         },
@@ -74,6 +84,7 @@ const Integralmall = (props) => {
             id:"3",
             imgsrc:dnb,
             price:15,
+            number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"电脑包",
             describe:"定制电脑包"
         },
@@ -81,6 +92,7 @@ const Integralmall = (props) => {
             id:"4",
             imgsrc:ydsh,
             price:10,
+            number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"运动水壶",
             describe:"定制运动水壶"
         },
@@ -88,6 +100,7 @@ const Integralmall = (props) => {
             id:"5",
             imgsrc:sjb,
             price:10,
+            number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"双肩包",
             describe:"定制双肩包"
         },
@@ -95,6 +108,7 @@ const Integralmall = (props) => {
             id:"6",
             imgsrc:dami,
             price:20,
+            number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"大米",
             describe:"南方优质稻米品种"
         },
@@ -102,6 +116,7 @@ const Integralmall = (props) => {
             id:"7",
             imgsrc:hsy,
             price:10,
+            number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"花生油",
             describe:"低芥酸特香菜籽特级压榨"
         },
@@ -109,6 +124,7 @@ const Integralmall = (props) => {
             id:"8",
             imgsrc:mf,
             price:10,
+            number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"面粉",
             describe:"小麦粉中筋面粉"
         },
@@ -117,7 +133,7 @@ const Integralmall = (props) => {
     const columns = [
         {
           title: '全选',
-          dataIndex: 'name',
+          dataIndex: 'goodsName',
         },
         {
           title: '单价',
@@ -139,7 +155,7 @@ const Integralmall = (props) => {
           key: i,
           name: `第${i}件商品`,
           price: `${i}`,
-          number: <InputNumber min={1} max={1} defaultValue={1} onChange={numberChange}/>,
+          number: <InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
           total:`${i}`
         });
       }

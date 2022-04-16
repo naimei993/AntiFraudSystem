@@ -4,13 +4,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.21 <0.9.0;
 
-<<<<<<< HEAD
 import "./TokenERC20.sol";
-
-=======
-import "./erc20.sol";
 // interface 
->>>>>>> d8d587627a0775e8e6cf2351f1d105faef0aebd7
 contract AntiFraud {
     // // 引入ERC20规则的积分（代币）合约
     // 创建完成后所有积分归创建者所有
@@ -102,16 +97,10 @@ contract AntiFraud {
     // mapping(uint => address) policeIdToAddress;
     // 储存所有警方用户的映射
     mapping(address => Police) policeList;
-<<<<<<< HEAD
-       // get警方用户1
-    function getPoliceUser1(address _policeUserAddress) external view returns (uint, string memory, string memory) {
-        return(policeList[_policeUserAddress].id, policeList[_policeUserAddress].name, policeList[_policeUserAddress].avatarLink);
-=======
     // get警方用户
     function getPoliceUser(address _policeUserAddress) external view returns (uint, string memory, string memory) {
         Police memory police = policeList[_policeUserAddress];
         return (police.id, police.name, police.avatarLink);
->>>>>>> d8d587627a0775e8e6cf2351f1d105faef0aebd7
     }
     // 注册警方用户
     function createPoliceUser(string memory _name, string memory _avatarLink) external {
@@ -140,11 +129,7 @@ contract AntiFraud {
     // get市民用户
     function getCivilUser(address _civilUserAddress) external view returns (uint, string memory, string memory) {
         Civil memory civil = civilList[_civilUserAddress];
-<<<<<<< HEAD
-        return(civil.id, civil.name, civil.avatarLink); 
-=======
         return (civil.id, civil.name, civil.avatarLink); 
->>>>>>> d8d587627a0775e8e6cf2351f1d105faef0aebd7
     }
     // 注册市民用户
     function createCivilUser(string memory _name, string memory _avatarLink) external {
@@ -158,10 +143,6 @@ contract AntiFraud {
         civil.name = _name;
         // 设定头像
         civil.avatarLink = _avatarLink;
-    }
-    // get积分余额
-    function getBalanceOf(address _address) external view returns (uint256) {
-        return credit._getBalance(_address);
     }
     // 案件资料结构体
     // 只需市民用户上传截图 警方用户进行审核
@@ -237,24 +218,6 @@ contract AntiFraud {
     function getHistoryAudit() external view returns (FraudScreenshot[] memory) {
         return historyScreenshotAudit[msg.sender];
     }
-    // get案件截图列表
-    function getScreenshot() external view 
-        returns (uint[] memory, address[] memory, string[] memory, bool[] memory, uint[] memory) {
-        uint[] memory ids;
-        address[] memory auditPoliceUsers;
-        string[] memory screenshotLinks;
-        bool[] memory valids;
-        uint[] memory postTimes; 
-        for (uint i = 0; i <= screenshotIndex; i++) {
-            FraudScreenshot memory screenshot = screenshotList[screenshotIdToPostCivilUser[i]];
-            ids[i] = screenshot.id;
-            auditPoliceUsers[i] = screenshot.auditPoliceUser;
-            screenshotLinks[i] = screenshot.screenshotLink;
-            valids[i] = screenshot.isValid;
-            postTimes[i] = screenshot.postTime;
-        }
-        return(ids, auditPoliceUsers, screenshotLinks, valids, postTimes);
-    }
     // 审核案件资料截图
     function auditScreenshot(uint _screenshotIndex, bool _isVaild) external {
         // 设定案件是否有效
@@ -302,32 +265,7 @@ contract AntiFraud {
     // 历史审核
     mapping(address => FraudCase[]) historyCaseAudit;
     // 储存所有案件的映射
-<<<<<<< HEAD
-    // mapping(address => mapping(uint => FraudCase)) caseList;
-    mapping(address => FraudCase) caseList;
-    // 储存案件(id)与发布警方用户的映射
-    mapping(uint => address) caseIdToPostPoliceUser;
-    // get案件列表
-    function getCase() external view 
-        returns (uint[] memory, string[] memory, string[] memory, uint[] memory, string[] memory) {
-            uint[] memory ids;
-            string[] memory titles;
-            string[] memory descriptions;
-            uint[] memory postTimes;
-            string[] memory caseImageLinks;
-            for (uint i = 0; i <= caseIndex; i++) {
-                FraudCase memory fraudCase = caseList[caseIdToPostPoliceUser[i]];
-                ids[i] = fraudCase.id;
-                titles[i] = fraudCase.title;
-                descriptions[i] = fraudCase.description;
-                postTimes[i] = fraudCase.postTime;
-                caseImageLinks[i] = fraudCase.caseImageLink; 
-            }
-            return(ids, titles, descriptions, postTimes, caseImageLinks);
-    }
-=======
     mapping(uint => FraudCase) allCaseList;
->>>>>>> d8d587627a0775e8e6cf2351f1d105faef0aebd7
     // 发布案件 -> 类比拍卖系统的发布商品
     function postCase(string memory _title, string memory _tag, string memory _description, string memory _caseImageLink) external {
         // 将案件加入案件列表
@@ -446,39 +384,11 @@ contract AntiFraud {
         bool isAccept;
     }
     // 储存任务(id)与发布警方用户的映射
-<<<<<<< HEAD
-    mapping(uint => address) taskIdToPostPoliceUser;
-    // get任务列表
-    function getTask() external view 
-        returns (uint[] memory, string[] memory, string[] memory, uint[] memory, bool[] memory, string[] memory, bool[] memory, bool[] memory) {
-            uint[] memory ids;
-            string[] memory titles;
-            string[] memory descriptions;
-            uint[] memory postTimes;
-            bool[] memory isSolveds;
-            string[] memory taskImageLinks;
-            bool[] memory isAnswerInRushs;
-            bool[] memory isAccpets;
-            for (uint i = 0; i <= taskIndex; i++) {
-                Task memory task = taskList[taskIdToPostPoliceUser[i]];
-                ids[i] = task.id;
-                titles[i] = task.title;
-                descriptions[i] = task.description;
-                postTimes[i] = task.postTime;
-                isSolveds[i] = task.isSolved;
-                taskImageLinks[i] = task.taskImageLink;
-                isAnswerInRushs[i] = task.isAnswerInRush;
-                isAccpets[i] = task.isAccept; 
-            }
-            return(ids, titles, descriptions, postTimes, isSolveds, taskImageLinks, isAnswerInRushs, isAccpets);
-    }  
-=======
     mapping(uint => address) taskIdToPostPoliceUser; 
     // 储存警方与任务的映射
     mapping(address => Task[]) taskList;
     // 储存所有任务的映射
     mapping(uint => Task) allTaskList;
->>>>>>> d8d587627a0775e8e6cf2351f1d105faef0aebd7
     // 发布任务 -> 类比拍卖系统的发布商品
     // 1.抢答式：需要抢答人支付抵押金 成功完成后退回 
     // 2.采纳式：不需要抵押金 由发布者自行采纳回答 允许多人同时作答
