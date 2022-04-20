@@ -14,14 +14,23 @@ import ylfw from '../../static/ylfw.webp'
 import './integralmall.min.css'
 
 const Integralmall = (props) => {
+  let reduxinfo = props.userInfo.user;
     const [shopcart,setshopcart] = React.useState({visible:false,selectedRowKeys: [],loading: false,goodslist:""})
-
-    let reduxinfo = JSON.parse(props.userInfo.user)
+    const [info,setinfo] = React.useState({integral:""})
+    React.useEffect(()=>{//箭头函数
+      window.contract.methods.getBalanceOf(window.accounts[0]).call((err,result)=>{
+        setinfo((oldState)=>({
+          ...oldState,
+          integral:result
+        }))
+      })
+  },[])
     const onClick = (value) =>{//添加商品到购物车
         message.info(`你添加了${value.goodsName}到购物车`)
         setshopcart((oldState)=>({
             ...oldState,
             goodslist:shopcart.goodslist+`${value},`
+            
         }))
     }
     const shoppingCart = ()=>{//点击购物车触发弹窗
@@ -197,19 +206,19 @@ const Integralmall = (props) => {
                 <div className='int_right_avatar'>
                 <Avatar
                     size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                    src={reduxinfo.imgsrc}
+                    src={"http://localhost:8080/ipfs/"+reduxinfo.imgsrc}
                 />
                 <div className='username'>
                    {reduxinfo.username}
                 </div>
                 </div>
                 <div className='int_right_msg'>
-                    <div className='points'>我的积分<div>10</div></div>
+                    <div className='points'>我的积分<div>{info.integral}</div></div>
                     <div className='order'>历史订单<div>5</div></div>
                 </div>
                 <div className='int_right_shopcart'>
                 <Button type="primary" icon={<ShoppingCartOutlined />} size="large" onClick={shoppingCart} className='shopcartButton'>
-                                        我的购物车
+                                  我的购物车
                  </Button>
                     <Modal
                       title="购物车"

@@ -1,35 +1,39 @@
 import React from 'react';
-import { Comment, Avatar,Image,Divider,Button,Modal,Form,Input,Upload } from 'antd';
+import { useRef } from 'react'
+import { Comment, Avatar,Image,Divider,Button,Modal,Form,Input, message} from 'antd';
 import {connect} from 'react-redux';
-import ImgCrop from 'antd-img-crop';
-import {PlusCircleOutlined,ArrowUpOutlined} from '@ant-design/icons'
+import ipfsAPI from 'ipfs-api'
+import {PlusCircleOutlined,ArrowUpOutlined,UploadOutlined} from '@ant-design/icons'
 import img from '../../static/avatar.webp'
 import './fleamarket.min.css'
+const ipfs = ipfsAPI({
+  ip: 'localhost',
+  port: '5001',
+  protocol: 'http'
+})
 const Fleamarket = (props) => {
-  let reduxinfo = JSON.parse(props.userInfo.user)
-  const [isModalVisible, setIsModalVisible] = React.useState({isShow:false,type:"",describe:""});
-  const [fileList, setFileList] = React.useState([]);
+  const reduxinfo = props.userInfo.user
+  const inputRef = useRef(null)
+  const [isModalVisible, setIsModalVisible] = React.useState({isShow:false,type:"",describe:"",title:""});
+  const [imgSrc,setimgSrc] = React.useState([])
   const [commentisshow,setcommentisshow] = React.useState({isvisible:false,id:""})
   const [report,setreport] = React.useState({repvisible:false,id:"",content:""})
-  const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
-
-  const onPreview = async file => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
+  const [allinfo,setallinfo] = React.useState({integral:""})
+  React.useEffect(()=>{//箭头函数
+    const getDate = async ()=>{
+     await window.contract.methods.getBalanceOf(window.accounts[0]).call((err,result)=>{
+        console.log(result,"账户余额");
+        setallinfo((oldState)=>({
+          ...oldState,
+          integral:result
+        }))
+      })
+     await window.contract.methods.getPostsList().call((err,result)=>{
+        console.log(result,"获取帖子列表");
+      })
     }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow.document.write(image.outerHTML);
-  };
-
+    getDate()
+},[])
   const releaseGoods = ()=>{//发布物品
         console.log("发布物品");
         setIsModalVisible((oldState)=>({
@@ -46,22 +50,51 @@ const Fleamarket = (props) => {
           type:"need"
         }));
   }
-const describeChange = (e)=>{//物品描述
+  const saveImageOnIpfs = (reader) => {//保存图片
+    return new Promise(function(resolve,reject){
+        const buffer = Buffer.from(reader.result);
+        ipfs.add(buffer).then((response) => {
+            resolve(response[0].hash);
+        }).catch((err) => {
+          console.error(err)
+          reject(err);
+        })
+   })
+  }
+const describeChange = (e)=>{//发布求购物品描述
   setIsModalVisible((oldState)=>({
     ...oldState,
     describe: e.target.value
   }))
 }
-const reportChange = (e)=>{//物品描述
+const titleChange  = (e)=>{//发布求购物品标题
+  setIsModalVisible((oldState)=>({
+    ...oldState,
+    title: e.target.value
+  }))
+}
+const reportChange = (e)=>{//举报内容描述
   setreport((oldState)=>({
     ...oldState,
     content:e.target.value,
   }))
 }
-  const handleOk = () => {
-    setIsModalVisible(false);
-    setFileList([])
-    console.log(isModalVisible);
+  const handleOk = async () => {
+    console.log(isModalVisible.title,isModalVisible.describe,isModalVisible.type,imgSrc,0);
+    if(isModalVisible.title === "" || isModalVisible.describe===""){
+      message.warn("请填写完整信息后再试",3)
+    }else{
+      // window.contract.methods.createPosts(isModalVisible.title,isModalVisible.describe,isModalVisible.type,imgSrc,0).send(
+      //   {
+      //     from:window.accounts[0],
+      //     gas:1500000,
+      //     gasPrice:"1000000"
+      //   },function(error,result){console.log(result,"AAAAAAAAAAAAa",error);}
+      // )
+      message.success("未完成",3)
+    }
+    setIsModalVisible({isShow:false,type:"",describe:"",title:""});
+    setimgSrc([])
   };
   const handleOkreport = () => {//举报确定按钮
     setreport((oldState)=>({
@@ -73,12 +106,19 @@ const reportChange = (e)=>{//物品描述
 const ClickShare = (id)=>{//分享按钮回调
       console.log("分享",id);
 }
-const ClickComment = (id)=>{//点击举报
+const ClickComment = async (id)=>{//点击评论
+  
   setcommentisshow((oldState)=>({
     ...oldState,
     isvisible:!commentisshow.isvisible,
     id,
   }))
+  if(!commentisshow.isvisible){
+    await window.contract.methods.getThisPostsReply(id).call((err,result)=>{
+      console.log(result,"指定帖子下的所有回复");
+    })
+  }
+  console.log(`我点击了id为${id}的帖子`);
 }
 const ClickReport = (id)=>{//点击举报
   setreport((oldState)=>({
@@ -88,10 +128,10 @@ const ClickReport = (id)=>{//点击举报
   }))
 }
   const handleCancel = () => {
-    setIsModalVisible(false);
-    setFileList([])
+    setIsModalVisible({isShow:false,type:"",describe:"",title:""});
+    setimgSrc([])
   };
-  const handleCancelreport = () => {
+  const handleCancelreport = () => {//举报弹窗取消
     setreport((oldState)=>({
       ...oldState,
       repvisible:false,
@@ -200,14 +240,14 @@ const ClickReport = (id)=>{//点击举报
                     size='large'
                     width={180}
                     height={180}
-                    src={reduxinfo.imgsrc}
+                    src={"http://localhost:8080/ipfs/"+reduxinfo.imgsrc}
                 />
                 <div className='username'>
                     {reduxinfo.username}
                 </div>
                 </div>
                 <div className='int_right_msg'>
-                    <div className='points'>我的积分<div>10</div></div>
+                    <div className='points'>我的积分<div>{allinfo.integral}</div></div>
                     <div className='order'>历史记录<div>5</div></div>
                 </div>
                 <div className='int_right_shopcart'>
@@ -226,21 +266,60 @@ const ClickReport = (id)=>{//点击举报
                      wrapperCol={{ flex: 1 }}
                      colon={false}
                    >
+                      <Form.Item label="内容标题" name="title">
+                       <Input value={isModalVisible.title} onChange={titleChange} />
+                     </Form.Item>
                      <Form.Item label="内容描述" name="describe">
-                       <Input onChange={describeChange} />
+                       <Input value={isModalVisible.describe} onChange={describeChange} />
                      </Form.Item>
                      <Form.Item label="上传图片">
-                     <ImgCrop rotate>
-                       <Upload
-                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                         listType="picture-card"
-                         fileList={fileList}
-                         onChange={onChange}
-                         onPreview={onPreview}
-                       >
-                         {fileList.length < 5 && '+ Upload'}
-                       </Upload>
-                      </ImgCrop>
+                     <div>
+
+  <label id="file" ><UploadOutlined />选择文件<input type="file" ref={inputRef} id="file" name="file" multiple="multiple" style={{display:"none"}}/></label>
+
+
+ <Button 
+ onClick={() => {
+   const list = inputRef.current.files || []
+   let List = []
+   //console.log(this.refs.file.files)
+   console.log(list);
+   const len = list.length;
+   for(let i=0;i<=len-1;i++){
+      List.push(list[i])
+   }
+   let arr = []
+   List.map((item)=>{
+    var reader = new FileReader();
+    reader.readAsArrayBuffer(item)
+    reader.onloadend = (e) => {
+         saveImageOnIpfs(reader).then((hash) => {
+           console.log(hash,"哈希值");
+           arr.push(hash)
+         });
+       }
+       return(null)
+   })
+   setTimeout(()=>{
+    setimgSrc(arr)
+   },500)
+ }
+ }>上传提交</Button>
+ </div>
+ {
+    imgSrc.map((item)=>{
+      console.log(item,"展示图片");
+      console.log(imgSrc,"全部");
+      if(item){
+        return(
+          <Image key={item} alt='上传的图片' style={{width:150}} src={`http://localhost:8080/ipfs/${item}`}/>
+        )
+      }
+      else{
+        return(null)
+      }
+    })
+ }
                      </Form.Item>
                   </Form>
                 </Modal>

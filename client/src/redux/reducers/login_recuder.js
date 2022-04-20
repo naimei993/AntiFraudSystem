@@ -1,7 +1,7 @@
 import {SAVE_USER_INFO,DELETE_USER_INFO} from '../action_types'
 
 //尝试从localStorage中读取之前保存的信息
-let user = localStorage.getItem('user')
+let user = JSON.parse(localStorage.getItem('user'))
 let token = localStorage.getItem('token')
 //初始化userInfo数据
 let initState = {

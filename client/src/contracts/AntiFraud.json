@@ -23,8 +23,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -82,8 +81,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -130,8 +128,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -202,8 +199,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -243,8 +239,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -284,8 +279,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -381,8 +375,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -395,8 +388,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -415,8 +407,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -507,8 +498,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -596,8 +586,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -669,8 +658,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -799,8 +787,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -864,8 +851,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_taskIndex\",\"type\":\"uint256\"}],\"name\":\"acceptTask\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_caseIndex\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isValid\",\"type\":\"bool\"}],\"name\":\"auditCase\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_screenshotIndex\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"_isVaild\",\"type\":\"bool\"}],\"name\":\"auditScreenshot\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_avatarLink\",\"type\":\"string\"}],\"name\":\"createCivilUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_avatarLink\",\"type\":\"string\"}],\"name\":\"createPoliceUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_description\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_tag\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_imageLink\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_reward\",\"type\":\"uint256\"}],\"name\":\"createPosts\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_postsIndex\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_details\",\"type\":\"string\"}],\"name\":\"createPostsReply\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAdd\",\"type\":\"address\"}],\"name\":\"getBalanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getCase\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"tag\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"caseImageLink\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"state\",\"type\":\"uint256\"}],\"internalType\":\"struct AntiFraud.FraudCase[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_civilUserAddress\",\"type\":\"address\"}],\"name\":\"getCivilUser\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getHistoryAudit\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"auditPoliceUser\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"screenshotLink\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"isValid\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"}],\"internalType\":\"struct AntiFraud.FraudScreenshot[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getHistoryCaseAudit\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"tag\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"caseImageLink\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"state\",\"type\":\"uint256\"}],\"internalType\":\"struct AntiFraud.FraudCase[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getHistoryPost\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"auditPoliceUser\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"screenshotLink\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"isValid\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"}],\"internalType\":\"struct AntiFraud.FraudScreenshot[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getIsVoted\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_policeUserAddress\",\"type\":\"address\"}],\"name\":\"getPoliceUser\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getPostsList\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"replyCounts\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"tag\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"imageLink\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"postUserAdd\",\"type\":\"address\"}],\"internalType\":\"struct AntiFraud.Posts[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getScreenshotList\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"auditPoliceUser\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"screenshotLink\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"isValid\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"}],\"internalType\":\"struct AntiFraud.FraudScreenshot[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTask\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"answerCount\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isSolved\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"taskImageLink\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"isAnswerInRush\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"isAccept\",\"type\":\"bool\"}],\"internalType\":\"struct AntiFraud.Task[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_postsIndex\",\"type\":\"uint256\"}],\"name\":\"getThisPostsReply\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"postsId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"floor\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"details\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"postUserAdd\",\"type\":\"address\"}],\"internalType\":\"struct AntiFraud.PostsReply[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_taskIndex\",\"type\":\"uint256\"}],\"name\":\"getThisTaskAnswer\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"detail\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"postTime\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"answerAddress\",\"type\":\"address\"}],\"internalType\":\"struct AntiFraud.TaskAnswer[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_caseIndex\",\"type\":\"uint256\"}],\"name\":\"getVoteCountOf\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_tag\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_description\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_caseImageLink\",\"type\":\"string\"}],\"name\":\"postCase\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_screenshotLink\",\"type\":\"string\"}],\"name\":\"postScreenshot\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_description\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_taskImageLink\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"_isAnswerInRush\",\"type\":\"bool\"}],\"name\":\"postTask\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_taskIndex\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_detail\",\"type\":\"string\"}],\"name\":\"postTaskAnswer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_taskIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_answerIndex\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"_isAdopt\",\"type\":\"bool\"}],\"name\":\"taskCompelte\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_taskIndex\",\"type\":\"uint256\"}],\"name\":\"taskFailed\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_val\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_caseIndex\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isValid\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"_checkValue\",\"type\":\"int256\"}],\"name\":\"vote\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/AntiFraud.sol\":\"AntiFraud\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/AntiFraud.sol\":{\"keccak256\":\"0x1da1cbbb08b2542bdc81d2d04c3a7cf27fb60df0c6dbfbb054e0ed1b0c558279\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b354082e2edcc299d30128d20962bbfad54db72bcbceda1504908d4bafe5d783\",\"dweb:/ipfs/QmXknWp68Yn7Gh3AS2N84dzr5rixDMeqnLU6ZUwMMKSRMG\"]},\"project:/contracts/TokenERC20.sol\":{\"keccak256\":\"0xe2c293807d6dbd3bed06c5dc16b4ffc39d027250aea75618f1222795b5867c7f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5ed6c2375c85a74649e54f830b8ededeba1136978053a8be64aab01ee5cdae1c\",\"dweb:/ipfs/QmNV1rfbxQdH2qs6soUi385PVGyjgJmgbuwhGCo7rmp8gy\"]}},\"version\":1}",
@@ -57735,8 +57721,7 @@
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-15T07:53:49.746Z",
-  "networkType": "ethereum",
+  "updatedAt": "2022-04-16T08:48:36.879Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

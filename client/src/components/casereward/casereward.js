@@ -2,6 +2,12 @@ import React from 'react';
 import {Divider,Image} from 'antd'
 import './casereward.min.css'
 const CaseReward = () => {
+
+    React.useEffect(()=>{
+        window.contract.methods.getHistoryCaseAudit().call((err,result)=>{
+            console.log(err,result,"警用端历史审核");
+        })
+    },[])
     const dataList = [
         {   id:"1",
         imgsrc:"http://p6.qhimg.com/t01bd60eab8fdee708d.png",

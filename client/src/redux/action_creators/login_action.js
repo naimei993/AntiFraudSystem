@@ -8,6 +8,7 @@ export const createSaveUserInfoAction = (value)=> {
   j.username = value[1]
   j.imgsrc = value[2]
   j.type = value[3]
+  console.log(JSON.stringify(j),"JJJJJJJJJJJJJJJJJJ");
   localStorage.setItem('user',JSON.stringify(j))
   //向localStorage中保存token
   localStorage.setItem('token',j)

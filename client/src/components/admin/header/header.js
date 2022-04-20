@@ -13,14 +13,13 @@ import menuListPeople from '../../../config/menu_config_personal';
 import menuListPolice from '../../../config/menu_config_police';
 const { SubMenu } = Menu;
 const Header = (props) => {
-    let reduxinfo = JSON.parse(props.userInfo.user)
-    console.log(reduxinfo);
+    let reduxinfo = props.userInfo.user
     const {username,imgsrc,type} = reduxinfo;
     const { pathname } = useLocation();
     const navigate = useNavigate()
     let pathnamedetail = pathname.split('/').splice(2)
     const onClick = ({ key }) => {
-      if(key === "/admin/login/index"){
+      if(key === "/login"){
         props.deleteUserInfo()
       }
       navigate(`${key}`)
@@ -37,7 +36,7 @@ const Header = (props) => {
         return (target.map((item)=>{//箭头函数
           if(!item.children){
             return(
-            <Menu.Item key={item.key} onClick={()=>{console.log(item.title)}}>
+            <Menu.Item key={item.key} >
               <span>{
                 React.createElement(
                   Icon[item.icon]
@@ -59,31 +58,31 @@ const Header = (props) => {
           
     }))
       }
-    return (
-        <div className='header'>
-            <div className='logo'>
-                <a href='/admin/home/index' className='logo_a'>
-                    <img src={logo} alt="反诈信息平台"></img>
-                    <div className='header_title'>反诈信息平台</div>
-                </a>
-            </div>
-            <div className='NavigationBar'>
-            <Menu defaultSelectedKeys={pathnamedetail[0]}  mode="horizontal" theme="light">
-            {type === "people" ?createMenu(menuListPeople):createMenu(menuListPolice)}
-      </Menu>
-            </div>
-            <div className='user'>
-                <div className='useravatat'><Avatar size="default" src={imgsrc}  /></div>
-                <Dropdown overlay={menu}>
-                <a href='/admin/home/index' className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                {username} <DownOutlined />
+        return (
+          <div className='header'>
+              <div className='logo'>
+                  <a href='/admin/home/index' className='logo_a'>
+                      <img src={logo} alt="反诈信息平台"></img>
+                      <div className='header_title'>反诈信息平台</div>
                   </a>
+              </div>
+              <div className='NavigationBar'>
+              <Menu defaultSelectedKeys={pathnamedetail[0]}  mode="horizontal" theme="light">
+              {type === "people" ?createMenu(menuListPeople):createMenu(menuListPolice)}
+        </Menu>
+              </div>
+              <div className='user'>
+                  <div className='useravatat'><Avatar size="default" src={"http://localhost:8080/ipfs/"+imgsrc}  /></div>
+                  <Dropdown overlay={menu}>
+                  <a href='/admin/home/index' className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                  {username} <DownOutlined />
+                    </a>
+                    
+                  </Dropdown>
+              </div>
                   
-                </Dropdown>
-            </div>
-                
-        </div>
-    );
+          </div>
+      );
 };
 
 const mapStateToProps = (state)=>{

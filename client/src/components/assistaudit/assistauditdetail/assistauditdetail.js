@@ -15,6 +15,7 @@ const AssistauditDetail = () => {
     let { pathname } = useLocation();
     let pathnamedetail = pathname.split('/').splice(2)
     console.log(pathnamedetail);
+    
     const dataList = [
         {   id:"1",
         imgsrc:"http://p6.qhimg.com/t01bd60eab8fdee708d.png",
@@ -67,10 +68,10 @@ const AssistauditDetail = () => {
 
         },
     ]
-        const Audit = ()=>{//审核案件
+    const Audit = ()=>{//审核案件
             setVisible(true);
               console.log("审核");
-        }
+    }
     
   const handleOk = () => {
     console.log(input2.current.resizableTextArea.textArea.value); 
@@ -92,7 +93,7 @@ const AssistauditDetail = () => {
             {dataList.map((item)=>{
                  if(item.id === pathnamedetail[1]){
                     return (
-        <div>
+        <div key={item.id}>
             <Card 
             title={
             <div className='left-top' >

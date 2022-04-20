@@ -7,13 +7,24 @@ import avatar from '../../static/avatar.webp'
 
 
 const CaseSquare = () => {
-    const [comment,setcomment] = React.useState({isShow:false,id:""})
-    const [similarity,setsimilarity] = React.useState({isVisible:false,id:"",})
-    const [value, setValue] = React.useState(0);
-    const [butloading,setbutloading] = React.useState(false)
-    const [vote,setvote] = React.useState(true)
-    const [loading,setloading] = React.useState(false)
-    const Clickcomment = (id)=>{//评论区点击
+    const [comment,setcomment] = React.useState({isShow:false,id:""})//评论区板块
+    const [similarity,setsimilarity] = React.useState({isVisible:false,id:"",})//相似度板块
+    const [value, setValue] = React.useState(0);//投票选择得值
+    const [butloading,setbutloading] = React.useState(false)//提交投票按钮loading
+    const [vote,setvote] = React.useState(false)//是否投票
+    const [loading,setloading] = React.useState(false)//批量审核按钮loading
+    const Clickcomment = async (id)=>{//评论区点击
+      setvote(false)
+     await window.contract.methods.getVoteCountOf(id).call((err,result)=>{
+        console.log(result);
+      })
+    //  await window.contract.methods.getIsVoted(id).call((err,result)=>{
+    //    if(result){
+    //      setvote(true)
+    //    }else{
+    //      setvote(false)
+    //    }
+    //  })
         if(similarity.isVisible){
             setsimilarity((oldState)=>({
                 ...oldState,
@@ -32,7 +43,6 @@ const CaseSquare = () => {
                 id
               }))
         }
-        setvote(true)
         setValue(0)
     }
     const Clicksimilarity = (id)=>{//相似度点击区域
@@ -54,8 +64,6 @@ const CaseSquare = () => {
                 id,
             }))
         }
-        setvote(true)
-        setValue(0)
     }
     const start = () => {
       setloading(true)
@@ -67,8 +75,8 @@ const CaseSquare = () => {
           
         }, 1000);
       };
-    const checkBox = (e)=>{
-      console.log(e.target);
+    const checkBox = (e,id)=>{
+      console.log(e.target.checked,id);
     }
     const onChange = e => {//设置单选框的值
       setValue(e.target.value);
@@ -79,7 +87,7 @@ const CaseSquare = () => {
         setTimeout(() => {
           setbutloading(false)
           message.success("感谢您的提交",3)
-          setvote(false)
+          setvote(true)
         }, 1000);
       }else{
         message.warn("请您先选择",3)
@@ -330,7 +338,7 @@ const CaseSquare = () => {
     const MyComment = ()=>{//评论区组件
           return(
             <div className='mycomment'>
-              {vote?<div className='check'>
+              {!vote?<div className='check'>
                 <div className='check_left'>
                 <p>您的建议是:</p>
                 <div> 
@@ -468,7 +476,7 @@ const CaseSquare = () => {
                             return(
                                 <div key={item.id}>
                                     <div className='casequare_item'>
-                                    <Checkbox value={item.id} onChange={checkBox} ></Checkbox>
+                                    <Checkbox onChange={(e)=>{checkBox(e,item.id)}} ></Checkbox>
                                         <div className='line'></div>
                                         <div className='casequare_left'>
                             <a href="#!" >

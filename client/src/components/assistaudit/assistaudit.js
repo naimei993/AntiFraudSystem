@@ -12,6 +12,14 @@ const Assistaudit = () => {
     const [butloading,setbutloading] = React.useState(false)
     const [vote,setvote] = React.useState(true)
     const [combutloading,setcombutloading] = React.useState(false)
+    React.useEffect(()=>{
+      window.contract.methods.getCase().call((err,result)=>{
+          console.log(err,result,"所有案件列表");
+      })
+      window.contract.methods.getIsVoted().call((err,result)=>{
+        console.log(err,result,"是否投票");
+    })
+  },[])
     const Clickcomment = (id)=>{//评论区点击
         if(similarity.isVisible){
             setsimilarity((oldState)=>({
@@ -324,7 +332,6 @@ const Assistaudit = () => {
     const MyComment = ()=>{//评论区组件
           return(
             <div className='mycomment'>
-              
               {vote?<div className='check'>
                 <div className='check_left'>
                 <p>您的建议是:</p>

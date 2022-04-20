@@ -100,16 +100,15 @@ contract AntiFraud {
     // get警方用户
     function getPoliceUser(address _policeUserAddress) external view returns (uint, string memory, string memory) {
         Police memory police = policeList[_policeUserAddress];
+        require(police.id != 0, "User Not Found");
         return (police.id, police.name, police.avatarLink);
     }
     // 注册警方用户
     function createPoliceUser(string memory _name, string memory _avatarLink) external {
-        // 增加警方用户辅助编号
-        policeIndex++;
         // 加入警方用户列表
         Police storage police = policeList[msg.sender];
         // 警方id设定为辅助编号
-        police.id = policeIndex;
+        police.id = ++policeIndex;
         // 设定用户名
         police.name = _name;
         // 设定头像
@@ -129,16 +128,15 @@ contract AntiFraud {
     // get市民用户
     function getCivilUser(address _civilUserAddress) external view returns (uint, string memory, string memory) {
         Civil memory civil = civilList[_civilUserAddress];
+        require(civil.id != 0, "User Not Found");
         return (civil.id, civil.name, civil.avatarLink); 
     }
     // 注册市民用户
     function createCivilUser(string memory _name, string memory _avatarLink) external {
-        // 增加市民用户辅助编号
-        civilIndex++;
         // 加入市民用户列表
         Civil storage civil = civilList[msg.sender];
         // 市民id设定为辅助编号
-        civil.id = civilIndex;
+        civil.id = ++civilIndex;
         // 设定用户名
         civil.name = _name;
         // 设定头像
@@ -152,7 +150,7 @@ contract AntiFraud {
         // 审核案件的警方用户地址
         address auditPoliceUser;
         // 案件图片ipfs链接
-        string screenshotLink;
+        string[] screenshotLink;
         // 案件是否有效（由警方进行判断）
         bool isValid;
         // 上传时间
@@ -167,7 +165,7 @@ contract AntiFraud {
     // 所有截图
     mapping(uint => FraudScreenshot) allSList;
     // 上传案件资料
-    function postScreenshot(string memory _screenshotLink) external {
+    function postScreenshot(string[] memory _screenshotLink) external {
         // 设置案件的发布用户地址
         screenshotIdToPostCivilUser[screenshotIndex] = msg.sender;
         
@@ -191,6 +189,7 @@ contract AntiFraud {
     }
     // get案件截图列表
     function getScreenshotList() external view returns (FraudScreenshot[] memory) {
+        // require(screenshotIndex > 0, "No Screenshot Found");
         // 初始化返回数组
         FraudScreenshot[] memory _List = new FraudScreenshot[](screenshotIndex);
         // // 返回某个市民的全部截图 
@@ -212,14 +211,17 @@ contract AntiFraud {
     }
     // get自己的历史上传
     function getHistoryPost() external view returns (FraudScreenshot[] memory) {
+        // require(screenshotIndex > 0, "No Screenshot Found");
         return screenshotList[msg.sender];
     }
     // get自己的历史审核
     function getHistoryAudit() external view returns (FraudScreenshot[] memory) {
+        // require(screenshotIndex > 0, "No Screenshot Found");
         return historyScreenshotAudit[msg.sender];
     }
     // 审核案件资料截图
     function auditScreenshot(uint _screenshotIndex, bool _isVaild) external {
+        require(_screenshotIndex <= screenshotIndex, "Screenshot Not Exists");
         // 设定案件是否有效
         allSList[_screenshotIndex].isValid = _isVaild;
         // 设定审核警方用户
@@ -249,7 +251,7 @@ contract AntiFraud {
         // 发布时间
         uint postTime;
         // 案件图片ipfs链接
-        string caseImageLink;
+        string[] caseImageLink;
         // 案件状态表
         // 0：已被否决（社区高票否决/民警复核否决）
         // 1：已提交（社区投票中）
@@ -267,7 +269,7 @@ contract AntiFraud {
     // 储存所有案件的映射
     mapping(uint => FraudCase) allCaseList;
     // 发布案件 -> 类比拍卖系统的发布商品
-    function postCase(string memory _title, string memory _tag, string memory _description, string memory _caseImageLink) external {
+    function postCase(string memory _title, string memory _tag, string memory _description, string[] memory _caseImageLink) external {
         // 将案件加入案件列表
         FraudCase memory fraudCase;
         // 案件id设定为辅助编号
@@ -292,6 +294,7 @@ contract AntiFraud {
     } 
     // get案件列表
     function getCase() external view returns (FraudCase[] memory) {
+        // require(caseIndex > 0, "No Case Found");
         FraudCase[] memory _List = new FraudCase[](caseIndex);
         for (uint i = 0; i < caseIndex; i++) {
             _List[i] = allCaseList[i];
@@ -309,11 +312,13 @@ contract AntiFraud {
     }
     // get得票数
     function getVoteCountOf(uint _caseIndex) external view returns (int) {
+        require(_caseIndex <= caseIndex, "Case Not Exists");
         return voteCountOfCase[_caseIndex];
     }
     // 投票
     function vote(uint _caseIndex, bool isValid, int _checkValue) external {
         require(isVotedThisAddress[msg.sender] == false, "Has voted");
+        require(_caseIndex <= caseIndex, "Case Not Exists");
         isVotedThisAddress[msg.sender] = true;
         if (isValid) {
             voteCountOfCase[_caseIndex]++;
@@ -344,6 +349,7 @@ contract AntiFraud {
     }
     // 审核案件
     function auditCase(uint _caseIndex, bool isValid) external {
+        require(_caseIndex <= caseIndex, "Case Not Exists");
         // require(allCaseList[_caseIndex].state == 2 || allCaseList[_caseIndex].state == 3);
         if (isValid) {
             allCaseList[_caseIndex].state = 4;
@@ -359,6 +365,7 @@ contract AntiFraud {
     }
     // get自己的历史案件审核
     function getHistoryCaseAudit() external view returns (FraudCase[] memory) {
+        // require(caseIndex > 0, "No Case Found");
         return historyCaseAudit[msg.sender];
     }
     // 任务结构体
@@ -377,7 +384,7 @@ contract AntiFraud {
         // 任务是否已经解决
         bool isSolved;
         // 任务图片ipfs链接
-        string taskImageLink;
+        string[] taskImageLink;
         // 任务形式：true抢答制 false采纳制
         bool isAnswerInRush;
         // 抢答制下任务是否已被接受
@@ -392,7 +399,7 @@ contract AntiFraud {
     // 发布任务 -> 类比拍卖系统的发布商品
     // 1.抢答式：需要抢答人支付抵押金 成功完成后退回 
     // 2.采纳式：不需要抵押金 由发布者自行采纳回答 允许多人同时作答
-    function postTask(string memory _title, string memory _description, string memory _taskImageLink, bool _isAnswerInRush) external {
+    function postTask(string memory _title, string memory _description, string[] memory _taskImageLink, bool _isAnswerInRush) external {
         // 将任务加入任务列表
         Task memory task;
         // 任务编号设定为辅助编号
@@ -421,6 +428,7 @@ contract AntiFraud {
     }
     // get任务列表
     function getTask() external view returns (Task[] memory) {
+        // require(taskIndex > 0, "No Task Found");
         Task[] memory _List = new Task[](taskIndex);
         for (uint i = 0; i < taskIndex; i++) {
             _List[i] = allTaskList[i];
@@ -468,6 +476,7 @@ contract AntiFraud {
     }
     // get该任务下的回答
     function getThisTaskAnswer(uint _taskIndex) external view returns (TaskAnswer[] memory) {
+        require(_taskIndex <= taskIndex, "Task Not Exists");
         TaskAnswer[] memory _List = new TaskAnswer[](allTaskList[_taskIndex].answerCount);
         for (uint i = 0; i < allTaskList[_taskIndex].answerCount; i++) {
             _List[i] = answerList[_taskIndex][i];
@@ -482,10 +491,12 @@ contract AntiFraud {
     }
     // 外部调用
     function taskFailed(uint _taskIndex) external {
+        require(_taskIndex <= taskIndex, "Task Not Exists");
         _taskFailed(_taskIndex);
     }
     // 确认任务是否完成 
     function taskCompelte(uint _taskIndex, uint _answerIndex, bool _isAdopt) external {
+        require(_taskIndex <= taskIndex, "Task Not Exists");
         if (_isAdopt) {
             allTaskList[_taskIndex].isSolved = true;
             if (allTaskList[_taskIndex].isAnswerInRush) {
@@ -512,13 +523,13 @@ contract AntiFraud {
         string description;
         // 类型
         string tag;
-        string imageLink;
+        string[] imageLink;
         address postUserAdd;
     }
     // 储存所有帖子
     mapping(uint => Posts) postsList;
     // 发帖
-    function createPosts(string memory _title, string memory _description, string memory _tag, string memory _imageLink, uint _reward) external {
+    function createPosts(string memory _title, string memory _description, string memory _tag, string[] memory _imageLink, uint _reward) external {
         Posts memory _post;
         _post.id = postsIndex;
         _post.postTime = block.timestamp;
@@ -535,6 +546,7 @@ contract AntiFraud {
     }
     // get帖子列表
     function getPostsList() external view returns (Posts[] memory) {
+        // require(postsIndex > 0, "No Posts Found");
         Posts[] memory _List = new Posts[](postsIndex);
         for (uint i = 0; i < postsIndex; i++) {
             _List[i] = postsList[i];
@@ -567,6 +579,7 @@ contract AntiFraud {
     }
     // get指定贴子下的所有回复
     function getThisPostsReply(uint _postsIndex) external view returns (PostsReply[] memory) {
+        require(_postsIndex <= postsIndex, "Post Not Exists");
         PostsReply[] memory _List = new PostsReply[](postsList[_postsIndex].replyCounts);
         for (uint i = 0; i < postsList[_postsIndex].replyCounts; i++) {
             _List[i] = replyListOfPosts[_postsIndex][i];

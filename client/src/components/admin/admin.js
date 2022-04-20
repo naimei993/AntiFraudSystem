@@ -1,6 +1,8 @@
 import React from 'react';
-import { Layout,Result,Button } from 'antd';
+import { Layout,Result,Button,message } from 'antd';
+import { connect } from 'react-redux';
 import {Route,Routes,useNavigate} from 'react-router'
+import { Navigate } from "react-router-dom";
 import HeaderTop from './header/header';
 import Home from '../home/home';
 import PersonalCenter from '../personalCenter/personalCenter';
@@ -17,9 +19,10 @@ import Fleamarket from '../fleamarket/fleamarket';
 import Assistaudit from '../assistaudit/assistaudit';
 import AssistauditDetail from '../assistaudit/assistauditdetail/assistauditdetail';
 const { Header, Content } = Layout;
-const Admin = () => {
+const Admin = (props) => {
     const navigate = useNavigate()
-    return (
+    if(props.userInfo.isLogin){
+        return (
         <div>
             <Layout>
       <Header><HeaderTop/></Header>
@@ -68,7 +71,7 @@ const Admin = () => {
                     status="404"
                     title="404"
                     style={{height:"870px"}}
-                    subTitle="Sorry, the page you visited does not exist."
+                    subTitle="抱歉，未找到您需要的网址"
                     extra={<Button type="primary" onClick={()=>{navigate("/admin/home/index")}}>回到首页</Button>}
                   />
             }
@@ -78,6 +81,21 @@ const Admin = () => {
     </Layout>
         </div>
     );
+}else{
+    message.warn("请您先登录！",3);
+    return(
+    <Routes>
+        <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+)
+  }
 };
 
-export default Admin;
+const mapStateToProps = (state)=>{
+    return {
+      userInfo:state.userInfo
+    }
+  }
+  export default connect(
+    mapStateToProps,{}
+  )(Admin)

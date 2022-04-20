@@ -1,7 +1,6 @@
 import React from 'react';
-import { Card,Carousel,Divider, message } from 'antd';
+import { Card,Carousel,Divider,  } from 'antd';
 import {connect} from 'react-redux'
-import { useNavigate } from 'react-router';
 import './home.min.css'
 import logo from '../../static/gongan.png'
 import lb01 from '../../static/lb01.jpg'
@@ -11,7 +10,6 @@ import lb04 from '../../static/lb04.png'
 import report from '../../static/fanzha.svg'
 import progressquery from '../../static/jinduchaxun.svg'
 const Home = (props) => {
-    const navigate = useNavigate ()
       const niticeList = [
           {   id:"1",
               title:"习近平向第四届中古两党理论研讨会致贺信",
@@ -44,15 +42,9 @@ const Home = (props) => {
         },
         
       ]
-      let reduxinfo = JSON.parse(props.userInfo.user)
-      const {isLogin} = props.userInfo
+      let reduxinfo = props.userInfo.user
       console.log(props.userInfo);
-      if(!isLogin){
-          message.warn("请您先登录",3)
-          navigate("/admin/login/index")
-        return 
-        
-    }else{
+
         return (
         
             <div className='home'>
@@ -162,7 +154,6 @@ const Home = (props) => {
         );
     }
    
-};
 const mapStateToProps = (state)=>{
     return {
       userInfo:state.userInfo
