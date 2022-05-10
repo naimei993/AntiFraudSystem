@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter,Navigate} from 'react-router-dom';
+import {Spin} from 'antd'
 import {Route,Routes,} from 'react-router'
-// import AntiFraud from './contracts/AntiFraud.json'
-import {contractABI,contractAddress} from './contract'
+import  main from './contracts/Main.json'
+// import {contractABI,contractAddress} from './contract'
 // import  {  create  }  from  'ipfs-http-client' 
 // import AntiFraud from "./contracts/AntiFraud.json";
 import getWeb3 from "./getWeb3";
@@ -34,17 +35,22 @@ class App extends Component {
       // Use web3 to get the user's accounts.
       // console.log(window.ethereum,"钱包");
       const accounts = await web3.eth.getAccounts();
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = main.networks[networkId];
+      console.log(deployedNetwork && deployedNetwork.address);
+      // main.abi,
+      // deployedNetwork && deployedNetwork.address,
       let instance = new web3.eth.Contract(
-        contractABI,
-        contractAddress,
+       main.abi,
+      "0xF37db126A3e3793ABEA295973e259918e617e46c",
       );
-
-      // console.log(instance,"MMMMMMMMMMM");
-    this.setState({ web3, accounts, contract: instance }, this.runExample);
-      window.contractABI = contractABI;
-      window.contractAddress = contractAddress;
+      // window.contractABI = contractABI;
+      // window.contractAddress = contractAddress;
       window.accounts = accounts;
       window.contract = instance;
+      // console.log(instance,"MMMMMMMMMMM");
+    this.setState({ web3, accounts, contract: instance }, this.runExample);
+     
     } catch (error) {
       console.error(error);
     }
@@ -72,9 +78,10 @@ class App extends Component {
 
   render() {
     if (!this.state.web3) {
-      return  <div className="App">
-        <h3>{window.ethereum?"已安装钱包,请登录MateMask":"请先安装MateMask插件"}</h3>
-    </div>
+      return (
+        <div>正在检测链接是否正常<Spin  /></div>
+        
+      )
     }
     return (
       <div className="App">

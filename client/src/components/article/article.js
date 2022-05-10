@@ -3,7 +3,20 @@ import {Divider,Image} from 'antd'
 import './article.min.css'
 const Article = () => {
 
-
+    React.useEffect(()=>{
+        const getCase = async ()=>{
+            await window.contract.methods.getMyHistoryCaseValiditySet().call((err,result)=>{
+                console.log(err,result,"AAAAAAAA");
+            //   if(result){
+            //       console.log(result);
+            //     // let arr = Object.assign([],result).reverse();
+            //     // console.log(arr);
+                
+            //   }
+            })
+          }
+          getCase()
+    },[])
 
     const dataList = [
         {   id:"1",

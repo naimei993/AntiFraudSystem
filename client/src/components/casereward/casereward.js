@@ -71,7 +71,7 @@ const CaseReward = () => {
                              width={200}
                              src={item.imgsrc}
                             />
-                                <time dateTime="2022-04-5">{item.time}</time>
+                                
                            
                             
                         </div>

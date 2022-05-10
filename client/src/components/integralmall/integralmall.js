@@ -11,18 +11,22 @@ import dami from '../../static/dami.jpg'
 import mf from '../../static/mf.jpg'
 import hsy from '../../static/hsy.jpg'
 import ylfw from '../../static/ylfw.webp'
+import fzry from '../../static/fanzharongyu.webp'
 import './integralmall.min.css'
 
 const Integralmall = (props) => {
   let reduxinfo = props.userInfo.user;
+  if(typeof(reduxinfo) === "string"){
+    reduxinfo =  JSON.parse(reduxinfo)
+  }
     const [shopcart,setshopcart] = React.useState({visible:false,selectedRowKeys: [],loading: false,goodslist:""})
     const [info,setinfo] = React.useState({integral:""})
     React.useEffect(()=>{//箭头函数
-      window.contract.methods.getBalanceOf(window.accounts[0]).call((err,result)=>{
-        setinfo((oldState)=>({
-          ...oldState,
-          integral:result
-        }))
+        window.contract.methods.getBalanceOf(window.accounts[0]).call((err,result)=>{
+          setinfo((oldState)=>({
+            ...oldState,
+            integral:result
+          }))
       })
   },[])
     const onClick = (value) =>{//添加商品到购物车
@@ -69,12 +73,20 @@ const Integralmall = (props) => {
       {
         id:"0",
         imgsrc:ylfw,
-        price:20,
+        price:100,
         goodsName:"医疗服务",
         describe:"社区医生上门检查身体"
     },
+    {
+      id:"1",
+      imgsrc:fzry,
+      price:200,
+      goodsName:"反诈骗荣誉",
+      describe:"公安局颁发反诈骗荣誉奖项"
+    },
+    
         {
-            id:"1",
+            id:"2",
             imgsrc:bjb,
             price:5,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
@@ -82,7 +94,7 @@ const Integralmall = (props) => {
             describe:"定制真皮手感活页笔记本"
         },
         {
-            id:"2",
+            id:"3",
             imgsrc:sbd,
             price:5,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
@@ -90,7 +102,7 @@ const Integralmall = (props) => {
             describe:"定制鼠标垫"
         },
         {
-            id:"3",
+            id:"4",
             imgsrc:dnb,
             price:15,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
@@ -98,7 +110,7 @@ const Integralmall = (props) => {
             describe:"定制电脑包"
         },
         {
-            id:"4",
+            id:"5",
             imgsrc:ydsh,
             price:10,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
@@ -106,7 +118,7 @@ const Integralmall = (props) => {
             describe:"定制运动水壶"
         },
         {
-            id:"5",
+            id:"6",
             imgsrc:sjb,
             price:10,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
@@ -114,7 +126,7 @@ const Integralmall = (props) => {
             describe:"定制双肩包"
         },
         {
-            id:"6",
+            id:"7",
             imgsrc:dami,
             price:20,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
@@ -122,7 +134,7 @@ const Integralmall = (props) => {
             describe:"南方优质稻米品种"
         },
         {
-            id:"7",
+            id:"8",
             imgsrc:hsy,
             price:10,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
@@ -130,7 +142,7 @@ const Integralmall = (props) => {
             describe:"低芥酸特香菜籽特级压榨"
         },
         {
-            id:"8",
+            id:"9",
             imgsrc:mf,
             price:10,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,

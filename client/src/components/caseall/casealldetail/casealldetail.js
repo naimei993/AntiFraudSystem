@@ -2,12 +2,12 @@ import React from 'react';
 import {Card,List,Button,Image,Modal,Steps, message,Select} from 'antd'
 import {useLocation,useNavigate} from 'react-router-dom';
 import {ArrowLeftOutlined,SmileOutlined,LoadingOutlined} from '@ant-design/icons'
-import './assistauditdetail.min.css'
+import './casesquaredetail.min.css'
 
 const {Item} = List
 const { Step } = Steps;
 const { Option } = Select;
-const AssistauditDetail = () => {
+const CasesquareDetail = () => {
     const [visible, setVisible] = React.useState(false);
     const [confirmLoading, setConfirmLoading] = React.useState(false);
     const [identity,setidentity] = React.useState({ident:"yes",id:""})
@@ -22,13 +22,13 @@ const AssistauditDetail = () => {
               let arr = Object.assign([],result).reverse();
               console.log(arr);
               setdatalist(arr)
-              
+              console.log("任务");
             }
           })
         }
         getCase()
       },[])
-
+ 
     const handleChange =(value)=> {
         console.log(value);
         setidentity((oldState)=>({
@@ -36,13 +36,13 @@ const AssistauditDetail = () => {
             ident:value
         }))
       }
-        // const Audit = (id)=>{//审核案件
-        //     setidentity((oldState)=>({
-        //         ...oldState,
-        //         id:id,
-        //     }))
-        //     setVisible(true);
-        // }
+        const Audit = (id)=>{//审核案件
+            setidentity((oldState)=>({
+                ...oldState,
+                id:id,
+            }))
+            setVisible(true);
+        }
     
   const handleOk = async () => {
     setConfirmLoading(true);
@@ -79,7 +79,7 @@ const AssistauditDetail = () => {
                         <Card 
                         title={
                         <div className='left-top' >
-                            <Button type='link' size='small' onClick={()=>{navigate({ pathname: '/admin/assist_audit/index' }, { replace: true })}}>
+                            <Button type='link' size='small' onClick={()=>{navigate({ pathname: '/admin/case_square/index' }, { replace: true })}}>
                                 <ArrowLeftOutlined style={{fontSize:'20px'}} />
                             </Button>
                             <span>案件详情</span>
@@ -117,17 +117,16 @@ const AssistauditDetail = () => {
                                 <Item className='item'>
                                     <span className='prod-title'>案件进度：</span>
                                     <Steps>
-                                      <Step status="finish" title="案件提交" description="2022.4.5" />
-                                      <Step status="process" title="社区民众协助审核" icon={<LoadingOutlined />} />
-                                      <Step status="wait" title="辖区民警审核"  />
-                                      <Step status="wait" title="案件公布通知"  />
+                                      <Step status="finish" title="已提交,等待审核"   description={new Date(parseInt(item.postTime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')} />
+                                      <Step status="process" title="通过审核,案件广场展示" icon={<LoadingOutlined />}description={new Date(parseInt(item.postTime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')} />
+                                      <Step status="wait" title="辖区民警审核" />
                                       <Step status="wait" title="案件完成" icon={<SmileOutlined />} />
                                     </Steps>
                                 </Item>
                             </List>
                         </Card>
                         <div className='buttonlist'>
-                            {/* <Button type='primary' size='large' onClick={()=>{Audit(item.id)}}>立即审核</Button>  */}
+                            <Button type='primary' size='large' onClick={()=>{Audit(item.id)}}>立即审核</Button> 
                             <Modal
                               title="审核案件"
                               visible={visible}
@@ -157,4 +156,4 @@ const AssistauditDetail = () => {
     );
 };
 
-export default AssistauditDetail;
+export default CasesquareDetail;

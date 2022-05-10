@@ -100,11 +100,9 @@ let saveImageOnIpfs = (reader) => {
     // Object.assign(result,values.user,allinfo);
     Object.assign(result,values.user);
     console.log(imgSrc);
-    console.log(result.title,result.content,imgSrc[0]);
-   let res =  await window.contract.methods.postCase(result.title,allinfo.hazardType,result.content,imgSrc[0]).send( {
+    console.log(result.title,result.content,imgSrc);
+   let res =  await window.contract.methods.postCase(result.title,allinfo.hazardType,result.content,imgSrc).send( {
       from:window.accounts[0],
-      gas:1500000,
-      gasPrice:"1000000"
     },function(error,result){console.log(result,"AAAAAAAAAAAAa",error);})
     if(res.transactionHash){
       message.success("感谢您的举报内容",3)

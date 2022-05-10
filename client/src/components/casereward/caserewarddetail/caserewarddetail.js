@@ -68,7 +68,7 @@ const CaserewardDetail = () => {
             {dataList.map((item)=>{
                  if(item.id === pathnamedetail[1]){
                     return (
-            <Card 
+            <Card key={item.id}
             title={
             <div className='left-top' >
                 <Button type='link' size='small' onClick={()=>{navigate({ pathname: '/admin/article_about/index' }, { replace: true })}}>

@@ -50,10 +50,15 @@ const Login = (props) => {
                  
                  let result = await  window.contract.methods.getCivilUser(window.accounts[0]).call((erro,result)=>{
                      console.log(result)
-                        if(result[1]){
-                          result[3] = "people"
-                            props.saveUserInfo(result)
-                            console.log(result);
+                     let res = {
+                       0:result[0],
+                       1:result[1],
+                       2:result[2],
+                       3:identity.ident
+                     }
+                        if(result){
+                            props.saveUserInfo(res)
+                            console.log(res);
                             navigate("/admin/home/index")
                         }else{
                             message.error("请您先注册！",3)
@@ -62,18 +67,24 @@ const Login = (props) => {
                       })
                       console.log(result);
                 }else{
-                 let res = await  window.contract.methods.getPoliceUser(window.accounts[0]).call((erro,result)=>{
-                        if(result[1]){
-                            result[3] = "police"
-                            console.log(result);
-                            props.saveUserInfo(result)
+                 let result1 = await  window.contract.methods.getPoliceUser(window.accounts[0]).call((erro,result)=>{
+                  console.log(result)
+                  let res = {
+                    0:result[0],
+                    1:result[1],
+                    2:result[2],
+                    3:identity.ident
+                  }
+                        if(result){
+                            console.log(res);
+                            props.saveUserInfo(res)
                             navigate("/admin/home/index")
                         }else{
                             message.error("请您先注册！",3)
                         }
                         
                       })
-                      console.log(res );
+                      console.log(result1);
                 }
             }catch{
                 message.error("请您检查您的MateMask钱包是否连接正常",3)
@@ -100,8 +111,6 @@ const Login = (props) => {
             })
             let res = await window.contract.methods.createCivilUser(username,imgSrc[0]).send( {
               from:window.accounts[0],
-              gas:1500000,
-              gasPrice:"1000000"
             },function(error,result){console.log(result,"AAAAAAAAAAAAa",error);})
             console.log(res,"市民注册");
             
@@ -114,8 +123,6 @@ const Login = (props) => {
             })
            let res = await window.contract.methods.createPoliceUser(username,imgSrc[0]).send( {
                 from:window.accounts[0],
-                gas:1500000,
-                gasPrice:"1000000"
               },function(error,result){console.log(result,"AAAAAAAAAAAAa",error);})
             console.log(res,"警察注册");
             // message.success("注册成功")

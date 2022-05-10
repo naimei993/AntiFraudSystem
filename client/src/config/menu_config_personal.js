@@ -20,10 +20,10 @@ const menuListPeople = [ //eslint-disable-next-line
     path:'/admin/assist_audit/index'
   },
   {
-    title: '社区生态',
-    key: 'flea_market',
-    icon: 'SmileOutlined',
-    path: '/admin/flea_market/index'//flea market
+    title: '案件广场',
+    key: 'case_all_people',
+    icon: 'UnorderedListOutlined',
+    path:'/admin/case_all_people/index'
   },
   {
     title: '历史审核',

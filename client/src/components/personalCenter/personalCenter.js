@@ -18,6 +18,9 @@ const PersonalCenter = (props) => {
   const [imgSrc,setimgSrc] = React.useState([])
   const inputRef = useRef(null)
   let reduxinfo = props.userInfo.user;
+  if(typeof(reduxinfo) === "string"){
+    reduxinfo =  JSON.parse(reduxinfo)
+  }
       React.useEffect(()=>{//箭头函数
         var myEcharts;
         if(myEcharts !== null && myEcharts !== "" && myEcharts !== undefined){
@@ -173,8 +176,8 @@ const PersonalCenter = (props) => {
                   </a>
                 </div>
                 <div className='center entrance'>
-                  <a href={reduxinfo.type === "people" ?'/admin/article_about/index':"/admin/history_review/index"}>
-                  <div>历史审核</div>
+                  <a href={reduxinfo.type === "people" ?'/admin/article_about/index':"/admin/upload_case/index"}>
+                  <div>{reduxinfo.type === "people" ? "历史审核":"上传案件"}</div>
                   </a>
                 </div>
                 <div className='entrance'>
@@ -184,7 +187,7 @@ const PersonalCenter = (props) => {
                   <Modal title="反馈信息" visible={isModalVisible.isvisible} okText="确定" cancelText="取消" onOk={handleOk} onCancel={handleCancel}>
                   <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
                   <Form.Item name={['user', 'content']} rules={[{required:true,}]} label="反馈描述">
-        <Input.TextArea onChange={InputContent}/>
+        <Input.TextArea style={{height:100}} onChange={InputContent}/>
       </Form.Item>
       <Form.Item  label="反馈材料">
 <div>

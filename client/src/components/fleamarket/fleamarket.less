@@ -16,6 +16,7 @@
             }
             .ant-comment-content{
                 .ant-comment-actions{
+                    margin-top: 0;
                     li{
                         width: 100%;
                         .comment_bottom{
@@ -66,15 +67,31 @@
                         }
                     }
                 }
-                
+                .ant-comment-content-author-name
+                {
+                    width: 100%;
+                }
+            }
+            .top_comment{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                .ant-input{
+                    height: 110px;
+                }
+                .ant-btn{
+                    width: 120px;
+                }
             }
             .ant-comment-inner{
                 padding: 0 0;
             }
             .ant-comment-inner{
                 text-align: start;
+                margin: 10px 0;
             }
             .ant-comment-content-detail{
+                margin: 5px 0;
                 div{
                     display: flex;
                     flex-direction: column;

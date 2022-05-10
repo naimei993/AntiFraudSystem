@@ -7,24 +7,35 @@ const menuListPolice = [ //eslint-disable-next-line
     path: '/admin/home/index'//对应路径
   },
   {
-    title: '辖区案件',
+    title: '审核案件',
     key: 'case_square',
-    icon: 'UnorderedListOutlined',
+    icon: 'AuditOutlined',
     path:'/admin/case_square/index'
   },
-  
+  {
+    title: '案件广场',
+    key: 'case_all',
+    icon: 'UnorderedListOutlined',
+    path:'/admin/case_all/index'
+  },
+  {
+    title: '悬赏任务',
+    key: 'review',
+    icon: 'LikeOutlined',
+    path: '/admin/review/index'
+    
+  },
+  {
+    title: '上传任务',
+    key: 'upload_case',
+    icon: 'UploadOutlined',
+    path: '/admin/upload_case/index'//flea market
+  },
   {
     title: '社区生态',
     key: 'flea_market',
     icon: 'SmileOutlined',
     path: '/admin/flea_market/index'//flea market
-  },
-  {
-    title: '历史审核',
-    key: 'history_review',
-    icon: 'LikeOutlined',
-    path: '/admin/history_review/index'
-    
   },
   {
     title: '积分商城',

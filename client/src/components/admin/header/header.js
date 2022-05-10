@@ -13,8 +13,11 @@ import menuListPeople from '../../../config/menu_config_personal';
 import menuListPolice from '../../../config/menu_config_police';
 const { SubMenu } = Menu;
 const Header = (props) => {
-    let reduxinfo = props.userInfo.user
-    const {username,imgsrc,type} = reduxinfo;
+  let reduxinfo = props.userInfo.user
+  if(typeof(reduxinfo) === "string"){
+    reduxinfo =  JSON.parse(reduxinfo)
+  }
+
     const { pathname } = useLocation();
     const navigate = useNavigate()
     let pathnamedetail = pathname.split('/').splice(2)
@@ -59,6 +62,7 @@ const Header = (props) => {
     }))
       }
         return (
+          
           <div className='header'>
               <div className='logo'>
                   <a href='/admin/home/index' className='logo_a'>
@@ -68,14 +72,14 @@ const Header = (props) => {
               </div>
               <div className='NavigationBar'>
               <Menu defaultSelectedKeys={pathnamedetail[0]}  mode="horizontal" theme="light">
-              {type === "people" ?createMenu(menuListPeople):createMenu(menuListPolice)}
+              {reduxinfo.type === "people" ?createMenu(menuListPeople):createMenu(menuListPolice)}
         </Menu>
               </div>
               <div className='user'>
-                  <div className='useravatat'><Avatar size="default" src={"http://localhost:8080/ipfs/"+imgsrc}  /></div>
+                  <div className='useravatat'><Avatar size="default" src={"http://localhost:8080/ipfs/"+(typeof(reduxinfo) === "string"?JSON.parse(reduxinfo).imgsrc:reduxinfo.imgsrc)}  /></div>
                   <Dropdown overlay={menu}>
                   <a href='/admin/home/index' className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                  {username} <DownOutlined />
+                  {reduxinfo.username} <DownOutlined />
                     </a>
                     
                   </Dropdown>
