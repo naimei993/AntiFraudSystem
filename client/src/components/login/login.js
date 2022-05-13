@@ -56,7 +56,7 @@ const Login = (props) => {
                        2:result[2],
                        3:identity.ident
                      }
-                        if(result){
+                        if(result[1] !== ''){
                             props.saveUserInfo(res)
                             console.log(res);
                             navigate("/admin/home/index")
@@ -75,7 +75,7 @@ const Login = (props) => {
                     2:result[2],
                     3:identity.ident
                   }
-                        if(result){
+                        if(result[1] !== ''){
                             console.log(res);
                             props.saveUserInfo(res)
                             navigate("/admin/home/index")
@@ -109,11 +109,20 @@ const Login = (props) => {
                 message.error("请勿重复注册",5)
               }
             })
-            let res = await window.contract.methods.createCivilUser(username,imgSrc[0]).send( {
+            await window.contract.methods.createCivilUser(username,imgSrc[0]).send( {
               from:window.accounts[0],
-            },function(error,result){console.log(result,"AAAAAAAAAAAAa",error);})
-            console.log(res,"市民注册");
-            
+            },function(error,result){
+              if(result){
+                console.log(result,"市民注册");
+                message.success("注册成功",3)
+                setTimeout(()=>{
+                  window.location.reload()
+                },2000)
+              }else{
+                message.error("注册出错，请稍后再试")
+              }
+            })
+           
           }else{
             await  window.contract.methods.getPoliceUser(window.accounts[0]).call((erro,result)=>{//先检查账户是否注册过
               if(result[1]){
@@ -121,11 +130,17 @@ const Login = (props) => {
                 navigate("/login")
               }
             })
-           let res = await window.contract.methods.createPoliceUser(username,imgSrc[0]).send( {
+           await window.contract.methods.createPoliceUser(username,imgSrc[0]).send( {
                 from:window.accounts[0],
-              },function(error,result){console.log(result,"AAAAAAAAAAAAa",error);})
-            console.log(res,"警察注册");
-            // message.success("注册成功")
+              },function(error,result){if(result){
+               
+                message.success("注册成功",3)
+                setTimeout(()=>{
+                  window.location.reload()
+                },2000)
+              }else{
+                message.error("注册出错，请稍后再试")
+              }})
           }
           console.log(username,imgSrc[0],identity.ident);
           }

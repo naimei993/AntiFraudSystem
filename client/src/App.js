@@ -42,7 +42,7 @@ class App extends Component {
       // deployedNetwork && deployedNetwork.address,
       let instance = new web3.eth.Contract(
        main.abi,
-      "0xF37db126A3e3793ABEA295973e259918e617e46c",
+      "0x8AD9B32f0443e58392c13D031D5CfD70172f1581",
       );
       // window.contractABI = contractABI;
       // window.contractAddress = contractAddress;

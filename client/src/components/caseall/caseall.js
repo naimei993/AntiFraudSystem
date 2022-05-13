@@ -498,7 +498,7 @@ const Caseall = () => {
                 <div className='casequare_all'>
                   {
                     datalist.map((item)=>{
-                        if(item.isSetValidity){
+                        if(item.isValid){
                             return(
                                 <div key={item.id}>
                                           <div className='casequare_item'>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Button, message,Avatar,Modal,Table,InputNumber} from 'antd'
+import {Button, message,Avatar,InputNumber} from 'antd'
 import {ShoppingCartOutlined,} from '@ant-design/icons'
 import bjb from '../../static/bjb.jpg'
 import sbd from '../../static/sbd.jpg'
@@ -30,41 +30,19 @@ const Integralmall = (props) => {
       })
   },[])
     const onClick = (value) =>{//添加商品到购物车
-        message.info(`你添加了${value.goodsName}到购物车`)
+      console.log(value);
+      if(info.integral > value.price){
+        message.success("兑换成功",2)
+      }else{
+        message.error("积分不足，兑换失败",2)
+      }
+        // message.info(`你添加了${value.goodsName}到购物车`)
         setshopcart((oldState)=>({
             ...oldState,
             goodslist:shopcart.goodslist+`${value},`
-            
         }))
     }
-    const shoppingCart = ()=>{//点击购物车触发弹窗
-        setshopcart(oldState => ({
-            ...oldState,
-           visible:true
-        }))
-          message.info("你点开了购物车",3)
-    }
-    const modalCancel = ()=>{//弹窗取消按钮
-        setshopcart(oldState => ({
-            ...oldState,
-           visible:false
-        }))
-        message.info("你取消了弹窗",3)
-    }
-    const modalOk = ()=>{//弹窗确认按钮
-          setshopcart(oldState => ({
-            ...oldState,
-           visible:false
-        }))
-        message.info("你点击了确认按钮，弹窗关闭并跳转计算页面",3)
-    }
-    const onSelectChange = (selectedRowKeys)=>{//箭头函数
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        setshopcart(oldState => ({
-            ...oldState,
-            selectedRowKeys
-        }))
-    }
+
     const numberChange = (value)=>{//箭头函数
           console.log(value);
     }
@@ -88,7 +66,7 @@ const Integralmall = (props) => {
         {
             id:"2",
             imgsrc:bjb,
-            price:5,
+            price:50,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"笔记本",
             describe:"定制真皮手感活页笔记本"
@@ -96,7 +74,7 @@ const Integralmall = (props) => {
         {
             id:"3",
             imgsrc:sbd,
-            price:5,
+            price:50,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"鼠标垫",
             describe:"定制鼠标垫"
@@ -104,7 +82,7 @@ const Integralmall = (props) => {
         {
             id:"4",
             imgsrc:dnb,
-            price:15,
+            price:150,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"电脑包",
             describe:"定制电脑包"
@@ -112,7 +90,7 @@ const Integralmall = (props) => {
         {
             id:"5",
             imgsrc:ydsh,
-            price:10,
+            price:100,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"运动水壶",
             describe:"定制运动水壶"
@@ -120,7 +98,7 @@ const Integralmall = (props) => {
         {
             id:"6",
             imgsrc:sjb,
-            price:10,
+            price:100,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"双肩包",
             describe:"定制双肩包"
@@ -128,7 +106,7 @@ const Integralmall = (props) => {
         {
             id:"7",
             imgsrc:dami,
-            price:20,
+            price:200,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"大米",
             describe:"南方优质稻米品种"
@@ -136,7 +114,7 @@ const Integralmall = (props) => {
         {
             id:"8",
             imgsrc:hsy,
-            price:10,
+            price:100,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"花生油",
             describe:"低芥酸特香菜籽特级压榨"
@@ -144,31 +122,14 @@ const Integralmall = (props) => {
         {
             id:"9",
             imgsrc:mf,
-            price:10,
+            price:100,
             number:<InputNumber min={1} max={5} defaultValue={1} onChange={numberChange}/>,
             goodsName:"面粉",
             describe:"小麦粉中筋面粉"
         },
 
     ]
-    const columns = [
-        {
-          title: '全选',
-          dataIndex: 'goodsName',
-        },
-        {
-          title: '单价',
-          dataIndex: 'price',
-        },
-        {
-          title: '数量',
-          dataIndex: 'number',
-        },
-        {
-          title: '总计',
-          dataIndex: 'total',
-        },
-      ];
+   
       
       const data = [];
       for (let i = 1; i < 20; i++) {
@@ -180,10 +141,7 @@ const Integralmall = (props) => {
           total:`${i}`
         });
       }
-      const rowSelection = {
-        selectedRowKeys:shopcart.selectedRowKeys,
-        onChange: onSelectChange,
-      };
+
     return (
         <div className='intergralmall'>
             <div className='inter_left'>
@@ -203,7 +161,7 @@ const Integralmall = (props) => {
                                     <div className='bottom_right'>
                                         <div className='price'>积分：<span>{item.price}</span></div>
                                     <Button type="primary" icon={<ShoppingCartOutlined />} size="large" onClick={()=> onClick(item)}>
-                                        添加
+                                        兑换
                                     </Button>
                                     </div>
                                 
@@ -228,30 +186,7 @@ const Integralmall = (props) => {
                     <div className='points'>我的积分<div>{info.integral}</div></div>
                     <div className='order'>历史订单<div>5</div></div>
                 </div>
-                <div className='int_right_shopcart'>
-                <Button type="primary" icon={<ShoppingCartOutlined />} size="large" onClick={shoppingCart} className='shopcartButton'>
-                                  我的购物车
-                 </Button>
-                    <Modal
-                      title="购物车"
-                      visible={shopcart.visible}
-                      onOk={modalOk}
-                      onCancel={modalCancel}
-                      okText="确认"
-                      cancelText="取消"
-                      width={1000}
-                    >
-                      <div>
-        <div style={{ marginBottom: 16 }}>
-         
-          <span style={{ marginLeft: 8 }}>
-            {shopcart.selectedRowKeys.length>0 ? true : false ? `Selected ${shopcart.selectedRowKeys.length} items` : ''}
-          </span>
-        </div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-      </div>
-                    </Modal>
-                </div>
+                
             </div>
         </div>
     );

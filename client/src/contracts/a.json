@@ -1,0 +1,863 @@
+[
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_avatarLink",
+				"type": "string"
+			}
+		],
+		"name": "createCivilUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_avatarLink",
+				"type": "string"
+			}
+		],
+		"name": "createPoliceUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAdd",
+				"type": "address"
+			}
+		],
+		"name": "getBalanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCaseList",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "imageLinks",
+						"type": "string[]"
+					},
+					{
+						"internalType": "address",
+						"name": "userAdd",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "validitySetUserAdd",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "isSetValidity",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isValid",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isFraud",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct Main.Case[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getCaseState",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAdd",
+				"type": "address"
+			}
+		],
+		"name": "getCivilUser",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "avatarLink",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "userAdd",
+						"type": "address"
+					}
+				],
+				"internalType": "struct Main.User",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getIsVoted",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getMyHistoryCaseValiditySet",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "imageLinks",
+						"type": "string[]"
+					},
+					{
+						"internalType": "address",
+						"name": "userAdd",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "validitySetUserAdd",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "isSetValidity",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isValid",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isFraud",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct Main.Case[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAdd",
+				"type": "address"
+			}
+		],
+		"name": "getPoliceUser",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "avatarLink",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "userAdd",
+						"type": "address"
+					}
+				],
+				"internalType": "struct Main.User",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getTaskList",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "acceptTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "imageLinks",
+						"type": "string[]"
+					},
+					{
+						"internalType": "address",
+						"name": "userAdd",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "acceptAdd",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "isAccept",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isFraud",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isFinished",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct Main.Task[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getTaskReply",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "repoId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "floor",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "level",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "details",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "userAdd",
+						"type": "address"
+					}
+				],
+				"internalType": "struct Main.Reply",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getTransactionPostList",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "imageLink",
+						"type": "string[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "userAdd",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "replyCounts",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Main.TransactionPost[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_transactionPostIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getTransactionPostReplyList",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "repoId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "floor",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "level",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "postTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "details",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "userAdd",
+						"type": "address"
+					}
+				],
+				"internalType": "struct Main.Reply[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getVoteCountOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_tag",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_description",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_imageLinks",
+				"type": "string[]"
+			}
+		],
+		"name": "postCase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_isFraud",
+				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "_details",
+				"type": "string"
+			}
+		],
+		"name": "postReply2Task",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_transactionPostIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_level",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_details",
+				"type": "string"
+			}
+		],
+		"name": "postReply2TransactionPost",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_tag",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_description",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_imageLinks",
+				"type": "string[]"
+			}
+		],
+		"name": "postTask",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "postTaskFromCase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_description",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_tag",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_imageLink",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_price",
+				"type": "uint256"
+			}
+		],
+		"name": "postTransactionPost",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "setCaseAccept",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "setCaseFailed",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "setCaseFinished",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "_caseIndex",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "_isValid",
+				"type": "bool[]"
+			}
+		],
+		"name": "setCaseValidity",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_isFraud",
+				"type": "bool"
+			}
+		],
+		"name": "setIsFraudCase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_val",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_caseIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_isFraud",
+				"type": "bool"
+			}
+		],
+		"name": "vote",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]

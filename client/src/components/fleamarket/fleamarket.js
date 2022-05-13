@@ -129,6 +129,7 @@ const reportChange = (e)=>{//举报内容描述
                 ...oldState,
                 isShow:false
               }))
+              window.location.reload()
             },3000)
            
           }else{
@@ -330,9 +331,8 @@ const onChangeInput = async(id)=>{
               <div className='inter_right'>
                 <div className='int_right_avatar'>
                 <Avatar
-                    size='large'
-                    width={200}
-                    height={200}
+                    size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+                   
                     src={"http://localhost:8080/ipfs/"+reduxinfo.imgsrc}
                 />
                 <div className='username'>

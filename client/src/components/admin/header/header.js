@@ -30,7 +30,6 @@ const Header = (props) => {
     const menu = (
       <Menu onClick={onClick}>
     <Menu.Item key="/admin/personalcenter/index">个人中心</Menu.Item>
-    <Menu.Item key="/admin/article_about/index">我的贴子</Menu.Item>
     <Menu.Item key="/admin/integralmall/index">我的积分</Menu.Item>
     <Menu.Item key="/login">退出登录</Menu.Item>
   </Menu>

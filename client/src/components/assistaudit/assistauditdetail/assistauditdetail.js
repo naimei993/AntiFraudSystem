@@ -28,7 +28,7 @@ const AssistauditDetail = () => {
         }
         getCase()
       },[])
-
+   
     const handleChange =(value)=> {
         console.log(value);
         setidentity((oldState)=>({
@@ -36,19 +36,22 @@ const AssistauditDetail = () => {
             ident:value
         }))
       }
-        // const Audit = (id)=>{//审核案件
-        //     setidentity((oldState)=>({
-        //         ...oldState,
-        //         id:id,
-        //     }))
-        //     setVisible(true);
-        // }
+        const Audit = (id)=>{//审核案件
+            setidentity((oldState)=>({
+                ...oldState,
+                id:id,
+            }))
+            setVisible(true);
+        }
     
   const handleOk = async () => {
     setConfirmLoading(true);
     console.log(identity,"最终信息");
     let mark = identity.ident === "yes"?true:false
-    await window.contract.methods.setIsFraudCase(identity.id,mark).send({
+    let idarr = [identity.id];
+    let markarr = [mark]
+    console.log(mark,identity.id);
+    await window.contract.methods.setCaseValidity(idarr,markarr).send({
         from:window.accounts[0],
     },function(error,result){
         if(result){
@@ -56,10 +59,12 @@ const AssistauditDetail = () => {
                 setVisible(false);
                 setConfirmLoading(false);
                 message.success("感谢您的审核与帮助",3)
-                navigate("/admin/case_square/index")
+                navigate("/admin/assist_audit/index")
               }, 2000);
         }else{
             message.error("审核错误，请稍后再试",3)
+            setVisible(false);
+            setConfirmLoading(false);
         }
     })
     
@@ -102,10 +107,7 @@ const AssistauditDetail = () => {
                                     <span className='time'>是否审核：</span>
                                     <span>{item.isSetValidity?"是":"否"}</span>
                                 </Item>
-                                <Item className='item'>
-                                    <span className='time'>信息有效性：</span>
-                                    <span>{item.isValid?"是":"否"}</span>
-                                </Item>
+                                
                                 <Item className='item'>
                                     <span className='prod-title'>所属分类：</span>
                                     <span>{item.tag}</span>
@@ -117,17 +119,16 @@ const AssistauditDetail = () => {
                                 <Item className='item'>
                                     <span className='prod-title'>案件进度：</span>
                                     <Steps>
-                                      <Step status="finish" title="案件提交" description="2022.4.5" />
-                                      <Step status="process" title="社区民众协助审核" icon={<LoadingOutlined />} />
-                                      <Step status="wait" title="辖区民警审核"  />
-                                      <Step status="wait" title="案件公布通知"  />
-                                      <Step status="wait" title="案件完成" icon={<SmileOutlined />} />
+                                      <Step status="process" title="已提交,等待审核" icon={<LoadingOutlined />}  description={new Date(parseInt(item.postTime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')} />
+                                      <Step status="wait" title="通过审核,案件广场展示" />
+                                      <Step status="wait" title="辖区民警审核" />
+                                      <Step status="wait" title="案件完成" icon={<SmileOutlined />}  />
                                     </Steps>
                                 </Item>
                             </List>
                         </Card>
                         <div className='buttonlist'>
-                            {/* <Button type='primary' size='large' onClick={()=>{Audit(item.id)}}>立即审核</Button>  */}
+                            <Button type='primary' size='large' onClick={()=>{Audit(item.id)}}>审核信息有效性</Button> 
                             <Modal
                               title="审核案件"
                               visible={visible}
@@ -139,8 +140,8 @@ const AssistauditDetail = () => {
                             >
                               <h3><span>审核意见</span>
                               <Select className='selecttruth' defaultValue="yes" style={{ width: 200 }} onChange={handleChange}>
-                                  <Option value="yes">该案件为诈骗案件</Option>
-                                  <Option value="no">该案件不是诈骗案件</Option>
+                                  <Option value="yes">信息有效</Option>
+                                  <Option value="no">信息无效</Option>
                             </Select>
                               </h3>
                               

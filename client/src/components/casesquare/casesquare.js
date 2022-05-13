@@ -1,14 +1,16 @@
 import React from 'react';
 
-import {Divider,Image, Button, message,Checkbox,Modal} from 'antd'
+import {Divider,Image, Button, message,Checkbox,Modal,Select} from 'antd'
 import './casesquare.min.css'
 
 
 
+const { Option } = Select;
 const CaseSquare = () => {
     const [datalist,setdatalist] = React.useState([])
     const [selectitem,setselectitem] = React.useState([])
     const [visi,setvisi] = React.useState({visible:false,type:false})
+    const [identity,setidentity] = React.useState({ident:"yes",id:""})
     React.useEffect(()=>{
       const getCase = async ()=>{
         await window.contract.methods.getCaseList().call((err,result)=>{
@@ -27,11 +29,17 @@ const CaseSquare = () => {
  
   const auditOk = async () => {
     let len = selectitem.length
+    let truth = identity.ident === "yes"?true:false
     let arr = []
     for(let i =0;i<len;i++){
-      arr.push(true)
+      arr.push(truth)
     }
-    await window.contract.methods.setCaseValidity(selectitem,arr).send({
+    console.log(selectitem,arr);
+    if(len === 0){
+      message.error("选择列表不能为空",3)
+      return 
+    }else{
+  await window.contract.methods.setCaseValidity(selectitem,arr).send({
       from:window.accounts[0],
     },function(error,result){
       if(result){
@@ -40,6 +48,9 @@ const CaseSquare = () => {
           visible:false
         }));
         message.success("感谢您的提交",3)
+        setTimeout(()=>{
+          window.location.reload()
+        },2000)
       }else{
         message.error("提交错误，请稍后再试",3)
         setvisi((oldState)=>({
@@ -48,6 +59,8 @@ const CaseSquare = () => {
         }));
       }
     })
+    }
+    
   };
 
   const auditCancel = () => {
@@ -56,7 +69,13 @@ const CaseSquare = () => {
       visible:false
     }));
   };
-   
+  const handleChange =(value)=> {
+    console.log(value);
+    setidentity((oldState)=>({
+        ...oldState,
+        ident:value
+    }))
+  }
     
     const start = async() => {//批量审核按钮
       setvisi((oldState)=>({
@@ -92,12 +111,15 @@ const CaseSquare = () => {
             批量审核有效性
           </Button>
           <Modal title="审核意见" visible={visi.visible} okText="确定" cancelText="取消" onOk={auditOk} onCancel={auditCancel}>
-            <p>确定将案件审核通过为诈骗信息</p>
+            <Select className='selecttruth' defaultValue="yes" style={{ width: 200 }} onChange={handleChange}>
+                   <Option value="yes">是有效信息</Option>
+                    <Option value="no">不是有效信息</Option>
+             </Select>
           </Modal>
                 <div className='casequare_all'>
                   {
                     datalist.map((item)=>{
-                      if(!item.isSetValidity){
+                      if(!item.isValid){
                         return(
                           <div key={item.id}>
                                     <div className='casequare_item'>

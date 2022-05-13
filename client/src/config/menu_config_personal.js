@@ -26,12 +26,6 @@ const menuListPeople = [ //eslint-disable-next-line
     path:'/admin/case_all_people/index'
   },
   {
-    title: '历史审核',
-    key: 'article_about',
-    icon: 'FormOutlined',
-    path:'/admin/article_about/index'
-  },
-  {
     title: '积分商城',
     key: 'integralmall',
     icon: 'ShoppingOutlined',
@@ -45,3 +39,10 @@ const menuListPeople = [ //eslint-disable-next-line
   },
 ]
 export default menuListPeople
+// ,
+//   {
+//     title: '历史审核',
+//     key: 'article_about',
+//     icon: 'FormOutlined',
+//     path:'/admin/article_about/index'
+//   }

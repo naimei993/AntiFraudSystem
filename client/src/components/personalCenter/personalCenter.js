@@ -16,18 +16,47 @@ const PersonalCenter = (props) => {
   const [info,setinfo] = React.useState({integral:0})
   const [isModalVisible, setIsModalVisible] = React.useState({isvisible:false,content:""});
   const [imgSrc,setimgSrc] = React.useState([])
+  const [allarr,setallarr] = React.useState({aarr:0,vailarr:0})
   const inputRef = useRef(null)
   let reduxinfo = props.userInfo.user;
   if(typeof(reduxinfo) === "string"){
     reduxinfo =  JSON.parse(reduxinfo)
   }
       React.useEffect(()=>{//箭头函数
-        var myEcharts;
-        if(myEcharts !== null && myEcharts !== "" && myEcharts !== undefined){
-          myEcharts.dispose();//解决echarts dom已经加载的报错
+        const getCase = async ()=>{
+          await window.contract.methods.getMyHistoryCaseValiditySet().call((err,result)=>{
+              console.log(err,result,"AAAAAAAA");
+          //   if(result){
+          //       console.log(result);
+          //     // let arr = Object.assign([],result).reverse();
+          //     // console.log(arr);
+              
+          //   }
+          })
+          await window.contract.methods.getCaseList().call((err,result)=>{
+            if(result){
+              let arr = Object.assign([],result).reverse();
+              console.log(arr);
+              let allarr = [];
+              let vaildarr = [];
+              arr.map((item)=>{
+                if(item.userAdd === window.accounts[0]){
+                  console.log(item);
+                  allarr.push(item)
+                  if(item.isValid){
+                    vaildarr.push(item)
+                  }
+                }
+                return null
+              })
+              setTimeout(()=>{
+                setallarr({aarr:allarr.length,vailarr:vaildarr.length})
+              },200)
+            }
+          })
         }
-        myEcharts = echarts.init(document.getElementById('myecharts'))
-        myEcharts.setOption(option);
+        getCase()
+        
        
         window.contract.methods.getBalanceOf(window.accounts[0]).call((err,result)=>{
         setinfo((oldState)=>({
@@ -36,49 +65,60 @@ const PersonalCenter = (props) => {
         }))
       })
     },[])// eslint-disable-line react-hooks/exhaustive-deps
-    const option = {
-      tooltip: {
-        trigger: 'item'
-      },
-      legend: {
-        top: '5%',
-        left: 'center'
-      },
-      series: [
-        {
-          name: '',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '30',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: [
-            { value: 10, name: '已提交案件' },
-            { value: 7, name: '已解决案件' },
-            { value: 3, name: '审核中' },
-            
-          ]
-        }
-      ]
-    };
     
+    const setEcharts = ()=>{//箭头函数
+      const option = {
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center'
+        },
+        series: [
+          {
+            name: '',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '30',
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: `${allarr.aarr}`-0, name: '已提交案件' },
+              { value: `${allarr.vailarr}`-0, name: '通过有效性审核案件' },
+              
+              
+            ]
+          }
+        ]
+      };
+      var myEcharts;
+        if(document.getElementById('myecharts')){
+          myEcharts = echarts.init(document.getElementById('myecharts'))
+        myEcharts.setOption(option);
+        }else{
+          return 
+        }
+        
+    }
+    setEcharts()
     const InputContent = (e)=>{
       setIsModalVisible((oldState)=>({
         ...oldState,
@@ -163,9 +203,9 @@ const PersonalCenter = (props) => {
               <div className='userinfo'>
                 <div className='username'>{reduxinfo.username}</div>
                 <div className='userdetial'>
-                  注册年龄：1年
-                  <Divider type="vertical" />
-                  <a href="/admin/article_about/index">发布数量：10</a>
+                
+                  
+                  <a href="/admin/article_about/index">发布数量：{allarr.aarr}</a>
                   <Divider type="vertical" />
                   <a href="/admin/integralmall/index">我的积分：{info.integral}</a>
                 </div>
@@ -176,8 +216,8 @@ const PersonalCenter = (props) => {
                   </a>
                 </div>
                 <div className='center entrance'>
-                  <a href={reduxinfo.type === "people" ?'/admin/article_about/index':"/admin/upload_case/index"}>
-                  <div>{reduxinfo.type === "people" ? "历史审核":"上传案件"}</div>
+                  <a href={reduxinfo.type === "people" ?'/admin/integralmall/index':"/admin/upload_case/index"}>
+                  <div>{reduxinfo.type === "people" ? "积分商城":"上传任务"}</div>
                   </a>
                 </div>
                 <div className='entrance'>
